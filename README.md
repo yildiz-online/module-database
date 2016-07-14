@@ -1,26 +1,64 @@
-### Informations ###
+# Yildiz-Engine module-database.
 
-* The version is 1.0.0-0-SNAPSHOT, this version is always kept, real versions are managed by the continuous build system.
-* Additional informations on https://yildiz.bitbucket.org
+This is the official repository of The Yildiz-Engine Database Module, part of the Yildiz-Engine project.
+The database module is a component meant to access and use the database.
 
-### Build ###
+## Status [![Quality Gate](https://www.sonarqube.com/api/badges/gate?key=be.yildiz-games:module-database)](https://sonarqube.com/overview?id=be.yildiz-games:module-database)
 
-To build the pom you will need:
+## Features
 
-* Maven https://maven.apache.org/
-* Java 8 JDK http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
+* Mysql support.
+* C3P0 pooling support.
+* Model construction from physical model with JOOQ.
+* ...
 
-How to build:
+## Requirements
 
-* Build the dependencies.
-* Invoke mvn clean install -Ddb.url=MyDBUrl -Ddb.user=MyDBUser -Ddb.password=MyDBPassword
+To build this module, you will need a java 8 JDK, and Maven 3.
 
-### Contribution guidelines ###
+## Coding Style and other information
 
-* XML writing guidelines: http://yildiz.bitbucket.org/guidelines/xml
-* POM writing guidelines: http://yildiz.bitbucket.org/guidelines/pom
-* Java writing guidelines: http://yildiz.bitbucket.org/guidelines/java
+Project website:
+http://www.yildiz-games.be
 
-### Who do I talk to? ###
+Issue tracker:
+https://yildiz.atlassian.net
 
-* Repository owner: Grégory Van den Borre
+Wiki:
+https://yildiz.atlassian.net/wiki
+
+Quality report:
+https://sonarqube.com/overview?id=be.yildiz-games:module-database
+
+## License
+
+All source code files are licensed under the permissive MIT license
+(http://opensource.org/licenses/MIT) unless marked differently in a particular folder/file.
+## Build instructions for module-graphic using maven.
+
+Go to your root directory, where you POM file is located.
+
+Then invoke maven
+
+	mvn clean install
+
+This will compile the source code, then run the unit tests, and finally build a jar file.
+
+## Usage
+
+To use the snapshot versions, please add the following repository
+https://oss.sonatype.org/content/repositories/snapshots/
+
+Released version are retrieved from maven central.
+
+In your maven project, add the dependency
+
+```xml
+<dependency>
+    <groupId>be.yildiz-games</groupId>
+    <artifactId>module-database</artifactId>
+    <version>1.0.0-0-SNAPSHOT</version>
+</dependency>
+```
+## Contact
+Owner of this repository: Grégory Van den Borre
