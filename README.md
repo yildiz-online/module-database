@@ -1,9 +1,7 @@
 # Yildiz-Engine module-database.
 
-This is the official repository of The Yildiz-Engine Database Module, part of the Yildiz-Engine project.
+This is the official repository of the Database Module, part of the Yildiz-Engine project.
 The database module is a component meant to access and use the database.
-
-## Status [![Quality Gate](https://www.sonarqube.com/api/badges/gate?key=be.yildiz-games:module-database)](https://sonarqube.com/overview?id=be.yildiz-games:module-database)
 
 ## Features
 
