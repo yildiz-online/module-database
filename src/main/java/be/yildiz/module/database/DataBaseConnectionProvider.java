@@ -166,12 +166,23 @@ public abstract class DataBaseConnectionProvider {
          */
         DERBY(SQLDialect.DERBY, "org.apache.derby.jdbc.EmbeddedDriver");
 
+        /**
+         * Associated dialect.
+         */
         @Getter
         private final SQLDialect dialect;
 
+        /**
+         * Associated driver.
+         */
         @Getter
         private final String driver;
 
+        /**
+         * Build a new DBSystem.
+         * @param dialect JOOQ dialect to use.
+         * @param driver Driver to load.
+         */
         DBSystem(final SQLDialect dialect, final String driver) {
             this.dialect = dialect;
             this.driver = driver;
