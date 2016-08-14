@@ -71,11 +71,11 @@ public abstract class DataBaseConnectionProvider {
      * @param properties Properties holding connection data.
      * @throws NullPointerException if a parameter is null.
      * @throws SQLException         If the given DB system is not managed.
-     * @Ensures (this.system == system)
-     * @Ensures (this.system != null)
-     * @Ensures (this.login == properties.dbUser)
-     * @Ensures (this.password == properties.dbPassword)
      */
+    //@Ensures ("this.system == system")
+    //@Ensures ("this.system != null")
+    //@Ensures ("this.login == properties.dbUser")
+    //@Ensures ("this.password == properties.dbPassword")
     protected DataBaseConnectionProvider(@NonNull final DBSystem system, @NonNull final DbProperties properties) throws SQLException {
         String host = properties.getDbHost();
         int port = properties.getDbPort();
@@ -180,8 +180,9 @@ public abstract class DataBaseConnectionProvider {
 
         /**
          * Build a new DBSystem.
+         *
          * @param dialect JOOQ dialect to use.
-         * @param driver Driver to load.
+         * @param driver  Driver to load.
          */
         DBSystem(final SQLDialect dialect, final String driver) {
             this.dialect = dialect;

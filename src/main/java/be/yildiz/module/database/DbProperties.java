@@ -34,31 +34,31 @@ public interface DbProperties {
 
     /**
      * @return The user login to connect to the database.
-     * @Ensures return value != null.
      */
+    //@Ensures("return value != null")
     String getDbUser();
 
     /**
      * @return The database connection port number.
-     * @Ensure 0 >= return value <= 65635
      */
+    //@Ensure("0 >= return value", "return value <= 65635")
     int getDbPort();
 
     /**
      * @return The user password to connect to the database.
-     * @Ensures return value != null.
      */
+    //@Ensures("return value != null")
     String getDbPassword();
 
     /**
      * @return The database connection host address.
-     * @Ensures return value != null.
      */
+    //@Ensures("return value != null")
     String getDbHost();
 
     /**
      * @return The database name.
-     * @Ensures return value != null.
      */
+    //@Ensures("return value != null")
     String getDbName();
 }
