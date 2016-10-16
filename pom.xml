@@ -5,7 +5,7 @@
   <description>Module handling the database access and manipulation.</description>
 
   <artifactId>module-database</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3-SNAPSHOT</version>
 
   <packaging>jar</packaging>
   <inceptionYear>2011</inceptionYear>
@@ -23,7 +23,7 @@
   <properties>
     <version.bom.junit>1.0.3</version.bom.junit>
     <version.bom.connectorj>1.0.2</version.bom.connectorj>
-    <version.common.shared>1.0.4</version.common.shared>
+    <version.common.shared>1.0.5-SNAPSHOT</version.common.shared>
   </properties>
 
   <dependencyManagement>
