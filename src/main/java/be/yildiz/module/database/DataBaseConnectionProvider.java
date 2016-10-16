@@ -34,6 +34,7 @@ import org.jooq.SQLDialect;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Calendar;
 
 /**
  * Provide connections to the database system.
@@ -85,7 +86,7 @@ public abstract class DataBaseConnectionProvider {
         this.password = properties.getDbPassword();
         switch (this.system) {
             case MYSQL:
-                this.uri = "jdbc:mysql://" + host + ":" + port + "/" + database + "?zeroDateTimeBehavior=convertToNull&useSSL=false";
+                this.uri = "jdbc:mysql://" + host + ":" + port + "/" + database + "?zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone="+Calendar.getInstance().getTimeZone().getID();
                 break;
             case DERBY:
                 this.uri = "jdbc:derby:target/database/" + database + ";";
@@ -159,7 +160,7 @@ public abstract class DataBaseConnectionProvider {
         /**
          * MySQL system.
          */
-        MYSQL(SQLDialect.MYSQL, "com.mysql.jdbc.Driver"),
+        MYSQL(SQLDialect.MYSQL, "com.mysql.cj.jdbc.Driver"),
 
         /**
          * Derby 10 system.
