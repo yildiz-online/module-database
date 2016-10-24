@@ -109,9 +109,8 @@ public abstract class DataBaseConnectionProvider {
      * @throws SQLException thrown if connection failed.
      */
     public final void sanity() throws SQLException {
-        try {
-            Logger.info("Checking database connection...");
-            this.getConnection();
+        Logger.info("Checking database connection...");
+        try (Connection c = this.getConnection()){
             Logger.info("Checking database connection successful.");
         } catch (SQLException e) {
             Logger.error("Database connection failed.");
