@@ -17,12 +17,12 @@
   <parent>
     <groupId>be.yildiz-games</groupId>
     <artifactId>parent</artifactId>
-    <version>1.0.7</version>
+    <version>1.0.8-SNAPSHOT</version>
   </parent>
 
   <properties>
-    <version.bom.junit>1.0.3</version.bom.junit>
-    <version.bom.connectorj>1.0.2</version.bom.connectorj>
+    <version.bom.junit>1.0.4-SNAPSHOT</version.bom.junit>
+    <version.bom.connectorj>1.0.3-SNAPSHOT</version.bom.connectorj>
     <version.common.shared>1.0.5-SNAPSHOT</version.common.shared>
   </properties>
 
