@@ -61,4 +61,25 @@ public interface DbProperties {
      */
     //@Ensures("return value != null")
     String getDbName();
+
+    class Invariant {
+
+        public static void check(String user, String password, String database, String host, int port) {
+            if(user == null) {
+                throw new NullPointerException("User is null.");
+            }
+            if(password == null) {
+                throw new NullPointerException("Password is null.");
+            }
+            if(database == null) {
+                throw new NullPointerException("database is null.");
+            }
+            if(host == null) {
+                throw new NullPointerException("User is null.");
+            }
+            if(port < 0 || port > 65635) {
+                throw new IllegalArgumentException("Port must be between 0 and 65635, value is " + port);
+            }
+        }
+    }
 }
