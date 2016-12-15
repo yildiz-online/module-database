@@ -26,6 +26,8 @@ package be.yildiz.module.database;//        This file is part of the Yildiz-Onli
 import org.jooq.SQLDialect;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
+import org.junit.runner.RunWith;
 
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -33,46 +35,75 @@ import java.util.Calendar;
 /**
  * @author Grégory Van den Borre
  */
+@RunWith(Enclosed.class)
 public class DatabaseConnectionProviderTest {
 
-    @Test
-    public void testDatabaseConnectionProvider() throws SQLException {
-        DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-        DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
-        Assert.assertFalse(dcp.isDebug());
-        Assert.assertEquals(properties.getDbUser(), dcp.getLogin());
-        Assert.assertEquals(properties.getDbPassword(), dcp.getPassword());
+    public static class Constructor {
+
+        @Test
+        public void happyFlow() throws SQLException {
+            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
+            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
+            Assert.assertFalse(dcp.isDebug());
+            Assert.assertEquals(properties.getDbUser(), dcp.getLogin());
+            Assert.assertEquals(properties.getDbPassword(), dcp.getPassword());
+        }
+
+        @Test
+        public void withMysql() throws SQLException {
+            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
+            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
+
+            Assert.assertEquals(SQLDialect.MYSQL, dcp.getDialect());
+            Assert.assertEquals(DataBaseConnectionProvider.DBSystem.MYSQL, dcp.getSystem());
+            Assert.assertEquals("jdbc:mysql://" + properties.getDbHost() + ":" + properties.getDbPort() + "/" + properties.getDbName() + "?zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone="+ Calendar.getInstance().getTimeZone().getID(), dcp.getUri());
+        }
+
+        @Test
+        public void withDerby() throws SQLException {
+            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
+            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY, properties, false);
+
+            Assert.assertEquals(SQLDialect.DERBY, dcp.getDialect());
+            Assert.assertEquals(DataBaseConnectionProvider.DBSystem.DERBY, dcp.getSystem());
+            Assert.assertEquals("jdbc:derby:target/database/" + properties.getDbName() + ";", dcp.getUri());
+        }
+
+        @Test(expected = NullPointerException.class)
+        public void withNull() throws SQLException {
+            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
+            new DummyDatabaseConnectionProvider(null, properties, false);
+        }
+
+        @Test(expected = NullPointerException.class)
+        public void withNullProperties() throws SQLException {
+            new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY, null, false);
+        }
     }
 
-    @Test
-    public void testDatabaseConnectionProviderMySql() throws SQLException {
-        DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-        DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
+    public static class GetConnection  {
 
-        Assert.assertEquals(SQLDialect.MYSQL, dcp.getDialect());
-        Assert.assertEquals(DataBaseConnectionProvider.DBSystem.MYSQL, dcp.getSystem());
-        Assert.assertEquals("jdbc:mysql://" + properties.getDbHost() + ":" + properties.getDbPort() + "/" + properties.getDbName() + "?zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone="+ Calendar.getInstance().getTimeZone().getID(), dcp.getUri());
+        @Test
+        public void happyFlow() throws SQLException {
+            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
+            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
+            Assert.assertNotNull(dcp.getConnection());
+        }
+
+        @Test
+        public void withDebugMode() throws SQLException {
+            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
+            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
+            dcp.setDebugMode();
+            Assert.assertNotNull(dcp.getConnection());
+        }
+
+        @Test(expected = SQLException.class)
+        public void withError() throws SQLException {
+            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
+            new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, true).getConnection();
+        }
     }
 
-    @Test
-    public void testDatabaseConnectionProviderDerby() throws SQLException {
-        DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-        DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY, properties, false);
-
-        Assert.assertEquals(SQLDialect.DERBY, dcp.getDialect());
-        Assert.assertEquals(DataBaseConnectionProvider.DBSystem.DERBY, dcp.getSystem());
-        Assert.assertEquals("jdbc:derby:target/database/" + properties.getDbName() + ";", dcp.getUri());
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testDatabaseConnectionProviderNullSystem() throws SQLException {
-        DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-        new DummyDatabaseConnectionProvider(null, properties, false);
-    }
-
-    @Test(expected = NullPointerException.class)
-    public void testDatabaseConnectionProviderNullProperties() throws SQLException {
-        new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY, null, false);
-    }
 
 }
