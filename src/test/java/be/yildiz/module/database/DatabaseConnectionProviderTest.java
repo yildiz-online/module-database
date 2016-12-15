@@ -53,7 +53,6 @@ public class DatabaseConnectionProviderTest {
         public void withMysql() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
-
             Assert.assertEquals(SQLDialect.MYSQL, dcp.getDialect());
             Assert.assertEquals(DataBaseConnectionProvider.DBSystem.MYSQL, dcp.getSystem());
             Assert.assertEquals("jdbc:mysql://" + properties.getDbHost() + ":" + properties.getDbPort() + "/" + properties.getDbName() + "?zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone="+ Calendar.getInstance().getTimeZone().getID(), dcp.getUri());
@@ -105,5 +104,34 @@ public class DatabaseConnectionProviderTest {
         }
     }
 
+    public static class GetDriver {
+
+        @Test
+        public void mysql() {
+            Assert.assertEquals("com.mysql.cj.jdbc.Driver", DataBaseConnectionProvider.DBSystem.MYSQL.getDriver());
+        }
+
+        @Test
+        public void derby() {
+            Assert.assertEquals("org.apache.derby.jdbc.EmbeddedDriver", DataBaseConnectionProvider.DBSystem.DERBY.getDriver());
+        }
+    }
+
+    public static class Sanity {
+
+        @Test
+        public void happyFlow() throws SQLException{
+            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
+            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
+            dcp.sanity();
+        }
+
+        @Test(expected = SQLException.class)
+        public void withError() throws SQLException{
+            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
+            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, true);
+            dcp.sanity();
+        }
+    }
 
 }
