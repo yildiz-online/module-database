@@ -26,6 +26,7 @@
   <modelVersion>4.0.0</modelVersion>
   <name>Yildiz Module Database</name>
   <description>Module handling the database access and manipulation.</description>
+  <url>https://bitbucket.org/yildiz-engine-team/module-database</url>
 
   <artifactId>module-database</artifactId>
   <version>1.0.3-SNAPSHOT</version>
@@ -43,25 +44,19 @@
     <version>1.0.8-SNAPSHOT</version>
   </parent>
 
-  <properties>
-    <version.bom.junit>1.0.4-SNAPSHOT</version.bom.junit>
-    <version.bom.connectorj>1.0.3-SNAPSHOT</version.bom.connectorj>
-    <version.common.shared>1.0.5-SNAPSHOT</version.common.shared>
-  </properties>
-
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>be.yildiz-games</groupId>
         <artifactId>bom-connectorj</artifactId>
-        <version>${version.bom.connectorj}</version>
+        <version>${version.bom-connectorj}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>be.yildiz-games</groupId>
         <artifactId>bom-junit</artifactId>
-        <version>${version.bom.junit}</version>
+        <version>${version.bom-junit}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -72,7 +67,6 @@
     <dependency>
       <groupId>be.yildiz-games</groupId>
       <artifactId>common-shared</artifactId>
-      <version>${version.common.shared}</version>
     </dependency>
     <dependency>
       <groupId>mysql</groupId>
