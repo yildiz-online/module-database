@@ -27,17 +27,12 @@ public class NoPoolConnectionProvider extends DataBaseConnectionProvider {
         super(system, properties);
         try {
             Class.forName(system.getDriver());
-            switch (system) {
-                case MYSQL:
-                    this.driver = new com.mysql.jdbc.Driver();
-                    break;
-                case DERBY:
-                    this.driver = new EmbeddedDriver();
-                    break;
-                case DERBY_IN_MEMORY:
-                    this.driver = new EmbeddedDriver();
-                    break;
-                default: throw new SQLException("Unknown driver:" + system.getDriver());
+            if (system == DBSystem.MYSQL) {
+                this.driver = new com.mysql.jdbc.Driver();
+            } else if (system == DBSystem.DERBY || system == DBSystem.DERBY_IN_MEMORY) {
+                this.driver = new EmbeddedDriver();
+            } else {
+                throw new SQLException("Unknown driver:" + system.getDriver());
             }
         } catch (ClassNotFoundException e) {
             throw new SQLException("Driver not found: " + system.getDriver(), e);
