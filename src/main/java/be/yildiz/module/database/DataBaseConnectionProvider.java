@@ -89,6 +89,9 @@ public abstract class DataBaseConnectionProvider {
             case DERBY:
                 this.uri = "jdbc:derby:target/database/" + database + ";";
                 break;
+            case DERBY_IN_MEMORY:
+                this.uri = "jdbc:derby:memory:" + database + ";create=true";
+                break;
             default:
                 throw new SQLException("Unknown system: " + system);
         }
@@ -162,7 +165,12 @@ public abstract class DataBaseConnectionProvider {
         /**
          * Derby 10 system.
          */
-        DERBY(SQLDialect.DERBY, "org.apache.derby.jdbc.EmbeddedDriver");
+        DERBY(SQLDialect.DERBY, "org.apache.derby.jdbc.EmbeddedDriver"),
+
+        /**
+         * Derby 10 system, only in memory.
+         */
+        DERBY_IN_MEMORY(SQLDialect.DERBY, "org.apache.derby.jdbc.EmbeddedDriver");
 
         /**
          * Associated dialect.

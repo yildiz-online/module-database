@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  */
 
-package be.yildiz.module.database;//        This file is part of the Yildiz-Online project, licenced under the MIT License
+package be.yildiz.module.database;
 
 import org.mockito.Mockito;
 
