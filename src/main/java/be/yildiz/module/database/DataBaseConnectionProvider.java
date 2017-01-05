@@ -90,7 +90,7 @@ public abstract class DataBaseConnectionProvider {
                 this.uri = "jdbc:derby:target/database/" + database + ";";
                 break;
             case DERBY_IN_MEMORY:
-                this.uri = "jdbc:derby:memory:" + database + ";create=true";
+                this.uri = "jdbc:derby:memory:" + database + ";create=true;user=" + properties.getDbUser();
                 break;
             default:
                 throw new SQLException("Unknown system: " + system);

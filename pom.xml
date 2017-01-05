@@ -29,7 +29,7 @@
   <url>https://bitbucket.org/yildiz-engine-team/module-database</url>
 
   <artifactId>module-database</artifactId>
-  <version>1.0.3-SNAPSHOT</version>
+  <version>1.1.0-SNAPSHOT</version>
 
   <packaging>jar</packaging>
   <inceptionYear>2011</inceptionYear>
@@ -77,6 +77,10 @@
       <artifactId>jdbcdslog</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.apache.derby</groupId>
       <artifactId>derby</artifactId>
     </dependency>
@@ -113,5 +117,21 @@
       <artifactId>mockito-all</artifactId>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>test-jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

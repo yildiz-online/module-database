@@ -36,9 +36,13 @@ public class DummyDatabaseConnectionProvider extends DataBaseConnectionProvider 
 
     private final boolean throwError;
 
-    DummyDatabaseConnectionProvider(DBSystem system, DbProperties properties, boolean throwError) throws SQLException {
+    public DummyDatabaseConnectionProvider(DBSystem system, DbProperties properties, boolean throwError) throws SQLException {
         super(system, properties);
         this.throwError = throwError;
+    }
+
+    public static DataBaseConnectionProvider getDummyProvider() throws SQLException {
+        return new DummyDatabaseConnectionProvider(DBSystem.MYSQL, new DefaultProperties(), false);
     }
 
     @Override
@@ -49,7 +53,7 @@ public class DummyDatabaseConnectionProvider extends DataBaseConnectionProvider 
         return Mockito.mock(Connection.class);
     }
 
-    final static class DefaultProperties implements DbProperties {
+    public final static class DefaultProperties implements DbProperties {
 
         @Override
         public String getDbUser() {
