@@ -15,6 +15,8 @@ public class NoPoolConnectionProvider extends DataBaseConnectionProvider {
 
     private final Driver driver;
 
+    private Connection connection;
+
     /**
      * Create a new Database connection provider.
      *
@@ -47,6 +49,9 @@ public class NoPoolConnectionProvider extends DataBaseConnectionProvider {
 
     @Override
     protected Connection getConnectionImpl() throws SQLException {
-        return this.driver.connect(this.getUri(), new Properties());
+        if(this.connection == null) {
+            this.connection = this.driver.connect(this.getUri(), new Properties());
+        }
+        return this.connection;
     }
 }
