@@ -44,9 +44,14 @@ public class NoPoolConnectionProvider extends DataBaseConnectionProvider {
 
     @Override
     protected Connection getConnectionImpl() throws SQLException {
-        if(this.connection == null) {
+        if(this.connection == null || this.connection.isClosed()) {
             this.connection = this.driver.connect(this.getUri(), new Properties());
         }
         return this.connection;
+    }
+
+    @Override
+    public void close() throws Exception {
+        this.connection.close();
     }
 }

@@ -40,7 +40,7 @@ import java.util.Calendar;
  * @author Grégory Van den Borre
  */
 @Getter(value = AccessLevel.PROTECTED)
-public abstract class DataBaseConnectionProvider {
+public abstract class DataBaseConnectionProvider implements AutoCloseable {
 
     /**
      * Selected Database system.

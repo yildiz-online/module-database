@@ -85,4 +85,9 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
     protected Connection getConnectionImpl() throws SQLException {
         return this.cpds.getConnection();
     }
+
+    @Override
+    public void close() throws Exception {
+        this.cpds.close();
+    }
 }

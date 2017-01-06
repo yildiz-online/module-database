@@ -53,6 +53,11 @@ public class DummyDatabaseConnectionProvider extends DataBaseConnectionProvider 
         return Mockito.mock(Connection.class);
     }
 
+    @Override
+    public void close() throws Exception {
+
+    }
+
     public final static class DefaultProperties implements DbProperties {
 
         @Override
