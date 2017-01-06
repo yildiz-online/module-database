@@ -58,6 +58,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
      * Data base connection password.
      */
     private final String password;
+
     /**
      * <code>true</code> will log every sql request.
      */

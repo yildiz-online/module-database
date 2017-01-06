@@ -52,6 +52,10 @@ public class NoPoolConnectionProvider extends DataBaseConnectionProvider {
 
     @Override
     public void close() throws Exception {
-        this.connection.close();
+        if(this.getSystem() == DBSystem.DERBY_IN_MEMORY) {
+            this.driver.connect(this.getUri().replace("create", "drop"), new Properties());
+        } else {
+            this.connection.close();
+        }
     }
 }
