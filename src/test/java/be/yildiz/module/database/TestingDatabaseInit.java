@@ -25,7 +25,7 @@ public class TestingDatabaseInit {
     /**
      * @author Grégory Van den Borre
      */
-    private class TestingDbProperties implements DbProperties {
+     static class TestingDbProperties implements DbProperties {
         @Override
         public String getDbUser() {
             return "YILDIZDATABASE";

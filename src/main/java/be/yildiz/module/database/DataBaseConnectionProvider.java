@@ -26,7 +26,6 @@ package be.yildiz.module.database;
 import be.yildiz.common.log.Logger;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NonNull;
 import org.jdbcdslog.ConnectionLoggingProxy;
 import org.jooq.SQLDialect;
 
@@ -49,7 +48,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
     /**
      * Connection URI.
      */
-    private final String uri;
+    private String uri;
     /**
      * Database connection login.
      */
@@ -69,14 +68,19 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
      *
      * @param system     Database system to use.
      * @param properties Properties holding connection data.
-     * @throws NullPointerException if a parameter is null.
-     * @throws SQLException         If the given DB system is not managed.
+     * @throws IllegalArgumentException if a parameter is null or invalid.
      */
     //@Ensures ("this.system == system")
     //@Ensures ("this.system != null")
     //@Ensures ("this.login == properties.dbUser")
     //@Ensures ("this.password == properties.dbPassword")
-    protected DataBaseConnectionProvider(@NonNull final DBSystem system, @NonNull final DbProperties properties) throws SQLException {
+    protected DataBaseConnectionProvider(final DBSystem system, final DbProperties properties) {
+        if(properties == null) {
+            throw new IllegalArgumentException("Properties cannot be null.");
+        }
+        if(system == null) {
+            throw new IllegalArgumentException("system cannot be null.");
+        }
         String host = properties.getDbHost();
         int port = properties.getDbPort();
         String database = properties.getDbName();
@@ -93,9 +97,8 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
             case DERBY_IN_MEMORY:
                 this.uri = "jdbc:derby:memory:" + database + ";create=true;user=" + properties.getDbUser();
                 break;
-            default:
-                throw new SQLException("Unknown system: " + system);
         }
+        assert this.invariant();
     }
 
     /**
@@ -149,6 +152,22 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
      */
     public SQLDialect getDialect() {
         return this.system.getDialect();
+    }
+
+    private boolean invariant() {
+        if(this.system == null) {
+            throw new IllegalArgumentException("system cannot be null.");
+        }
+        if(this.login == null) {
+            throw new IllegalArgumentException("login cannot be null.");
+        }
+        if(this.password == null) {
+            throw new IllegalArgumentException("password cannot be null.");
+        }
+        if(this.uri == null) {
+            throw new IllegalArgumentException("uri cannot be null.");
+        }
+        return true;
     }
 
     /**
