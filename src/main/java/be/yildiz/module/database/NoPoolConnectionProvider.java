@@ -1,10 +1,12 @@
 package be.yildiz.module.database;
 
+import be.yildiz.common.log.Logger;
 import org.apache.derby.jdbc.EmbeddedDriver;
 
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
+import java.sql.SQLNonTransientConnectionException;
 import java.util.Properties;
 
 /**
@@ -52,7 +54,11 @@ public class NoPoolConnectionProvider extends DataBaseConnectionProvider {
     @Override
     public void close() throws Exception {
         if(this.getSystem() == DBSystem.DERBY_IN_MEMORY) {
-            this.driver.connect(this.getUri().replace("create", "drop"), new Properties());
+            try {
+                this.driver.connect(this.getUri().replace("create", "drop"), new Properties());
+            } catch (SQLNonTransientConnectionException e) {
+                Logger.error("Closing database, expected exception for in memory", e);
+            }
         } else {
             this.connection.close();
         }
