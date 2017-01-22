@@ -43,7 +43,7 @@ public class TransactionTest {
                     DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY,
                     new DummyDatabaseConnectionProvider.DefaultProperties(),
                     false));
-            t.execute(() -> {});
+            t.execute(c -> {});
         }
     }
 }

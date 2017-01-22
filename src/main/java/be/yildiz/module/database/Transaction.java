@@ -20,7 +20,7 @@ public final class Transaction {
         try(Connection c = connectionProvider.getConnection()) {
             c.setAutoCommit(false);
             try {
-                b.execute();
+                b.execute(c);
             } catch (Exception e) {
                 c.rollback();
                 Logger.error(e);
