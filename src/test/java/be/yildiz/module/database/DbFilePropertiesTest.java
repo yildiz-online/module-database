@@ -28,12 +28,23 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.net.URL;
 
 /**
  * @author Grégory Van den Borre
  */
 public class DbFilePropertiesTest {
+
+    @Test
+    public void testInvariantConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        Constructor<DbProperties.Invariant> constructor = DbProperties.Invariant.class.getDeclaredConstructor();
+        Assert.assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        constructor.setAccessible(true);
+        constructor.newInstance();
+    }
 
     @Test
     public void happyFlow() {
