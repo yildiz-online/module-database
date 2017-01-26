@@ -1,8 +1,5 @@
 package be.yildiz.module.database;
 
-import be.yildiz.common.log.Logger;
-import org.apache.derby.jdbc.EmbeddedDriver;
-
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.SQLException;
@@ -30,13 +27,7 @@ public class NoPoolConnectionProvider extends DataBaseConnectionProvider {
         super(system, properties);
         try {
             Class.forName(system.getDriver());
-            if (system == DBSystem.MYSQL) {
-                this.driver = new com.mysql.cj.jdbc.Driver();
-            } else if (system == DBSystem.DERBY || system == DBSystem.DERBY_CREATE || system == DBSystem.DERBY_IN_MEMORY) {
-                this.driver = new EmbeddedDriver();
-            } else {
-                throw new SQLException("Unknown driver:" + system.getDriver());
-            }
+            this.driver = system.getDriverProvider().getDriver();
         } catch (ClassNotFoundException e) {
             throw new SQLException("Driver not found: " + system.getDriver(), e);
         }
@@ -57,7 +48,7 @@ public class NoPoolConnectionProvider extends DataBaseConnectionProvider {
             try {
                 this.driver.connect(this.getUri().replace("create", "drop"), new Properties());
             } catch (SQLNonTransientConnectionException e) {
-                Logger.error("Closing database, expected exception for in memory", e);
+                //Expected exception when closing in memory derby.
             }
         } else {
             this.connection.close();

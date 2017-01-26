@@ -24,8 +24,11 @@
 package be.yildiz.module.database;
 
 import be.yildiz.common.log.Logger;
+import be.yildiz.common.util.StringUtil;
+import com.mysql.cj.jdbc.Driver;
 import lombok.AccessLevel;
 import lombok.Getter;
+import org.apache.derby.jdbc.EmbeddedDriver;
 import org.jdbcdslog.ConnectionLoggingProxy;
 import org.jooq.SQLDialect;
 
@@ -81,26 +84,10 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
         if(system == null) {
             throw new IllegalArgumentException("system cannot be null.");
         }
-        String host = properties.getDbHost();
-        int port = properties.getDbPort();
-        String database = properties.getDbName();
         this.system = system;
         this.login = properties.getDbUser();
         this.password = properties.getDbPassword();
-        switch (this.system) {
-            case MYSQL:
-                this.uri = "jdbc:mysql://" + host + ":" + port + "/" + database + "?zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone="+Calendar.getInstance().getTimeZone().getID();
-                break;
-            case DERBY:
-                this.uri = "jdbc:derby:target/database/" + database + ";";
-                break;
-            case DERBY_CREATE:
-                this.uri = "jdbc:derby:target/database/" + database + ";create=true";
-                break;
-            case DERBY_IN_MEMORY:
-                this.uri = "jdbc:derby:memory:" + database + ";create=true;user=" + properties.getDbUser();
-                break;
-        }
+        this.uri = system.getUrl(properties);
         assert this.invariant();
     }
 
@@ -183,22 +170,38 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
         /**
          * MySQL system.
          */
-        MYSQL(SQLDialect.MYSQL, "com.mysql.cj.jdbc.Driver"),
+        MYSQL(
+                SQLDialect.MYSQL,
+                "com.mysql.cj.jdbc.Driver",
+                Driver::new,
+                "jdbc:mysql://${1}:${2}/${0}?zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone="+Calendar.getInstance().getTimeZone().getID()),
 
         /**
          * Derby 10 system.
          */
-        DERBY(SQLDialect.DERBY, "org.apache.derby.jdbc.EmbeddedDriver"),
+        DERBY(
+                SQLDialect.DERBY,
+                "org.apache.derby.jdbc.EmbeddedDriver",
+                EmbeddedDriver::new,
+                "jdbc:derby:target/database/${0};"),
 
         /**
          * Derby 10 system, only in memory.
          */
-        DERBY_CREATE(SQLDialect.DERBY, "org.apache.derby.jdbc.EmbeddedDriver"),
+        DERBY_CREATE(
+                SQLDialect.DERBY,
+                "org.apache.derby.jdbc.EmbeddedDriver",
+                EmbeddedDriver::new,
+                "jdbc:derby:target/database/${0};create=true"),
 
         /**
          * Derby 10 system, only in memory.
          */
-        DERBY_IN_MEMORY(SQLDialect.DERBY, "org.apache.derby.jdbc.EmbeddedDriver");
+        DERBY_IN_MEMORY(
+                SQLDialect.DERBY,
+                "org.apache.derby.jdbc.EmbeddedDriver",
+                EmbeddedDriver::new,
+                "jdbc:derby:memory:${0};create=true;user=${3}");
 
         /**
          * Associated dialect.
@@ -212,15 +215,27 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
         @Getter
         private final String driver;
 
+        @Getter
+        private final DriverProvider driverProvider;
+
+        private final String url;
+
         /**
          * Build a new DBSystem.
          *
          * @param dialect JOOQ dialect to use.
          * @param driver  Driver to load.
          */
-        DBSystem(final SQLDialect dialect, final String driver) {
+        DBSystem(final SQLDialect dialect, final String driver, final DriverProvider driverProvider, String url) {
             this.dialect = dialect;
             this.driver = driver;
+            this.driverProvider = driverProvider;
+            this.url = url;
+        }
+
+        public String getUrl(DbProperties p) {
+            String[] params = {p.getDbName(), p.getDbHost(), String.valueOf(p.getDbPort()), p.getDbUser()};
+            return StringUtil.fillVariable(this.url, params);
         }
     }
 }
