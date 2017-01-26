@@ -66,8 +66,15 @@ public class NoPoolConnectionProviderTest {
     public static class Close {
 
         @Test
-        public void happyFlow() throws Exception {
+        public void happyFlowDerbyInMemory() throws Exception {
             DataBaseConnectionProvider c = new NoPoolConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, new TestingDatabaseInit.TestingDbProperties());
+            c.getConnection();
+            c.close();
+        }
+
+        @Test
+        public void happyFlowDerby() throws Exception {
+            DataBaseConnectionProvider c = new NoPoolConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_CREATE, new TestingDatabaseInit.TestingDbProperties());
             c.getConnection();
             c.close();
         }

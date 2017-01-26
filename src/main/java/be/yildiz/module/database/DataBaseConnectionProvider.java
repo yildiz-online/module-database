@@ -94,6 +94,9 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
             case DERBY:
                 this.uri = "jdbc:derby:target/database/" + database + ";";
                 break;
+            case DERBY_CREATE:
+                this.uri = "jdbc:derby:target/database/" + database + ";create=true";
+                break;
             case DERBY_IN_MEMORY:
                 this.uri = "jdbc:derby:memory:" + database + ";create=true;user=" + properties.getDbUser();
                 break;
@@ -186,6 +189,11 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
          * Derby 10 system.
          */
         DERBY(SQLDialect.DERBY, "org.apache.derby.jdbc.EmbeddedDriver"),
+
+        /**
+         * Derby 10 system, only in memory.
+         */
+        DERBY_CREATE(SQLDialect.DERBY, "org.apache.derby.jdbc.EmbeddedDriver"),
 
         /**
          * Derby 10 system, only in memory.

@@ -32,7 +32,7 @@ public class NoPoolConnectionProvider extends DataBaseConnectionProvider {
             Class.forName(system.getDriver());
             if (system == DBSystem.MYSQL) {
                 this.driver = new com.mysql.cj.jdbc.Driver();
-            } else if (system == DBSystem.DERBY || system == DBSystem.DERBY_IN_MEMORY) {
+            } else if (system == DBSystem.DERBY || system == DBSystem.DERBY_CREATE || system == DBSystem.DERBY_IN_MEMORY) {
                 this.driver = new EmbeddedDriver();
             } else {
                 throw new SQLException("Unknown driver:" + system.getDriver());
