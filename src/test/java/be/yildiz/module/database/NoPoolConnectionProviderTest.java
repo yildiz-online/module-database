@@ -61,6 +61,14 @@ public class NoPoolConnectionProviderTest {
             DataBaseConnectionProvider c = new NoPoolConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, new TestingDatabaseInit.TestingDbProperties());
             Assert.assertNotNull(c.getConnection());
         }
+
+        @Test
+        public void afterClosed() throws SQLException {
+            DataBaseConnectionProvider c = new NoPoolConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, new TestingDatabaseInit.TestingDbProperties());
+            c.getConnection().close();
+            c.getConnection();
+            Assert.assertFalse(c.getConnection().isClosed());
+        }
     }
 
     public static class Close {
