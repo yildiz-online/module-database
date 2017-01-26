@@ -48,5 +48,38 @@ public class C3P0ConnectionProviderTest {
             Assert.assertEquals(system.getProperty("com.mchange.v2.log.MLog"), "com.mchange.v2.log.FallbackMLog");
             Assert.assertEquals(system.getProperty("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL"), Logger.getLogLevel().name());
         }
+
+        @Test(expected = AssertionError.class)
+        public void withNullSystem() throws SQLException {
+            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
+            DataBaseConnectionProvider p = new C3P0ConnectionProvider(null, properties);
+        }
+
+        @Test(expected = AssertionError.class)
+        public void withNullProperties() throws SQLException {
+            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
+            DataBaseConnectionProvider p = new C3P0ConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, null);
+        }
+    }
+
+    public static class GetConnection {
+
+        @Test
+        public void happyFlow() throws SQLException {
+            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
+            DataBaseConnectionProvider p = new C3P0ConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, properties);
+            Assert.assertNotNull(p.getConnection());
+        }
+    }
+
+    public static class Close {
+
+        @Test
+        public void happyFlow() throws Exception {
+            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
+            DataBaseConnectionProvider p = new C3P0ConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, properties);
+            p.getConnection();
+            p.close();
+        }
     }
 }
