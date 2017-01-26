@@ -145,10 +145,6 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
     }
 
     private boolean invariant() {
-        if(this.system == null) {
-            Logger.error("system cannot be null.");
-            return false;
-        }
         if(this.login == null) {
             Logger.error("login cannot be null.");
             return false;

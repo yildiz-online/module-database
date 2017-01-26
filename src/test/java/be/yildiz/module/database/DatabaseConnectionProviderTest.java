@@ -49,6 +49,69 @@ public class DatabaseConnectionProviderTest {
             Assert.assertEquals(properties.getDbPassword(), dcp.getPassword());
         }
 
+        @Test(expected = AssertionError.class)
+        public void withNoLogin() throws SQLException {
+            DbProperties properties = new DbProperties() {
+                @Override
+                public String getDbUser() {
+                    return null;
+                }
+
+                @Override
+                public int getDbPort() {
+                    return 0;
+                }
+
+                @Override
+                public String getDbPassword() {
+                    return "ok";
+                }
+
+                @Override
+                public String getDbHost() {
+                    return "ok";
+                }
+
+                @Override
+                public String getDbName() {
+                    return "ok";
+                }
+            };
+            new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
+        }
+
+        @Test(expected = AssertionError.class)
+        public void withNoPassword() throws SQLException {
+            DbProperties properties = new DbProperties() {
+                @Override
+                public String getDbUser() {
+                    return "ok";
+                }
+
+                @Override
+                public int getDbPort() {
+                    return 0;
+                }
+
+                @Override
+                public String getDbPassword() {
+                    return null;
+                }
+
+                @Override
+                public String getDbHost() {
+                    return "ok";
+                }
+
+                @Override
+                public String getDbName() {
+                    return "ok";
+                }
+            };
+            new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
+        }
+
+
         @Test
         public void withMysql() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
