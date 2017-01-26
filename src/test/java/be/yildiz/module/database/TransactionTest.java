@@ -45,5 +45,14 @@ public class TransactionTest {
                     false));
             t.execute(c -> {});
         }
+
+        @Test
+        public void withError() throws Exception {
+            Transaction t = new Transaction(new DummyDatabaseConnectionProvider(
+                    DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY,
+                    new DummyDatabaseConnectionProvider.DefaultProperties(),
+                    false));
+            t.execute(c -> {throw new Exception("Expected exception");});
+        }
     }
 }
