@@ -43,12 +43,12 @@ public class NoPoolConnectionProviderTest {
             new NoPoolConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, new TestingDatabaseInit.TestingDbProperties());
         }
 
-        @Test(expected = IllegalArgumentException.class)
+        @Test(expected = AssertionError.class)
         public void withSystemNull() throws SQLException {
             new NoPoolConnectionProvider(null, new TestingDatabaseInit.TestingDbProperties());
         }
 
-        @Test(expected = IllegalArgumentException.class)
+        @Test(expected = AssertionError.class)
         public void withPropertiesNull() throws SQLException {
             new NoPoolConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, null);
         }

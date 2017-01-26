@@ -68,13 +68,13 @@ public class DatabaseConnectionProviderTest {
             Assert.assertEquals("jdbc:derby:target/database/" + properties.getDbName() + ";", dcp.getUri());
         }
 
-        @Test(expected = IllegalArgumentException.class)
+        @Test(expected = AssertionError.class)
         public void withNull() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             new DummyDatabaseConnectionProvider(null, properties, false);
         }
 
-        @Test(expected = IllegalArgumentException.class)
+        @Test(expected = AssertionError.class)
         public void withNullProperties() throws SQLException {
             new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY, null, false);
         }

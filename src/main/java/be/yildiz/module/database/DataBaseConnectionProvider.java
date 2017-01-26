@@ -79,10 +79,10 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
     //@Ensures ("this.password == properties.dbPassword")
     protected DataBaseConnectionProvider(final DBSystem system, final DbProperties properties) {
         if(properties == null) {
-            throw new IllegalArgumentException("Properties cannot be null.");
+            throw new AssertionError("Properties cannot be null.");
         }
         if(system == null) {
-            throw new IllegalArgumentException("system cannot be null.");
+            throw new AssertionError("system cannot be null.");
         }
         this.system = system;
         this.login = properties.getDbUser();
@@ -146,16 +146,20 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
 
     private boolean invariant() {
         if(this.system == null) {
-            throw new IllegalArgumentException("system cannot be null.");
+            Logger.error("system cannot be null.");
+            return false;
         }
         if(this.login == null) {
-            throw new IllegalArgumentException("login cannot be null.");
+            Logger.error("login cannot be null.");
+            return false;
         }
         if(this.password == null) {
-            throw new IllegalArgumentException("password cannot be null.");
+            Logger.error("password cannot be null.");
+            return false;
         }
         if(this.uri == null) {
-            throw new IllegalArgumentException("uri cannot be null.");
+            Logger.error("uri cannot be null.");
+            return false;
         }
         return true;
     }
