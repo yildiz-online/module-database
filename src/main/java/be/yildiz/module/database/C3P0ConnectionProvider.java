@@ -61,7 +61,7 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
      * @throws SQLException         If an exception occurs when building the object.
      * @throws NullPointerException if a parameter is null.
      */
-    public C3P0ConnectionProvider(final DBSystem system, final DbProperties properties) throws SQLException {
+    public C3P0ConnectionProvider(final DatabaseSystem system, final DbProperties properties) throws SQLException {
         super(system, properties);
         Properties p = new Properties(System.getProperties());
         p.put("com.mchange.v2.log.MLog", "com.mchange.v2.log.FallbackMLog");
