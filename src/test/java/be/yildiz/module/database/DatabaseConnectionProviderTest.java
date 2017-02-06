@@ -21,8 +21,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  */
 
-package be.yildiz.module.database;//        This file is part of the Yildiz-Online project, licenced under the MIT License
+package be.yildiz.module.database;
 
+import com.mysql.cj.jdbc.Driver;
 import org.jooq.SQLDialect;
 import org.junit.Assert;
 import org.junit.Test;
@@ -109,6 +110,35 @@ public class DatabaseConnectionProviderTest {
                 }
             };
             new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
+        }
+
+        @Test(expected = AssertionError.class)
+        public void withNoURI() throws SQLException {
+            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
+
+            DatabaseSystem withoutUri = new DatabaseSystem() {
+                @Override
+                public SQLDialect getDialect() {
+                    return SQLDialect.MYSQL;
+                }
+
+                @Override
+                public String getDriver() {
+                    return "com.mysql.cj.jdbc.Driver";
+                }
+
+                @Override
+                public DriverProvider getDriverProvider() {
+                    return Driver::new;
+                }
+
+                @Override
+                public String getUrl(DbProperties p) {
+                    return null;
+                }
+            };
+
+            new DummyDatabaseConnectionProvider(withoutUri, properties, false);
         }
 
 

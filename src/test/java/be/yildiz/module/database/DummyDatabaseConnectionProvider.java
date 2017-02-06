@@ -36,7 +36,7 @@ public class DummyDatabaseConnectionProvider extends DataBaseConnectionProvider 
 
     private final boolean throwError;
 
-    public DummyDatabaseConnectionProvider(DBSystem system, DbProperties properties, boolean throwError) throws SQLException {
+    public DummyDatabaseConnectionProvider(DatabaseSystem system, DbProperties properties, boolean throwError) throws SQLException {
         super(system, properties);
         this.throwError = throwError;
     }

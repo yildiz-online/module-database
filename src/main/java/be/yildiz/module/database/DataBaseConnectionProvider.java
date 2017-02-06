@@ -47,7 +47,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
     /**
      * Selected Database system.
      */
-    private final DBSystem system;
+    private final DatabaseSystem system;
     /**
      * Connection URI.
      */
@@ -77,7 +77,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
     //@Ensures ("this.system != null")
     //@Ensures ("this.login == properties.dbUser")
     //@Ensures ("this.password == properties.dbPassword")
-    protected DataBaseConnectionProvider(final DBSystem system, final DbProperties properties) {
+    protected DataBaseConnectionProvider(final DatabaseSystem system, final DbProperties properties) {
         if(properties == null) {
             throw new AssertionError("Properties cannot be null.");
         }
@@ -120,15 +120,11 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
      * @throws SQLException In case the connection retrieving throws it.
      */
     public final Connection getConnection() throws SQLException {
-        try {
-            Connection c = this.getConnectionImpl();
-            if (this.debug) {
-                c = ConnectionLoggingProxy.wrap(c);
-            }
-            return c;
-        } catch (SQLException e) {
-            throw e;
+        Connection c = this.getConnectionImpl();
+        if (this.debug) {
+            c = ConnectionLoggingProxy.wrap(c);
         }
+        return c;
     }
 
     /**
@@ -165,7 +161,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
      *
      * @author Van den Borre Grégory
      */
-    public enum DBSystem {
+    public enum DBSystem implements DatabaseSystem {
 
         /**
          * MySQL system.
@@ -233,6 +229,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
             this.url = url;
         }
 
+        @Override
         public String getUrl(DbProperties p) {
             String[] params = {p.getDbName(), p.getDbHost(), String.valueOf(p.getDbPort()), p.getDbUser()};
             return StringUtil.fillVariable(this.url, params);
