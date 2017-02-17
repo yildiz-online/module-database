@@ -60,6 +60,10 @@ public interface DbProperties {
     //@Ensures("return value != null")
     String getDbName();
 
+    String getPool();
+
+    String getSystem();
+
     /**
      * Invariant to ensure the state is correct.
      */
@@ -72,7 +76,7 @@ public interface DbProperties {
             super();
         }
 
-        public static void check(String user, String password, String database, String host, int port) {
+        public static void check(String user, String password, String database, String host, int port, String system, String pool) {
             checkUser(user);
             checkPassword(password);
             checkDatabase(database);

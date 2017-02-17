@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class TestingDatabaseInit {
 
     public DataBaseConnectionProvider init(final String changeLogFile) throws SQLException {
-        DataBaseConnectionProvider dbcp = new NoPoolConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, new TestingDbProperties());
+        DataBaseConnectionProvider dbcp = DatabaseConnectionProviderFactory.create(new TestingDbProperties());
         new LiquibaseDatabaseUpdater(changeLogFile).update(dbcp);
         return dbcp;
     }
@@ -40,6 +40,16 @@ public class TestingDatabaseInit {
         @Override
         public String getDbName() {
             return "YILDIZDATABASE";
+        }
+
+        @Override
+        public String getPool() {
+            return "no-pool";
+        }
+
+        @Override
+        public String getSystem() {
+            return "derby-memory";
         }
     }
 }

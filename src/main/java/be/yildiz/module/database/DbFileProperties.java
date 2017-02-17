@@ -60,6 +60,10 @@ public class DbFileProperties implements DbProperties {
      */
     private final int port;
 
+    private final String pool;
+
+    private final String system;
+
     /**
      * Build a DbProperties from a property file.
      * Expected content is:
@@ -83,7 +87,9 @@ public class DbFileProperties implements DbProperties {
         this.database = properties.getProperty("database.name");
         this.host = properties.getProperty("database.host");
         this.port = PropertiesHelper.getIntValue(properties, "database.port");
-        Invariant.check(this.user, this.password, this.database, this.host, this.port);
+        this.pool = properties.getProperty("database.pool");
+        this.system = properties.getProperty("database.system");
+        Invariant.check(this.user, this.password, this.database, this.host, this.port, this.system, this.pool);
     }
 
     @Override
@@ -109,5 +115,15 @@ public class DbFileProperties implements DbProperties {
     @Override
     public String getDbName() {
         return this.database;
+    }
+
+    @Override
+    public String getPool() {
+        return this.pool;
+    }
+
+    @Override
+    public String getSystem() {
+        return this.system;
     }
 }

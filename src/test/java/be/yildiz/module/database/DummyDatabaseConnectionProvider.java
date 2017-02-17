@@ -84,5 +84,15 @@ public class DummyDatabaseConnectionProvider extends DataBaseConnectionProvider 
         public String getDbName() {
             return "myDatabase";
         }
+
+        @Override
+        public String getPool() {
+            return "no-pool";
+        }
+
+        @Override
+        public String getSystem() {
+            return "derby-memory";
+        }
     }
 }

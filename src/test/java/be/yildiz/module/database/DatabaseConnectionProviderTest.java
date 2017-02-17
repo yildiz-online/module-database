@@ -77,6 +77,16 @@ public class DatabaseConnectionProviderTest {
                 public String getDbName() {
                     return "ok";
                 }
+
+                @Override
+                public String getPool() {
+                    return "no-pool";
+                }
+
+                @Override
+                public String getSystem() {
+                    return "derby-memory";
+                }
             };
             new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
         }
@@ -107,6 +117,16 @@ public class DatabaseConnectionProviderTest {
                 @Override
                 public String getDbName() {
                     return "ok";
+                }
+
+                @Override
+                public String getPool() {
+                    return "no-pool";
+                }
+
+                @Override
+                public String getSystem() {
+                    return "derby-memory";
                 }
             };
             new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
