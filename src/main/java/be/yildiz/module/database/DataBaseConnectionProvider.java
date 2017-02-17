@@ -35,6 +35,7 @@ import org.jooq.SQLDialect;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Properties;
 
 /**
  * Provide connections to the database system.
@@ -84,6 +85,11 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
         if(system == null) {
             throw new AssertionError("system cannot be null.");
         }
+        Properties p = new Properties(System.getProperties());
+        p.put("com.mchange.v2.log.MLog", "com.mchange.v2.log.FallbackMLog");
+        p.put("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL", Logger.getLogLevel().name());
+        p.put("org.jooq.no-logo", "true");
+        System.setProperties(p);
         this.system = system;
         this.login = properties.getDbUser();
         this.password = properties.getDbPassword();
