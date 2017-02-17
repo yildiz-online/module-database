@@ -23,13 +23,11 @@
 
 package be.yildiz.module.database;
 
-import be.yildiz.common.log.Logger;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Properties;
 
 /**
  * C3P0 implementation for a connection provider.
