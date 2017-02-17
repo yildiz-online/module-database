@@ -1,12 +1,5 @@
 package be.yildiz.module.database;
 
-import liquibase.Liquibase;
-import liquibase.database.Database;
-import liquibase.database.DatabaseFactory;
-import liquibase.database.jvm.JdbcConnection;
-import liquibase.exception.LiquibaseException;
-import liquibase.resource.ClassLoaderResourceAccessor;
-
 import java.sql.SQLException;
 
 /**
@@ -14,11 +7,9 @@ import java.sql.SQLException;
  */
 public class TestingDatabaseInit {
 
-    public DataBaseConnectionProvider init(final String changeLogFile) throws LiquibaseException, SQLException {
+    public DataBaseConnectionProvider init(final String changeLogFile) throws SQLException {
         DataBaseConnectionProvider dbcp = new NoPoolConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, new TestingDbProperties());
-        Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(dbcp.getConnection()));
-        Liquibase liquibase = new Liquibase(changeLogFile, new ClassLoaderResourceAccessor(), database);
-        liquibase.update("test");
+        new LiquibaseDatabaseUpdater(changeLogFile).update(dbcp);
         return dbcp;
     }
 
