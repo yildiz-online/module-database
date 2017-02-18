@@ -23,32 +23,37 @@
 
 package be.yildiz.module.database;
 
+import be.yildiz.common.collections.Maps;
 import be.yildiz.common.exeption.UnhandledSwitchCaseException;
 
 import java.sql.SQLException;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Grégory Van den Borre
  */
 public class DatabaseConnectionProviderFactory {
 
-    public static DataBaseConnectionProvider create(DbProperties properties) throws SQLException {
-        DatabaseSystem system;
-        switch (properties.getSystem()) {
-            case "derby-memory" :
-                system = DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY;
-                break;
-            case "derby-file" :
-                system = DataBaseConnectionProvider.DBSystem.DERBY;
-                break;
-            case "derby-create":
-                system = DataBaseConnectionProvider.DBSystem.DERBY_CREATE;
-                break;
-            case "mysql":
-                system = DataBaseConnectionProvider.DBSystem.MYSQL;
-                break;
-            default: throw new UnhandledSwitchCaseException(properties.getSystem());
-        }
+    private final Map<String, DatabaseSystem> systems = Maps.newMap();
+
+    public DatabaseConnectionProviderFactory() {
+        super();
+        this.systems.put("derby-memory", DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY);
+        this.systems.put("derby-file", DataBaseConnectionProvider.DBSystem.DERBY);
+        this.systems.put("derby-create", DataBaseConnectionProvider.DBSystem.DERBY_CREATE);
+        this.systems.put("mysql", DataBaseConnectionProvider.DBSystem.MYSQL);
+    }
+
+    public void addSystem(String key, DatabaseSystem system) {
+        this.systems.put(key, system);
+    }
+
+    public DataBaseConnectionProvider create(DbProperties properties) throws SQLException {
+        DatabaseSystem system = Optional
+                .ofNullable(this.systems.get(properties.getSystem()))
+                .orElseThrow(() -> new UnhandledSwitchCaseException(properties.getSystem()));
+
         if("no-pool".equals(properties.getPool())) {
             return new NoPoolConnectionProvider(system, properties);
         } else if("c3p0".equals(properties.getPool())) {

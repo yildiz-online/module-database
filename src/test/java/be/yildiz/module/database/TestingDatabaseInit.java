@@ -31,7 +31,7 @@ import java.sql.SQLException;
 public class TestingDatabaseInit {
 
     public DataBaseConnectionProvider init(final String changeLogFile) throws SQLException {
-        DataBaseConnectionProvider dbcp = DatabaseConnectionProviderFactory.create(new TestingDbProperties());
+        DataBaseConnectionProvider dbcp = new DatabaseConnectionProviderFactory().create(new TestingDbProperties());
         new LiquibaseDatabaseUpdater(changeLogFile).update(dbcp);
         return dbcp;
     }
