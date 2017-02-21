@@ -86,11 +86,6 @@ public class DummyDatabaseConnectionProvider extends DataBaseConnectionProvider 
         }
 
         @Override
-        public String getPool() {
-            return "no-pool";
-        }
-
-        @Override
         public String getSystem() {
             return "derby-memory";
         }

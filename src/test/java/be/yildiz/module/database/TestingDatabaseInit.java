@@ -66,11 +66,6 @@ public class TestingDatabaseInit {
         }
 
         @Override
-        public String getPool() {
-            return "c3p0";
-        }
-
-        @Override
         public String getSystem() {
             return "derby-memory";
         }
