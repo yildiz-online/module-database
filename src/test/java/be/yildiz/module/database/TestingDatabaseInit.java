@@ -67,7 +67,7 @@ public class TestingDatabaseInit {
 
         @Override
         public String getPool() {
-            return "no-pool";
+            return "c3p0";
         }
 
         @Override

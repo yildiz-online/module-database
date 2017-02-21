@@ -54,11 +54,6 @@ public class DatabaseConnectionProviderFactory {
                 .ofNullable(this.systems.get(properties.getSystem()))
                 .orElseThrow(() -> new UnhandledSwitchCaseException(properties.getSystem()));
 
-        if("no-pool".equals(properties.getPool())) {
-            return new NoPoolConnectionProvider(system, properties);
-        } else if("c3p0".equals(properties.getPool())) {
-            return new C3P0ConnectionProvider(system, properties);
-        } else throw new UnhandledSwitchCaseException(properties.getPool());
-
+        return new C3P0ConnectionProvider(system, properties);
     }
 }

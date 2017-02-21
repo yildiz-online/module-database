@@ -28,6 +28,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLNonTransientConnectionException;
 
 /**
  * C3P0 implementation for a connection provider.
@@ -50,6 +51,8 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
      * C3P0 data source.
      */
     private final ComboPooledDataSource cpds;
+
+    private boolean open = false;
 
     /**
      * Build a C3P0 connection provider, set the default C3P0 logger silent, the max idle time is 1 hour, autocommit is set to true.
@@ -77,11 +80,27 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
 
     @Override
     protected Connection getConnectionImpl() throws SQLException {
+        if(!open) {
+            Connection c = this.cpds.getConnection();
+            this.cpds.setJdbcUrl(this.getUri().replace("create=true;", ""));
+            return c;
+        }
         return this.cpds.getConnection();
     }
 
     @Override
     public void close() throws Exception {
+        if(open) {
+            if (this.getSystem() == DBSystem.DERBY_IN_MEMORY) {
+                try {
+                    this.cpds.setJdbcUrl(this.getUri().replace("create", "drop"));
+                    this.cpds.getConnection();
+                } catch (SQLNonTransientConnectionException e) {
+                    //Expected exception when closing in memory derby.
+                }
+            }
+        }
         this.cpds.close();
+        this.open = false;
     }
 }
