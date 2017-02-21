@@ -73,21 +73,20 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
         } catch (PropertyVetoException e) {
             throw new SQLException("Cannot load pool driver.", e);
         }
-        //this.cpds.setJdbcUrl(this.getUri());
+        this.cpds.setJdbcUrl(this.getUri());
         this.cpds.setUser(this.getLogin());
         this.cpds.setPassword(this.getPassword());
         this.cpds.setMaxIdleTime(ONE_HOUR);
         this.cpds.setMaxIdleTimeExcessConnections(HALF_HOUR);
         this.cpds.setAutoCommitOnClose(true);
-        this.cpds.setMinPoolSize(1);
-        this.cpds.setMaxPoolSize(1);
-        this.cpds.setInitialPoolSize(1);
     }
 
     @Override
     protected Connection getConnectionImpl() throws SQLException {
-        if(!open) {
-            Logger.info("Initializing database connection pool.");
+        if(!open && this.getSystem() == DBSystem.DERBY_IN_MEMORY) {
+            this.cpds.setMinPoolSize(1);
+            this.cpds.setMaxPoolSize(1);
+            this.cpds.setInitialPoolSize(1);
             this.cpds.setJdbcUrl(this.getUri() + "create=true;");
             Connection c = this.cpds.getConnection();
             this.cpds.setJdbcUrl(this.getUri());
@@ -100,7 +99,6 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
 
     @Override
     public void close() throws Exception {
-        System.out.println("closing");
         if(open) {
             if (this.getSystem() == DBSystem.DERBY_IN_MEMORY) {
                 try {
