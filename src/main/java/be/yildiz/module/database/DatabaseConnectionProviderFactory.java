@@ -41,7 +41,6 @@ public class DatabaseConnectionProviderFactory {
         super();
         this.systems.put("derby-memory", DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY);
         this.systems.put("derby-file", DataBaseConnectionProvider.DBSystem.DERBY);
-        this.systems.put("derby-create", DataBaseConnectionProvider.DBSystem.DERBY_CREATE);
         this.systems.put("mysql", DataBaseConnectionProvider.DBSystem.MYSQL);
     }
 

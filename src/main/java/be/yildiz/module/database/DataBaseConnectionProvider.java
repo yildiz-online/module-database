@@ -190,20 +190,11 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
         /**
          * Derby 10 system, only in memory.
          */
-        DERBY_CREATE(
-                SQLDialect.DERBY,
-                "org.apache.derby.jdbc.EmbeddedDriver",
-                EmbeddedDriver::new,
-                "jdbc:derby:target/database/${0};create=true"),
-
-        /**
-         * Derby 10 system, only in memory.
-         */
         DERBY_IN_MEMORY(
                 SQLDialect.DERBY,
                 "org.apache.derby.jdbc.EmbeddedDriver",
                 EmbeddedDriver::new,
-                "jdbc:derby:memory:${0};create=true;user=${3}");
+                "jdbc:derby:memory:${0};user=${3};");
 
         /**
          * Associated dialect.

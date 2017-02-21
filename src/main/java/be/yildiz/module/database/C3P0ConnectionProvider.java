@@ -23,12 +23,15 @@
 
 package be.yildiz.module.database;
 
+import be.yildiz.common.log.Logger;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import org.apache.derby.jdbc.Driver42;
 
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.SQLNonTransientConnectionException;
+import java.util.Properties;
 
 /**
  * C3P0 implementation for a connection provider.
@@ -70,19 +73,26 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
         } catch (PropertyVetoException e) {
             throw new SQLException("Cannot load pool driver.", e);
         }
-        this.cpds.setJdbcUrl(this.getUri());
+        //this.cpds.setJdbcUrl(this.getUri());
         this.cpds.setUser(this.getLogin());
         this.cpds.setPassword(this.getPassword());
         this.cpds.setMaxIdleTime(ONE_HOUR);
         this.cpds.setMaxIdleTimeExcessConnections(HALF_HOUR);
         this.cpds.setAutoCommitOnClose(true);
+        this.cpds.setMinPoolSize(1);
+        this.cpds.setMaxPoolSize(1);
+        this.cpds.setInitialPoolSize(1);
     }
 
     @Override
     protected Connection getConnectionImpl() throws SQLException {
         if(!open) {
+            Logger.info("Initializing database connection pool.");
+            this.cpds.setJdbcUrl(this.getUri() + "create=true;");
             Connection c = this.cpds.getConnection();
-            this.cpds.setJdbcUrl(this.getUri().replace("create=true;", ""));
+            this.cpds.setJdbcUrl(this.getUri());
+            this.open = true;
+            this.cpds.setMaxPoolSize(15);
             return c;
         }
         return this.cpds.getConnection();
@@ -90,17 +100,18 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
 
     @Override
     public void close() throws Exception {
+        System.out.println("closing");
         if(open) {
             if (this.getSystem() == DBSystem.DERBY_IN_MEMORY) {
                 try {
-                    this.cpds.setJdbcUrl(this.getUri().replace("create", "drop"));
-                    this.cpds.getConnection();
+                Driver42.activeDriver().connect(this.getUri() + "drop=true;", new Properties());
                 } catch (SQLNonTransientConnectionException e) {
                     //Expected exception when closing in memory derby.
                 }
             }
+            this.cpds.close();
+            this.open = false;
+            Logger.info("Closed database connection pool.");
         }
-        this.cpds.close();
-        this.open = false;
     }
 }
