@@ -51,7 +51,7 @@ In your maven project, add the dependency
 <dependency>
     <groupId>be.yildiz-games</groupId>
     <artifactId>module-database</artifactId>
-    <version>1.0.2</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 ## Contact
