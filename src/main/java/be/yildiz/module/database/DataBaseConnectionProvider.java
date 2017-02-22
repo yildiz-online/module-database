@@ -176,7 +176,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
                 SQLDialect.MYSQL,
                 "com.mysql.cj.jdbc.Driver",
                 Driver::new,
-                "jdbc:mysql://${1}:${2}/${0}?zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone="+Calendar.getInstance().getTimeZone().getID()),
+                "jdbc:mysql://${1}:${2}/${0}?zeroDateTimeBehavior=convertToNull&nullNamePatternMatchesAll=true&useSSL=false&serverTimezone="+Calendar.getInstance().getTimeZone().getID()),
 
         /**
          * Derby 10 system.

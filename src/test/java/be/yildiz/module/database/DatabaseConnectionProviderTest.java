@@ -158,7 +158,7 @@ public class DatabaseConnectionProviderTest {
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
             Assert.assertEquals(SQLDialect.MYSQL, dcp.getDialect());
             Assert.assertEquals(DataBaseConnectionProvider.DBSystem.MYSQL, dcp.getSystem());
-            Assert.assertEquals("jdbc:mysql://" + properties.getDbHost() + ":" + properties.getDbPort() + "/" + properties.getDbName() + "?zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone="+ Calendar.getInstance().getTimeZone().getID(), dcp.getUri());
+            Assert.assertEquals("jdbc:mysql://" + properties.getDbHost() + ":" + properties.getDbPort() + "/" + properties.getDbName() + "?zeroDateTimeBehavior=convertToNull&nullNamePatternMatchesAll=true&useSSL=false&serverTimezone="+ Calendar.getInstance().getTimeZone().getID(), dcp.getUri());
         }
 
         @Test
