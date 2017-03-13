@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
+ * Parse properties to extract the required connection provider.
  * @author Grégory Van den Borre
  */
 public class DatabaseConnectionProviderFactory {
@@ -49,6 +50,7 @@ public class DatabaseConnectionProviderFactory {
     }
 
     public DataBaseConnectionProvider create(DbProperties properties) throws SQLException {
+        assert properties != null;
         DatabaseSystem system = Optional
                 .ofNullable(this.systems.get(properties.getSystem()))
                 .orElseThrow(() -> new UnhandledSwitchCaseException(properties.getSystem()));
