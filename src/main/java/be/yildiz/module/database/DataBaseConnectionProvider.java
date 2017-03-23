@@ -26,8 +26,6 @@ package be.yildiz.module.database;
 import be.yildiz.common.log.Logger;
 import be.yildiz.common.util.StringUtil;
 import com.mysql.cj.jdbc.Driver;
-import lombok.AccessLevel;
-import lombok.Getter;
 import org.apache.derby.jdbc.EmbeddedDriver;
 import org.jdbcdslog.ConnectionLoggingProxy;
 import org.jooq.SQLDialect;
@@ -42,7 +40,6 @@ import java.util.Properties;
  *
  * @author Grégory Van den Borre
  */
-@Getter(value = AccessLevel.PROTECTED)
 public abstract class DataBaseConnectionProvider implements AutoCloseable {
 
     /**
@@ -146,6 +143,26 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
         return this.system.getDialect();
     }
 
+    protected DatabaseSystem getSystem() {
+        return system;
+    }
+
+    protected String getUri() {
+        return uri;
+    }
+
+    protected String getLogin() {
+        return login;
+    }
+
+    protected String getPassword() {
+        return password;
+    }
+
+    protected boolean isDebug() {
+        return debug;
+    }
+
     private boolean invariant() {
         if(this.login == null) {
             Logger.error("login cannot be null.");
@@ -199,16 +216,13 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
         /**
          * Associated dialect.
          */
-        @Getter
         private final SQLDialect dialect;
 
         /**
          * Associated driver.
          */
-        @Getter
         private final String driver;
 
-        @Getter
         private final DriverProvider driverProvider;
 
         private final String url;
@@ -224,6 +238,21 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
             this.driver = driver;
             this.driverProvider = driverProvider;
             this.url = url;
+        }
+
+        @Override
+        public SQLDialect getDialect() {
+            return dialect;
+        }
+
+        @Override
+        public String getDriver() {
+            return driver;
+        }
+
+        @Override
+        public DriverProvider getDriverProvider() {
+            return driverProvider;
         }
 
         @Override
