@@ -20,9 +20,7 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  */
-
 package be.yildiz.module.database;
-
 
 import be.yildiz.common.exeption.UnhandledSwitchCaseException;
 import org.junit.Assert;
@@ -59,6 +57,13 @@ public class DatabaseConnectionProviderFactoryTest {
             DbProperties properties = givenADbProperties("derby-memory");
             DataBaseConnectionProvider p = new DatabaseConnectionProviderFactory().create(properties);
             Assert.assertEquals(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, p.getSystem());
+        }
+
+        @Test
+        public void postgres() throws SQLException {
+            DbProperties properties = givenADbProperties("postgres");
+            DataBaseConnectionProvider p = new DatabaseConnectionProviderFactory().create(properties);
+            Assert.assertEquals(DataBaseConnectionProvider.DBSystem.POSTGRES, p.getSystem());
         }
 
         @Test(expected = AssertionError.class)

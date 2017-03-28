@@ -20,7 +20,6 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  */
-
 package be.yildiz.module.database;
 
 import com.mysql.cj.jdbc.Driver;
@@ -151,14 +150,13 @@ public class DatabaseConnectionProviderTest {
             new DummyDatabaseConnectionProvider(withoutUri, properties, false);
         }
 
-
         @Test
         public void withMysql() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
             Assert.assertEquals(SQLDialect.MYSQL, dcp.getDialect());
             Assert.assertEquals(DataBaseConnectionProvider.DBSystem.MYSQL, dcp.getSystem());
-            Assert.assertEquals("jdbc:mysql://" + properties.getDbHost() + ":" + properties.getDbPort() + "/" + properties.getDbName() + "?zeroDateTimeBehavior=convertToNull&nullNamePatternMatchesAll=true&useSSL=false&serverTimezone="+ Calendar.getInstance().getTimeZone().getID(), dcp.getUri());
+            Assert.assertEquals("jdbc:mysql://" + properties.getDbHost() + ":" + properties.getDbPort() + "/" + properties.getDbName() + "?zeroDateTimeBehavior=convertToNull&nullNamePatternMatchesAll=true&useSSL=false&serverTimezone=" + Calendar.getInstance().getTimeZone().getID(), dcp.getUri());
         }
 
         @Test
@@ -169,6 +167,17 @@ public class DatabaseConnectionProviderTest {
             Assert.assertEquals(SQLDialect.DERBY, dcp.getDialect());
             Assert.assertEquals(DataBaseConnectionProvider.DBSystem.DERBY, dcp.getSystem());
             Assert.assertEquals("jdbc:derby:target/database/" + properties.getDbName() + ";", dcp.getUri());
+        }
+
+        @Test
+        public void withPostgres() throws SQLException {
+            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
+            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.POSTGRES, properties, false);
+
+            Assert.assertEquals(SQLDialect.POSTGRES, dcp.getDialect());
+            Assert.assertEquals(DataBaseConnectionProvider.DBSystem.POSTGRES, dcp.getSystem());
+            Assert.assertEquals("jdbc:postgresql://" + properties.getDbHost() + ":" + properties.getDbPort()
+                    + "/" + properties.getDbName(), dcp.getUri());
         }
 
         @Test(expected = AssertionError.class)
@@ -183,7 +192,7 @@ public class DatabaseConnectionProviderTest {
         }
     }
 
-    public static class GetConnection  {
+    public static class GetConnection {
 
         @Test
         public void happyFlow() throws SQLException {
@@ -218,19 +227,24 @@ public class DatabaseConnectionProviderTest {
         public void derby() {
             Assert.assertEquals("org.apache.derby.jdbc.EmbeddedDriver", DataBaseConnectionProvider.DBSystem.DERBY.getDriver());
         }
+
+        @Test
+        public void postgres() {
+            Assert.assertEquals("org.postgresql.Driver", DataBaseConnectionProvider.DBSystem.POSTGRES.getDriver());
+        }
     }
 
     public static class Sanity {
 
         @Test
-        public void happyFlow() throws SQLException{
+        public void happyFlow() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
             dcp.sanity();
         }
 
         @Test(expected = SQLException.class)
-        public void withError() throws SQLException{
+        public void withError() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, true);
             dcp.sanity();
