@@ -20,7 +20,6 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  */
-
 package be.yildiz.module.database;
 
 import be.yildiz.common.log.Logger;
@@ -67,7 +66,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
     /**
      * Create a new Database connection provider.
      *
-     * @param system     Database system to use.
+     * @param system Database system to use.
      * @param properties Properties holding connection data.
      * @throws AssertionError if a parameter is null or invalid.
      */
@@ -76,10 +75,10 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
     //@Ensures ("this.login == properties.dbUser")
     //@Ensures ("this.password == properties.dbPassword")
     protected DataBaseConnectionProvider(final DatabaseSystem system, final DbProperties properties) {
-        if(properties == null) {
+        if (properties == null) {
             throw new AssertionError("Properties cannot be null.");
         }
-        if(system == null) {
+        if (system == null) {
             throw new AssertionError("system cannot be null.");
         }
         Properties p = new Properties(System.getProperties());
@@ -108,7 +107,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
      */
     public final void sanity() throws SQLException {
         Logger.info("Checking database connection...");
-        try (Connection c = this.getConnection()){
+        try (Connection c = this.getConnection()) {
             Logger.info("Checking database connection successful.");
         } catch (SQLException e) {
             Logger.error("Database connection failed.");
@@ -117,7 +116,8 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
     }
 
     /**
-     * Retrieve a connection to the data base. Do not forget to release it with Connection.close()
+     * Retrieve a connection to the data base. Do not forget to release it with
+     * Connection.close()
      *
      * @return The created database connection.
      * @throws SQLException In case the connection retrieving throws it.
@@ -164,15 +164,15 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
     }
 
     private boolean invariant() {
-        if(this.login == null) {
+        if (this.login == null) {
             Logger.error("login cannot be null.");
             return false;
         }
-        if(this.password == null) {
+        if (this.password == null) {
             Logger.error("password cannot be null.");
             return false;
         }
-        if(this.uri == null) {
+        if (this.uri == null) {
             Logger.error("uri cannot be null.");
             return false;
         }
@@ -193,8 +193,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
                 SQLDialect.MYSQL,
                 "com.mysql.cj.jdbc.Driver",
                 Driver::new,
-                "jdbc:mysql://${1}:${2}/${0}?zeroDateTimeBehavior=convertToNull&nullNamePatternMatchesAll=true&useSSL=false&serverTimezone="+Calendar.getInstance().getTimeZone().getID()),
-
+                "jdbc:mysql://${1}:${2}/${0}?zeroDateTimeBehavior=convertToNull&nullNamePatternMatchesAll=true&useSSL=false&serverTimezone=" + Calendar.getInstance().getTimeZone().getID()),
         /**
          * Derby 10 system.
          */
@@ -203,7 +202,6 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
                 "org.apache.derby.jdbc.EmbeddedDriver",
                 EmbeddedDriver::new,
                 "jdbc:derby:target/database/${0};"),
-
         /**
          * Derby 10 system, only in memory.
          */
@@ -211,7 +209,17 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
                 SQLDialect.DERBY,
                 "org.apache.derby.jdbc.EmbeddedDriver",
                 EmbeddedDriver::new,
-                "jdbc:derby:memory:${0};user=${3};");
+                "jdbc:derby:memory:${0};user=${3};"),
+        
+        /**
+         * PostgreSQL system
+         */
+        POSTGRES(
+                SQLDialect.POSTGRES,
+                "org.postgresql.Driver",
+                org.postgresql.Driver::new,
+                "jdbc:postgresql://${1}:${2}/${0}"
+        );
 
         /**
          * Associated dialect.
@@ -231,7 +239,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
          * Build a new DBSystem.
          *
          * @param dialect JOOQ dialect to use.
-         * @param driver  Driver to load.
+         * @param driver Driver to load.
          */
         DBSystem(final SQLDialect dialect, final String driver, final DriverProvider driverProvider, String url) {
             this.dialect = dialect;

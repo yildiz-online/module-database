@@ -43,6 +43,7 @@ public class DatabaseConnectionProviderFactory {
         this.systems.put("derby-memory", DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY);
         this.systems.put("derby-file", DataBaseConnectionProvider.DBSystem.DERBY);
         this.systems.put("mysql", DataBaseConnectionProvider.DBSystem.MYSQL);
+        this.systems.put("postgres", DataBaseConnectionProvider.DBSystem.POSTGRES);
     }
 
     public void addSystem(String key, DatabaseSystem system) {
