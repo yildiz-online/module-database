@@ -54,6 +54,7 @@ public class DbFilePropertiesTest {
         Assert.assertEquals("password-ok", p.getDbPassword());
         Assert.assertEquals("name-ok", p.getDbName());
         Assert.assertEquals("host-ok", p.getDbHost());
+        Assert.assertEquals("system-ok", p.getSystem());
         Assert.assertEquals(10, p.getDbPort());
     }
 
