@@ -86,7 +86,7 @@ public class DbFileProperties implements DbProperties {
         this.host = properties.getProperty("database.host");
         this.port = PropertiesHelper.getIntValue(properties, "database.port");
         this.system = properties.getProperty("database.system");
-        Invariant.check(this.user, this.password, this.database, this.host, this.port, this.system);
+        DbPropertiesInvariant.check(this.user, this.password, this.database, this.host, this.port, this.system);
     }
 
     @Override

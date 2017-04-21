@@ -63,14 +63,14 @@ public interface DbProperties {
     String getSystem();
 
     /**
-     * Invariant to ensure the state is correct.
+     * DbPropertiesInvariant to ensure the state is correct.
      */
-    class Invariant {
+    class DbPropertiesInvariant {
 
         /**
          * Prevent instantiation.
          */
-        private Invariant() {
+        private DbPropertiesInvariant() {
             super();
         }
 
@@ -80,6 +80,7 @@ public interface DbProperties {
             checkDatabase(database);
             checkHost(host);
             checkPort(port);
+            checkSystem(system);
         }
 
         private static void checkUser(String user) {
@@ -102,13 +103,19 @@ public interface DbProperties {
 
         private static void checkHost(String host) {
             if(host == null) {
-                throw new NullPointerException("User is null.");
+                throw new NullPointerException("Host is null.");
             }
         }
 
         private static void checkPort(int port) {
             if(port < 0 || port > 65635) {
                 throw new IllegalArgumentException("Port must be between 0 and 65635, value is " + port);
+            }
+        }
+
+        private static void checkSystem(String system) {
+            if(system == null) {
+                throw new NullPointerException("System is null.");
             }
         }
     }

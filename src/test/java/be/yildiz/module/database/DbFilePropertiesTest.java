@@ -40,7 +40,7 @@ public class DbFilePropertiesTest {
 
     @Test
     public void testInvariantConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        Constructor<DbProperties.Invariant> constructor = DbProperties.Invariant.class.getDeclaredConstructor();
+        Constructor<DbProperties.DbPropertiesInvariant> constructor = DbProperties.DbPropertiesInvariant.class.getDeclaredConstructor();
         Assert.assertTrue(Modifier.isPrivate(constructor.getModifiers()));
         constructor.setAccessible(true);
         constructor.newInstance();
