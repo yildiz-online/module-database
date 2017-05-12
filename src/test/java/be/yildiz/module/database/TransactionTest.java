@@ -23,6 +23,7 @@
 
 package be.yildiz.module.database;
 
+import be.yildiz.common.log.Logger;
 import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
@@ -39,6 +40,7 @@ public class TransactionTest {
 
         @Test
         public void happyFlow() throws SQLException {
+            Logger.disable();
             Transaction t = new Transaction(new DummyDatabaseConnectionProvider(
                     DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY,
                     new DummyDatabaseConnectionProvider.DefaultProperties(),
@@ -48,6 +50,7 @@ public class TransactionTest {
 
         @Test
         public void withError() throws Exception {
+            Logger.disable();
             Transaction t = new Transaction(new DummyDatabaseConnectionProvider(
                     DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY,
                     new DummyDatabaseConnectionProvider.DefaultProperties(),
