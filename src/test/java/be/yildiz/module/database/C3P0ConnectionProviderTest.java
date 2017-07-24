@@ -42,22 +42,22 @@ public class C3P0ConnectionProviderTest {
 
         @Test
         public void happyFlow() throws Exception {
+            Logger.disable();
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             try(DataBaseConnectionProvider p = new C3P0ConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, properties)) {
-                Properties system = System.getProperties();
-                Assert.assertEquals(system.getProperty("com.mchange.v2.log.MLog"), "com.mchange.v2.log.FallbackMLog");
-                Assert.assertEquals(system.getProperty("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL"), Logger.getLogLevel().name());
             }
         }
 
         @Test(expected = AssertionError.class)
         public void withNullSystem() throws SQLException {
+            Logger.disable();
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             new C3P0ConnectionProvider(null, properties);
         }
 
         @Test(expected = AssertionError.class)
         public void withNullProperties() throws SQLException {
+            Logger.disable();
             new C3P0ConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, null);
         }
     }
@@ -66,6 +66,7 @@ public class C3P0ConnectionProviderTest {
 
         @Test
         public void happyFlow() throws Exception {
+            Logger.disable();
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             try(DataBaseConnectionProvider p = new C3P0ConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, properties)) {
                 Assert.assertNotNull(p.getConnection());
@@ -77,6 +78,7 @@ public class C3P0ConnectionProviderTest {
 
         @Test
         public void happyFlow() throws Exception {
+            Logger.disable();
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider p = new C3P0ConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, properties);
             p.getConnection();

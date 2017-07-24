@@ -22,6 +22,7 @@
  */
 package be.yildiz.module.database;
 
+import be.yildiz.common.log.Logger;
 import com.mysql.cj.jdbc.Driver;
 import org.jooq.SQLDialect;
 import org.junit.Assert;
@@ -42,6 +43,7 @@ public class DatabaseConnectionProviderTest {
 
         @Test
         public void happyFlow() throws SQLException {
+            Logger.disable();
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
             Assert.assertFalse(dcp.isDebug());
@@ -51,6 +53,7 @@ public class DatabaseConnectionProviderTest {
 
         @Test(expected = AssertionError.class)
         public void withNoLogin() throws SQLException {
+            Logger.disable();
             DbProperties properties = new DbProperties() {
                 @Override
                 public String getDbUser() {
@@ -87,6 +90,7 @@ public class DatabaseConnectionProviderTest {
 
         @Test(expected = AssertionError.class)
         public void withNoPassword() throws SQLException {
+            Logger.disable();
             DbProperties properties = new DbProperties() {
                 @Override
                 public String getDbUser() {
@@ -123,6 +127,7 @@ public class DatabaseConnectionProviderTest {
 
         @Test(expected = AssertionError.class)
         public void withNoURI() throws SQLException {
+            Logger.disable();
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
 
             DatabaseSystem withoutUri = new DatabaseSystem() {
@@ -152,6 +157,7 @@ public class DatabaseConnectionProviderTest {
 
         @Test
         public void withMysql() throws SQLException {
+            Logger.disable();
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
             Assert.assertEquals(SQLDialect.MYSQL, dcp.getDialect());
@@ -161,6 +167,7 @@ public class DatabaseConnectionProviderTest {
 
         @Test
         public void withDerby() throws SQLException {
+            Logger.disable();
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY, properties, false);
 
@@ -171,6 +178,7 @@ public class DatabaseConnectionProviderTest {
 
         @Test
         public void withPostgres() throws SQLException {
+            Logger.disable();
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.POSTGRES, properties, false);
 
@@ -182,12 +190,14 @@ public class DatabaseConnectionProviderTest {
 
         @Test(expected = AssertionError.class)
         public void withNull() throws SQLException {
+            Logger.disable();
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             new DummyDatabaseConnectionProvider(null, properties, false);
         }
 
         @Test(expected = AssertionError.class)
         public void withNullProperties() throws SQLException {
+            Logger.disable();
             new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY, null, false);
         }
     }
@@ -196,6 +206,7 @@ public class DatabaseConnectionProviderTest {
 
         @Test
         public void happyFlow() throws SQLException {
+            Logger.disable();
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
             Assert.assertNotNull(dcp.getConnection());
@@ -203,6 +214,7 @@ public class DatabaseConnectionProviderTest {
 
         @Test
         public void withDebugMode() throws SQLException {
+            Logger.disable();
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
             dcp.setDebugMode();
@@ -211,6 +223,7 @@ public class DatabaseConnectionProviderTest {
 
         @Test(expected = SQLException.class)
         public void withError() throws SQLException {
+            Logger.disable();
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, true).getConnection();
         }
@@ -238,6 +251,7 @@ public class DatabaseConnectionProviderTest {
 
         @Test
         public void happyFlow() throws SQLException {
+            Logger.disable();
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
             dcp.sanity();
@@ -245,6 +259,7 @@ public class DatabaseConnectionProviderTest {
 
         @Test(expected = SQLException.class)
         public void withError() throws SQLException {
+            Logger.disable();
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, true);
             dcp.sanity();
