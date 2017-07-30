@@ -71,6 +71,7 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
         try {
             this.cpds.setDriverClass(system.getDriver());
         } catch (PropertyVetoException e) {
+            Logger.error(e);
             throw new SQLException("Cannot load pool driver.", e);
         }
         this.cpds.setJdbcUrl(this.getUri());

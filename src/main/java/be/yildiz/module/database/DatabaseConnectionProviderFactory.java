@@ -40,10 +40,10 @@ public class DatabaseConnectionProviderFactory {
 
     public DatabaseConnectionProviderFactory() {
         super();
-        this.systems.put("derby-memory", DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY);
-        this.systems.put("derby-file", DataBaseConnectionProvider.DBSystem.DERBY);
-        this.systems.put("mysql", DataBaseConnectionProvider.DBSystem.MYSQL);
-        this.systems.put("postgres", DataBaseConnectionProvider.DBSystem.POSTGRES);
+        this.addSystem("derby-memory", DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY);
+        this.addSystem("derby-file", DataBaseConnectionProvider.DBSystem.DERBY);
+        this.addSystem("mysql", DataBaseConnectionProvider.DBSystem.MYSQL);
+        this.addSystem("postgres", DataBaseConnectionProvider.DBSystem.POSTGRES);
     }
 
     public void addSystem(String key, DatabaseSystem system) {

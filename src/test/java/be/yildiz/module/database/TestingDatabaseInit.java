@@ -31,7 +31,15 @@ import java.sql.SQLException;
 public class TestingDatabaseInit {
 
     public DataBaseConnectionProvider init(final String changeLogFile) throws SQLException {
-        DataBaseConnectionProvider dbcp = new DatabaseConnectionProviderFactory().create(new TestingDbProperties());
+        DataBaseConnectionProvider dbcp =
+                new DatabaseConnectionProviderFactory().create(new TestingDbProperties());
+        new LiquibaseDatabaseUpdater(changeLogFile).update(dbcp);
+        return dbcp;
+    }
+
+    public DataBaseConnectionProvider init(final String changeLogFile, final String databaseName) throws SQLException {
+        DataBaseConnectionProvider dbcp =
+                new DatabaseConnectionProviderFactory().create(new TestingDbProperties(databaseName));
         new LiquibaseDatabaseUpdater(changeLogFile).update(dbcp);
         return dbcp;
     }
@@ -39,10 +47,21 @@ public class TestingDatabaseInit {
     /**
      * @author Grégory Van den Borre
      */
-     static class TestingDbProperties implements DbProperties {
+    static class TestingDbProperties implements DbProperties {
+
+        private final String name;
+
+        public TestingDbProperties() {
+            this("YILDIZDATABASE");
+        }
+
+         public TestingDbProperties(String databaseName) {
+             this.name = databaseName;
+         }
+
         @Override
         public String getDbUser() {
-            return "YILDIZDATABASE";
+            return name;
         }
 
         @Override
@@ -62,7 +81,7 @@ public class TestingDatabaseInit {
 
         @Override
         public String getDbName() {
-            return "YILDIZDATABASE";
+            return name;
         }
 
         @Override
