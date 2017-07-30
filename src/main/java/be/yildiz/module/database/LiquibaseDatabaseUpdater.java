@@ -28,6 +28,7 @@ import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
+import liquibase.logging.LogLevel;
 import liquibase.resource.ClassLoaderResourceAccessor;
 
 import java.sql.SQLException;
@@ -41,14 +42,17 @@ public class LiquibaseDatabaseUpdater implements DatabaseUpdater {
 
     public LiquibaseDatabaseUpdater(String configurationFile) {
         super();
+        assert configurationFile != null;
         this.configurationFile = configurationFile;
     }
 
     @Override
     public void update(DataBaseConnectionProvider provider) throws SQLException {
+        assert provider != null;
         try {
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(provider.getConnection()));
             Liquibase liquibase = new Liquibase(this.configurationFile, new ClassLoaderResourceAccessor(), database);
+            liquibase.getLog().setLogLevel(LogLevel.OFF);
             liquibase.update("database-update");
         } catch (LiquibaseException | SQLException e) {
             throw new SQLException(e);

@@ -67,6 +67,8 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
      */
     public C3P0ConnectionProvider(final DatabaseSystem system, final DbProperties properties) throws SQLException {
         super(system, properties);
+        System.setProperty("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL", "WARNING");
+        System.setProperty("com.mchange.v2.log.MLog", "com.mchange.v2.log.FallbackMLog");
         this.cpds = new ComboPooledDataSource();
         try {
             this.cpds.setDriverClass(system.getDriver());
