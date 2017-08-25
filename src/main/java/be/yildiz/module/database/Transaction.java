@@ -23,7 +23,8 @@
 
 package be.yildiz.module.database;
 
-import be.yildiz.common.log.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -32,6 +33,8 @@ import java.sql.SQLException;
  * @author Grégory Van den Borre
  */
 public final class Transaction {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Transaction.class);
 
     private final DataBaseConnectionProvider connectionProvider;
 
@@ -46,12 +49,12 @@ public final class Transaction {
                 b.execute(c);
             } catch (Exception e) {
                 c.rollback();
-                Logger.error(e);
+                LOGGER.error("Error in transaction", e);
             }
             c.commit();
             c.setAutoCommit(true);
         } catch (SQLException e) {
-            Logger.error(e);
+            LOGGER.error("Error in transaction", e);
         }
     }
 }

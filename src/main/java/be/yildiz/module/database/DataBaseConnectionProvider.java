@@ -22,12 +22,13 @@
  */
 package be.yildiz.module.database;
 
-import be.yildiz.common.log.Logger;
 import be.yildiz.common.util.StringUtil;
 import com.mysql.cj.jdbc.Driver;
 import org.apache.derby.jdbc.EmbeddedDriver;
 import org.jdbcdslog.ConnectionLoggingProxy;
 import org.jooq.SQLDialect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -40,6 +41,8 @@ import java.util.Properties;
  * @author Grégory Van den Borre
  */
 public abstract class DataBaseConnectionProvider implements AutoCloseable {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataBaseConnectionProvider.class);
 
     /**
      * Selected Database system.
@@ -83,7 +86,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
         }
         Properties p = new Properties(System.getProperties());
         p.put("com.mchange.v2.log.MLog", "com.mchange.v2.log.FallbackMLog");
-        p.put("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL", Logger.getLogLevel().name());
+        p.put("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL", "info");
         p.put("org.jooq.no-logo", "true");
         System.setProperties(p);
         this.system = system;
@@ -106,11 +109,11 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
      * @throws SQLException thrown if connection failed.
      */
     public final void sanity() throws SQLException {
-        Logger.info("Checking database connection...");
+        LOGGER.info("Checking database connection...");
         try (Connection c = this.getConnection()) {
-            Logger.info("Checking database connection successful.");
+            LOGGER.info("Checking database connection successful.");
         } catch (SQLException e) {
-            Logger.error("Database connection failed.");
+            LOGGER.error("Database connection failed.");
             throw e;
         }
     }
@@ -165,15 +168,15 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
 
     private boolean invariant() {
         if (this.login == null) {
-            Logger.error("login cannot be null.");
+            LOGGER.error("login cannot be null.");
             return false;
         }
         if (this.password == null) {
-            Logger.error("password cannot be null.");
+            LOGGER.error("password cannot be null.");
             return false;
         }
         if (this.uri == null) {
-            Logger.error("uri cannot be null.");
+            LOGGER.error("uri cannot be null.");
             return false;
         }
         return true;

@@ -23,9 +23,10 @@
 
 package be.yildiz.module.database;
 
-import be.yildiz.common.log.Logger;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.apache.derby.jdbc.Driver42;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
@@ -39,6 +40,8 @@ import java.util.Properties;
  * @author Grégory Van den Borre
  */
 public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(C3P0ConnectionProvider.class);
 
     /**
      * Time in seconds.
@@ -73,7 +76,7 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
         try {
             this.cpds.setDriverClass(system.getDriver());
         } catch (PropertyVetoException e) {
-            Logger.error(e);
+            LOGGER.error("Error in pool", e);
             throw new SQLException("Cannot load pool driver.", e);
         }
         this.cpds.setJdbcUrl(this.getUri());
@@ -112,7 +115,7 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
             }
             this.cpds.close();
             this.open = false;
-            Logger.info("Closed database connection pool.");
+            LOGGER.info("Closed database connection pool.");
         }
     }
 }
