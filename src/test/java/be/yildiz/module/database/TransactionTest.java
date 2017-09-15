@@ -23,22 +23,21 @@
 
 package be.yildiz.module.database;
 
-import org.junit.Test;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
 /**
  * @author Grégory Van den Borre
  */
-@RunWith(Enclosed.class)
-public class TransactionTest {
+class TransactionTest {
 
-    public static class Execute {
+    @Nested
+    class Execute {
 
         @Test
-        public void happyFlow() throws SQLException {
+        void happyFlow() throws SQLException {
             Transaction t = new Transaction(new DummyDatabaseConnectionProvider(
                     DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY,
                     new DummyDatabaseConnectionProvider.DefaultProperties(),
@@ -47,7 +46,7 @@ public class TransactionTest {
         }
 
         @Test
-        public void withError() throws Exception {
+        void withError() throws Exception {
             Transaction t = new Transaction(new DummyDatabaseConnectionProvider(
                     DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY,
                     new DummyDatabaseConnectionProvider.DefaultProperties(),

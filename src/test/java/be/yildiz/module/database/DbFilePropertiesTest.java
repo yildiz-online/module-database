@@ -24,8 +24,7 @@
 package be.yildiz.module.database;
 
 import be.yildiz.common.exeption.ResourceMissingException;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
@@ -33,70 +32,72 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.net.URL;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * @author Grégory Van den Borre
  */
-public class DbFilePropertiesTest {
+class DbFilePropertiesTest {
 
     @Test
-    public void testInvariantConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    void testInvariantConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor<DbProperties.DbPropertiesInvariant> constructor = DbProperties.DbPropertiesInvariant.class.getDeclaredConstructor();
-        Assert.assertTrue(Modifier.isPrivate(constructor.getModifiers()));
+        assertTrue(Modifier.isPrivate(constructor.getModifiers()));
         constructor.setAccessible(true);
         constructor.newInstance();
     }
 
     @Test
-    public void happyFlow() {
+    void happyFlow() {
         File f = getFile("dbfile-happyflow.properties");
         DbProperties p = new DbFileProperties(f.getAbsolutePath());
-        Assert.assertEquals("user-ok", p.getDbUser());
-        Assert.assertEquals("password-ok", p.getDbPassword());
-        Assert.assertEquals("name-ok", p.getDbName());
-        Assert.assertEquals("host-ok", p.getDbHost());
-        Assert.assertEquals("system-ok", p.getSystem());
-        Assert.assertEquals(10, p.getDbPort());
+        assertEquals("user-ok", p.getDbUser());
+        assertEquals("password-ok", p.getDbPassword());
+        assertEquals("name-ok", p.getDbName());
+        assertEquals("host-ok", p.getDbHost());
+        assertEquals("system-ok", p.getSystem());
+        assertEquals(10, p.getDbPort());
     }
 
-    @Test(expected = ResourceMissingException.class)
-    public void noFile() {
-        new DbFileProperties("nowhere");
+    @Test
+    void noFile() {
+        assertThrows(ResourceMissingException.class, () -> new DbFileProperties("nowhere"));
     }
 
-    @Test(expected = NullPointerException.class)
-    public void userNull() {
+    @Test
+    void userNull() {
         File f = getFile("dbfile-usernull.properties");
-        new DbFileProperties(f.getAbsolutePath());
+        assertThrows(NullPointerException.class, () -> new DbFileProperties(f.getAbsolutePath()));
     }
 
-    @Test(expected = NullPointerException.class)
-    public void passwordNull() {
+    @Test
+    void passwordNull() {
         File f = getFile("dbfile-passwordnull.properties");
-        new DbFileProperties(f.getAbsolutePath());
+        assertThrows(NullPointerException.class, () -> new DbFileProperties(f.getAbsolutePath()));
     }
 
-    @Test(expected = NullPointerException.class)
-    public void databaseNull() {
+    @Test
+    void databaseNull() {
         File f = getFile("dbfile-namenull.properties");
-        new DbFileProperties(f.getAbsolutePath());
+        assertThrows(NullPointerException.class, () -> new DbFileProperties(f.getAbsolutePath()));
     }
 
-    @Test(expected = NullPointerException.class)
-    public void hostNull() {
+    @Test
+    void hostNull() {
         File f = getFile("dbfile-hostnull.properties");
-        new DbFileProperties(f.getAbsolutePath());
+        assertThrows(NullPointerException.class, () -> new DbFileProperties(f.getAbsolutePath()));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void portTooLow() {
+    @Test
+    void portTooLow() {
         File f = getFile("dbfile-portnegative.properties");
-        new DbFileProperties(f.getAbsolutePath());
+        assertThrows(IllegalArgumentException.class, () -> new DbFileProperties(f.getAbsolutePath()));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void portTooHigh() {
+    @Test
+    void portTooHigh() {
         File f = getFile("dbfile-porttoohigh.properties");
-        new DbFileProperties(f.getAbsolutePath());
+        assertThrows(IllegalArgumentException.class, () -> new DbFileProperties(f.getAbsolutePath()));
     }
 
     private static File getFile(String name) {

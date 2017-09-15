@@ -24,36 +24,39 @@
 
 package be.yildiz.module.database;
 
-import org.junit.Test;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
+
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Grégory Van den Borre
  */
-@RunWith(Enclosed.class)
-public class LiquibaseDatabaseUpdaterTest {
+class LiquibaseDatabaseUpdaterTest {
 
-    public static class Constructor {
+    @Nested
+    class Constructor {
 
         @Test
-        public void happyFlow() {
+        void happyFlow() {
             new LiquibaseDatabaseUpdater("any");
         }
 
-        @Test(expected = AssertionError.class)
-        public void withNullFile() {
-            new LiquibaseDatabaseUpdater(null);
+        @Test
+        void withNullFile() {
+            assertThrows(AssertionError.class, () -> new LiquibaseDatabaseUpdater(null));
         }
     }
 
-    public static class Update {
+    @Nested
+    class Update {
 
-        @Test(expected = AssertionError.class)
-        public void withNullProvider() throws SQLException {
-            new LiquibaseDatabaseUpdater("any").update(null);
+        @Test
+        void withNullProvider() throws SQLException {
+            assertThrows(AssertionError.class, () -> new LiquibaseDatabaseUpdater("any").update(null));
         }
     }
 }

@@ -23,55 +23,58 @@
 
 package be.yildiz.module.database;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Grégory Van den Borre
  */
-@RunWith(Enclosed.class)
-public class C3P0ConnectionProviderTest {
+class C3P0ConnectionProviderTest {
 
-    public static class Constructor {
+    @Nested
+    class Constructor {
 
         @Test
-        public void happyFlow() throws Exception {
+        void happyFlow() throws Exception {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             try(DataBaseConnectionProvider p = new C3P0ConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, properties)) {
             }
         }
 
-        @Test(expected = AssertionError.class)
-        public void withNullSystem() throws SQLException {
+        @Test
+        void withNullSystem() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-            new C3P0ConnectionProvider(null, properties);
+            assertThrows(AssertionError.class, () -> new C3P0ConnectionProvider(null, properties));
         }
 
-        @Test(expected = AssertionError.class)
-        public void withNullProperties() throws SQLException {
-            new C3P0ConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, null);
+        @Test
+        void withNullProperties() throws SQLException {
+            assertThrows(AssertionError.class, () -> new C3P0ConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, null));
         }
     }
 
-    public static class GetConnection {
+    @Nested
+    class GetConnection {
 
         @Test
-        public void happyFlow() throws Exception {
+        void happyFlow() throws Exception {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             try(DataBaseConnectionProvider p = new C3P0ConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, properties)) {
-                Assert.assertNotNull(p.getConnection());
+                assertNotNull(p.getConnection());
             }
         }
     }
 
-    public static class Close {
+    @Nested
+    class Close {
 
         @Test
-        public void happyFlow() throws Exception {
+        void happyFlow() throws Exception {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider p = new C3P0ConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, properties);
             p.getConnection();

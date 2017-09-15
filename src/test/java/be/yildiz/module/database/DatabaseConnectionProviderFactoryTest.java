@@ -23,58 +23,59 @@
 package be.yildiz.module.database;
 
 import be.yildiz.common.exeption.UnhandledSwitchCaseException;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Grégory Van den Borre
  */
-@RunWith(Enclosed.class)
-public class DatabaseConnectionProviderFactoryTest {
+class DatabaseConnectionProviderFactoryTest {
 
-    public static class Create {
+    @Nested
+    class Create {
 
         @Test
-        public void mysql() throws SQLException {
+        void mysql() throws SQLException {
             DbProperties properties = givenADbProperties("mysql");
             DataBaseConnectionProvider p = new DatabaseConnectionProviderFactory().create(properties);
-            Assert.assertEquals(DataBaseConnectionProvider.DBSystem.MYSQL, p.getSystem());
+            assertEquals(DataBaseConnectionProvider.DBSystem.MYSQL, p.getSystem());
         }
 
         @Test
-        public void derby() throws SQLException {
+        void derby() throws SQLException {
             DbProperties properties = givenADbProperties("derby-file");
             DataBaseConnectionProvider p = new DatabaseConnectionProviderFactory().create(properties);
-            Assert.assertEquals(DataBaseConnectionProvider.DBSystem.DERBY, p.getSystem());
+            assertEquals(DataBaseConnectionProvider.DBSystem.DERBY, p.getSystem());
         }
 
         @Test
-        public void derbyInMemory() throws SQLException {
+        void derbyInMemory() throws SQLException {
             DbProperties properties = givenADbProperties("derby-memory");
             DataBaseConnectionProvider p = new DatabaseConnectionProviderFactory().create(properties);
-            Assert.assertEquals(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, p.getSystem());
+            assertEquals(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, p.getSystem());
         }
 
         @Test
-        public void postgres() throws SQLException {
+        void postgres() throws SQLException {
             DbProperties properties = givenADbProperties("postgres");
             DataBaseConnectionProvider p = new DatabaseConnectionProviderFactory().create(properties);
-            Assert.assertEquals(DataBaseConnectionProvider.DBSystem.POSTGRES, p.getSystem());
+            assertEquals(DataBaseConnectionProvider.DBSystem.POSTGRES, p.getSystem());
         }
 
-        @Test(expected = AssertionError.class)
-        public void withNull() throws SQLException {
-            new DatabaseConnectionProviderFactory().create(null);
+        @Test
+        void withNull() throws SQLException {
+            assertThrows(AssertionError.class, () -> new DatabaseConnectionProviderFactory().create(null));
         }
 
-        @Test(expected = UnhandledSwitchCaseException.class)
-        public void unknown() throws SQLException {
+        @Test
+        void unknown() throws SQLException {
             DbProperties properties = givenADbProperties("unknown");
-            DataBaseConnectionProvider p = new DatabaseConnectionProviderFactory().create(properties);
+            assertThrows(UnhandledSwitchCaseException.class, () -> new DatabaseConnectionProviderFactory().create(properties));
         }
     }
 

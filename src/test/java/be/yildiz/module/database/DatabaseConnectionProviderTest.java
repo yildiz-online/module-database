@@ -24,33 +24,33 @@ package be.yildiz.module.database;
 
 import com.mysql.cj.jdbc.Driver;
 import org.jooq.SQLDialect;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.experimental.runners.Enclosed;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.util.Calendar;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
  * @author Grégory Van den Borre
  */
-@RunWith(Enclosed.class)
-public class DatabaseConnectionProviderTest {
+class DatabaseConnectionProviderTest {
 
-    public static class Constructor {
+    @Nested
+    class Constructor {
 
         @Test
-        public void happyFlow() throws SQLException {
+        void happyFlow() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
-            Assert.assertFalse(dcp.isDebug());
-            Assert.assertEquals(properties.getDbUser(), dcp.getLogin());
-            Assert.assertEquals(properties.getDbPassword(), dcp.getPassword());
+            assertFalse(dcp.isDebug());
+            assertEquals(properties.getDbUser(), dcp.getLogin());
+            assertEquals(properties.getDbPassword(), dcp.getPassword());
         }
 
-        @Test(expected = AssertionError.class)
-        public void withNoLogin() throws SQLException {
+        @Test
+        void withNoLogin() throws SQLException {
             DbProperties properties = new DbProperties() {
                 @Override
                 public String getDbUser() {
@@ -82,11 +82,11 @@ public class DatabaseConnectionProviderTest {
                     return "derby-memory";
                 }
             };
-            new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
+            assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false));
         }
 
-        @Test(expected = AssertionError.class)
-        public void withNoPassword() throws SQLException {
+        @Test
+        void withNoPassword() throws SQLException {
             DbProperties properties = new DbProperties() {
                 @Override
                 public String getDbUser() {
@@ -118,11 +118,11 @@ public class DatabaseConnectionProviderTest {
                     return "derby-memory";
                 }
             };
-            new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
+            assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false));
         }
 
-        @Test(expected = AssertionError.class)
-        public void withNoURI() throws SQLException {
+        @Test
+        void withNoURI() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
 
             DatabaseSystem withoutUri = new DatabaseSystem() {
@@ -147,107 +147,109 @@ public class DatabaseConnectionProviderTest {
                 }
             };
 
-            new DummyDatabaseConnectionProvider(withoutUri, properties, false);
+            assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(withoutUri, properties, false));
         }
 
         @Test
-        public void withMysql() throws SQLException {
+        void withMysql() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
-            Assert.assertEquals(SQLDialect.MYSQL, dcp.getDialect());
-            Assert.assertEquals(DataBaseConnectionProvider.DBSystem.MYSQL, dcp.getSystem());
-            Assert.assertEquals("jdbc:mysql://" + properties.getDbHost() + ":" + properties.getDbPort() + "/" + properties.getDbName() + "?zeroDateTimeBehavior=convertToNull&nullNamePatternMatchesAll=true&useSSL=false&serverTimezone=" + Calendar.getInstance().getTimeZone().getID(), dcp.getUri());
+            assertEquals(SQLDialect.MYSQL, dcp.getDialect());
+            assertEquals(DataBaseConnectionProvider.DBSystem.MYSQL, dcp.getSystem());
+            assertEquals("jdbc:mysql://" + properties.getDbHost() + ":" + properties.getDbPort() + "/" + properties.getDbName() + "?zeroDateTimeBehavior=convertToNull&nullNamePatternMatchesAll=true&useSSL=false&serverTimezone=" + Calendar.getInstance().getTimeZone().getID(), dcp.getUri());
         }
 
         @Test
-        public void withDerby() throws SQLException {
+        void withDerby() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY, properties, false);
 
-            Assert.assertEquals(SQLDialect.DERBY, dcp.getDialect());
-            Assert.assertEquals(DataBaseConnectionProvider.DBSystem.DERBY, dcp.getSystem());
-            Assert.assertEquals("jdbc:derby:target/database/" + properties.getDbName() + ";", dcp.getUri());
+            assertEquals(SQLDialect.DERBY, dcp.getDialect());
+            assertEquals(DataBaseConnectionProvider.DBSystem.DERBY, dcp.getSystem());
+            assertEquals("jdbc:derby:target/database/" + properties.getDbName() + ";", dcp.getUri());
         }
 
         @Test
-        public void withPostgres() throws SQLException {
+        void withPostgres() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.POSTGRES, properties, false);
 
-            Assert.assertEquals(SQLDialect.POSTGRES, dcp.getDialect());
-            Assert.assertEquals(DataBaseConnectionProvider.DBSystem.POSTGRES, dcp.getSystem());
-            Assert.assertEquals("jdbc:postgresql://" + properties.getDbHost() + ":" + properties.getDbPort()
+            assertEquals(SQLDialect.POSTGRES, dcp.getDialect());
+            assertEquals(DataBaseConnectionProvider.DBSystem.POSTGRES, dcp.getSystem());
+            assertEquals("jdbc:postgresql://" + properties.getDbHost() + ":" + properties.getDbPort()
                     + "/" + properties.getDbName(), dcp.getUri());
         }
 
-        @Test(expected = AssertionError.class)
-        public void withNull() throws SQLException {
+        @Test
+        void withNull() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-            new DummyDatabaseConnectionProvider(null, properties, false);
+            assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(null, properties, false));
         }
 
-        @Test(expected = AssertionError.class)
-        public void withNullProperties() throws SQLException {
-            new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY, null, false);
+        @Test
+        void withNullProperties() throws SQLException {
+            assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY, null, false));
         }
     }
 
-    public static class GetConnection {
+    class GetConnection {
 
         @Test
-        public void happyFlow() throws SQLException {
+        void happyFlow() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
-            Assert.assertNotNull(dcp.getConnection());
+            assertNotNull(dcp.getConnection());
         }
 
         @Test
-        public void withDebugMode() throws SQLException {
+        void withDebugMode() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
             dcp.setDebugMode();
-            Assert.assertNotNull(dcp.getConnection());
+            assertNotNull(dcp.getConnection());
         }
 
-        @Test(expected = SQLException.class)
-        public void withError() throws SQLException {
+        @Test
+        void withError() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-            new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, true).getConnection();
+            assertThrows(SQLException.class, () -> new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, true).getConnection());
         }
     }
 
-    public static class GetDriver {
+    @Nested
+    class GetDriver {
 
         @Test
-        public void mysql() {
-            Assert.assertEquals("com.mysql.cj.jdbc.Driver", DataBaseConnectionProvider.DBSystem.MYSQL.getDriver());
+        void mysql() {
+            assertEquals("com.mysql.cj.jdbc.Driver", DataBaseConnectionProvider.DBSystem.MYSQL.getDriver());
         }
 
         @Test
-        public void derby() {
-            Assert.assertEquals("org.apache.derby.jdbc.EmbeddedDriver", DataBaseConnectionProvider.DBSystem.DERBY.getDriver());
+        void derby() {
+            assertEquals("org.apache.derby.jdbc.EmbeddedDriver", DataBaseConnectionProvider.DBSystem.DERBY.getDriver());
         }
 
         @Test
-        public void postgres() {
-            Assert.assertEquals("org.postgresql.Driver", DataBaseConnectionProvider.DBSystem.POSTGRES.getDriver());
+        void postgres() {
+            assertEquals("org.postgresql.Driver", DataBaseConnectionProvider.DBSystem.POSTGRES.getDriver());
         }
     }
 
-    public static class Sanity {
+    @Nested
+    class Sanity {
 
         @Test
-        public void happyFlow() throws SQLException {
+        void happyFlow() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
             dcp.sanity();
         }
 
-        @Test(expected = SQLException.class)
-        public void withError() throws SQLException {
+        @Test
+        void withError() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, true);
-            dcp.sanity();
+            assertThrows(SQLException.class, dcp::sanity);
         }
     }
 
