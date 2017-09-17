@@ -110,6 +110,16 @@ class DatabaseConnectionProviderFactoryTest {
             public String getSystem() {
                 return system;
             }
+
+            @Override
+            public String getDbRootUser() {
+                return getDbUser();
+            }
+
+            @Override
+            public String getDbRootPassword() {
+                return getDbPassword();
+            }
         };
     }
 }

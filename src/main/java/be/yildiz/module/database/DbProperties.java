@@ -62,6 +62,10 @@ public interface DbProperties {
 
     String getSystem();
 
+    String getDbRootUser();
+
+    String getDbRootPassword();
+
     /**
      * DbPropertiesInvariant to ensure the state is correct.
      */
@@ -74,9 +78,11 @@ public interface DbProperties {
             super();
         }
 
-        public static void check(String user, String password, String database, String host, int port, String system) {
+        public static void check(String user, String password, String rootUser, String rootPassword, String database, String host, int port, String system) {
             checkUser(user);
             checkPassword(password);
+            checkRootUser(rootUser);
+            checkRootPassword(rootPassword);
             checkDatabase(database);
             checkHost(host);
             checkPort(port);
@@ -92,6 +98,18 @@ public interface DbProperties {
         private static void checkPassword(String password) {
             if(password == null) {
                 throw new NullPointerException("Password is null.");
+            }
+        }
+
+        private static void checkRootUser(String user) {
+            if(user == null) {
+                throw new NullPointerException("User root is null.");
+            }
+        }
+
+        private static void checkRootPassword(String password) {
+            if(password == null) {
+                throw new NullPointerException("Password root is null.");
             }
         }
 

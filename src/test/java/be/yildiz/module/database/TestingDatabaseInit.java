@@ -88,5 +88,15 @@ public class TestingDatabaseInit {
         public String getSystem() {
             return "derby-memory";
         }
+
+        @Override
+        public String getDbRootUser() {
+            return getDbUser();
+        }
+
+        @Override
+        public String getDbRootPassword() {
+            return getDbPassword();
+        }
     }
 }

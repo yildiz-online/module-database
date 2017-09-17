@@ -62,6 +62,9 @@ public class DbFileProperties implements DbProperties {
 
     private final String system;
 
+    private final String rootUser;
+    private final String rootPassword;
+
     /**
      * Build a DbProperties from a property file.
      * Expected content is:
@@ -82,11 +85,13 @@ public class DbFileProperties implements DbProperties {
         Properties properties = PropertiesHelper.getPropertiesFromFile(new File(path));
         this.user = properties.getProperty("database.user");
         this.password = properties.getProperty("database.password");
+        this.rootUser = properties.getProperty("database.root.user");
+        this.rootPassword = properties.getProperty("database.root.password");
         this.database = properties.getProperty("database.name");
         this.host = properties.getProperty("database.host");
         this.port = PropertiesHelper.getIntValue(properties, "database.port");
         this.system = properties.getProperty("database.system");
-        DbPropertiesInvariant.check(this.user, this.password, this.database, this.host, this.port, this.system);
+        DbPropertiesInvariant.check(this.user, this.password, this.rootUser, this.rootPassword, this.database, this.host, this.port, this.system);
     }
 
     @Override
@@ -117,5 +122,15 @@ public class DbFileProperties implements DbProperties {
     @Override
     public String getSystem() {
         return this.system;
+    }
+
+    @Override
+    public String getDbRootUser() {
+        return this.rootUser;
+    }
+
+    @Override
+    public String getDbRootPassword() {
+        return this.rootPassword;
     }
 }

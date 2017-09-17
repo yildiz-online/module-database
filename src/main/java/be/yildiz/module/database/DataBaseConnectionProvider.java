@@ -77,7 +77,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
     //@Ensures ("this.system != null")
     //@Ensures ("this.login == properties.dbUser")
     //@Ensures ("this.password == properties.dbPassword")
-    protected DataBaseConnectionProvider(final DatabaseSystem system, final DbProperties properties) {
+    protected DataBaseConnectionProvider(final DatabaseSystem system, final DbProperties properties, boolean root) {
         if (properties == null) {
             throw new AssertionError("Properties cannot be null.");
         }
@@ -90,8 +90,8 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
         p.put("org.jooq.no-logo", "true");
         System.setProperties(p);
         this.system = system;
-        this.login = properties.getDbUser();
-        this.password = properties.getDbPassword();
+        this.login = root ? properties.getDbRootUser() : properties.getDbUser();
+        this.password = root ? properties.getDbRootPassword() :properties.getDbPassword();
         this.uri = system.getUrl(properties);
         assert this.invariant();
     }
@@ -196,7 +196,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
                 SQLDialect.MYSQL,
                 "com.mysql.cj.jdbc.Driver",
                 Driver::new,
-                "jdbc:mysql://${1}:${2}/${0}?zeroDateTimeBehavior=convertToNull&nullNamePatternMatchesAll=true&useSSL=false&serverTimezone=" + Calendar.getInstance().getTimeZone().getID()),
+                "jdbc:mysql://${1}:${2}/${0}?zeroDateTimeBehavior=convertToNull&createDatabaseIfNotExist=true&nullNamePatternMatchesAll=true&useSSL=false&serverTimezone=" + Calendar.getInstance().getTimeZone().getID()),
         /**
          * Derby 10 system.
          */

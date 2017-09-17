@@ -81,6 +81,16 @@ class DatabaseConnectionProviderTest {
                 public String getSystem() {
                     return "derby-memory";
                 }
+
+                @Override
+                public String getDbRootUser() {
+                    return "ok";
+                }
+
+                @Override
+                public String getDbRootPassword() {
+                    return "ok";
+                }
             };
             assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false));
         }
@@ -116,6 +126,16 @@ class DatabaseConnectionProviderTest {
                 @Override
                 public String getSystem() {
                     return "derby-memory";
+                }
+
+                @Override
+                public String getDbRootUser() {
+                    return "ok";
+                }
+
+                @Override
+                public String getDbRootPassword() {
+                    return "ok";
                 }
             };
             assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false));
@@ -156,7 +176,7 @@ class DatabaseConnectionProviderTest {
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
             assertEquals(SQLDialect.MYSQL, dcp.getDialect());
             assertEquals(DataBaseConnectionProvider.DBSystem.MYSQL, dcp.getSystem());
-            assertEquals("jdbc:mysql://" + properties.getDbHost() + ":" + properties.getDbPort() + "/" + properties.getDbName() + "?zeroDateTimeBehavior=convertToNull&nullNamePatternMatchesAll=true&useSSL=false&serverTimezone=" + Calendar.getInstance().getTimeZone().getID(), dcp.getUri());
+            assertEquals("jdbc:mysql://" + properties.getDbHost() + ":" + properties.getDbPort() + "/" + properties.getDbName() + "?zeroDateTimeBehavior=convertToNull&createDatabaseIfNotExist=true&nullNamePatternMatchesAll=true&useSSL=false&serverTimezone=" + Calendar.getInstance().getTimeZone().getID(), dcp.getUri());
         }
 
         @Test

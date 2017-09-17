@@ -37,7 +37,7 @@ public class DummyDatabaseConnectionProvider extends DataBaseConnectionProvider 
     private final boolean throwError;
 
     public DummyDatabaseConnectionProvider(DatabaseSystem system, DbProperties properties, boolean throwError) throws SQLException {
-        super(system, properties);
+        super(system, properties, false);
         this.throwError = throwError;
     }
 
@@ -72,6 +72,16 @@ public class DummyDatabaseConnectionProvider extends DataBaseConnectionProvider 
 
         @Override
         public String getDbPassword() {
+            return "myPwd";
+        }
+
+        @Override
+        public String getDbRootUser() {
+            return "myUser";
+        }
+
+        @Override
+        public String getDbRootPassword() {
             return "myPwd";
         }
 
