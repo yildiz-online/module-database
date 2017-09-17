@@ -40,14 +40,18 @@ public class LiquibaseDatabaseUpdater implements DatabaseUpdater {
 
     private final String configurationFile;
 
-    public LiquibaseDatabaseUpdater(String configurationFile) {
+    private LiquibaseDatabaseUpdater(String configurationFile) {
         super();
         assert configurationFile != null;
         this.configurationFile = configurationFile;
     }
 
+    public static LiquibaseDatabaseUpdater fromConfigurationPath(String path) {
+        return new LiquibaseDatabaseUpdater(path);
+    }
+
     @Override
-    public void update(DataBaseConnectionProvider provider) throws SQLException {
+    public final void update(DataBaseConnectionProvider provider) throws SQLException {
         assert provider != null;
         try {
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(provider.getConnection()));

@@ -42,12 +42,12 @@ class LiquibaseDatabaseUpdaterTest {
 
         @Test
         void happyFlow() {
-            new LiquibaseDatabaseUpdater("any");
+            LiquibaseDatabaseUpdater.fromConfigurationPath("any");
         }
 
         @Test
         void withNullFile() {
-            assertThrows(AssertionError.class, () -> new LiquibaseDatabaseUpdater(null));
+            assertThrows(AssertionError.class, () -> LiquibaseDatabaseUpdater.fromConfigurationPath(null));
         }
     }
 
@@ -56,7 +56,7 @@ class LiquibaseDatabaseUpdaterTest {
 
         @Test
         void withNullProvider() throws SQLException {
-            assertThrows(AssertionError.class, () -> new LiquibaseDatabaseUpdater("any").update(null));
+            assertThrows(AssertionError.class, () -> LiquibaseDatabaseUpdater.fromConfigurationPath("any").update(null));
         }
     }
 }

@@ -32,15 +32,15 @@ public class TestingDatabaseInit {
 
     public DataBaseConnectionProvider init(final String changeLogFile) throws SQLException {
         DataBaseConnectionProvider dbcp =
-                new DatabaseConnectionProviderFactory().create(new TestingDbProperties());
-        new LiquibaseDatabaseUpdater(changeLogFile).update(dbcp);
+                DatabaseConnectionProviderFactory.getInstance().create(new TestingDbProperties());
+        LiquibaseDatabaseUpdater.fromConfigurationPath(changeLogFile).update(dbcp);
         return dbcp;
     }
 
     public DataBaseConnectionProvider init(final String changeLogFile, final String databaseName) throws SQLException {
         DataBaseConnectionProvider dbcp =
-                new DatabaseConnectionProviderFactory().create(new TestingDbProperties(databaseName));
-        new LiquibaseDatabaseUpdater(changeLogFile).update(dbcp);
+                DatabaseConnectionProviderFactory.getInstance().create(new TestingDbProperties(databaseName));
+        LiquibaseDatabaseUpdater.fromConfigurationPath(changeLogFile).update(dbcp);
         return dbcp;
     }
 

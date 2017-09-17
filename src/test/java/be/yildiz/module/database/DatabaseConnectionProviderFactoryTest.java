@@ -42,40 +42,40 @@ class DatabaseConnectionProviderFactoryTest {
         @Test
         void mysql() throws SQLException {
             DbProperties properties = givenADbProperties("mysql");
-            DataBaseConnectionProvider p = new DatabaseConnectionProviderFactory().create(properties);
+            DataBaseConnectionProvider p = DatabaseConnectionProviderFactory.getInstance().create(properties);
             assertEquals(DataBaseConnectionProvider.DBSystem.MYSQL, p.getSystem());
         }
 
         @Test
         void derby() throws SQLException {
             DbProperties properties = givenADbProperties("derby-file");
-            DataBaseConnectionProvider p = new DatabaseConnectionProviderFactory().create(properties);
+            DataBaseConnectionProvider p = DatabaseConnectionProviderFactory.getInstance().create(properties);
             assertEquals(DataBaseConnectionProvider.DBSystem.DERBY, p.getSystem());
         }
 
         @Test
         void derbyInMemory() throws SQLException {
             DbProperties properties = givenADbProperties("derby-memory");
-            DataBaseConnectionProvider p = new DatabaseConnectionProviderFactory().create(properties);
+            DataBaseConnectionProvider p = DatabaseConnectionProviderFactory.getInstance().create(properties);
             assertEquals(DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY, p.getSystem());
         }
 
         @Test
         void postgres() throws SQLException {
             DbProperties properties = givenADbProperties("postgres");
-            DataBaseConnectionProvider p = new DatabaseConnectionProviderFactory().create(properties);
+            DataBaseConnectionProvider p = DatabaseConnectionProviderFactory.getInstance().create(properties);
             assertEquals(DataBaseConnectionProvider.DBSystem.POSTGRES, p.getSystem());
         }
 
         @Test
         void withNull() throws SQLException {
-            assertThrows(AssertionError.class, () -> new DatabaseConnectionProviderFactory().create(null));
+            assertThrows(AssertionError.class, () -> DatabaseConnectionProviderFactory.getInstance().create(null));
         }
 
         @Test
         void unknown() throws SQLException {
             DbProperties properties = givenADbProperties("unknown");
-            assertThrows(UnhandledSwitchCaseException.class, () -> new DatabaseConnectionProviderFactory().create(properties));
+            assertThrows(UnhandledSwitchCaseException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(properties));
         }
     }
 

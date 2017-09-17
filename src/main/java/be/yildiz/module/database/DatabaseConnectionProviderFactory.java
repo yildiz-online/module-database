@@ -36,9 +36,11 @@ import java.util.Optional;
  */
 public class DatabaseConnectionProviderFactory {
 
+    private static final DatabaseConnectionProviderFactory INSTANCE = new DatabaseConnectionProviderFactory();
+
     private final Map<String, DatabaseSystem> systems = Maps.newMap();
 
-    public DatabaseConnectionProviderFactory() {
+    private DatabaseConnectionProviderFactory() {
         super();
         this.addSystem("derby-memory", DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY);
         this.addSystem("derby-file", DataBaseConnectionProvider.DBSystem.DERBY);
@@ -46,16 +48,28 @@ public class DatabaseConnectionProviderFactory {
         this.addSystem("postgres", DataBaseConnectionProvider.DBSystem.POSTGRES);
     }
 
-    public void addSystem(String key, DatabaseSystem system) {
+    public static DatabaseConnectionProviderFactory getInstance() {
+        return INSTANCE;
+    }
+
+    public final void addSystem(String key, DatabaseSystem system) {
         this.systems.put(key, system);
     }
 
-    public DataBaseConnectionProvider create(DbProperties properties) throws SQLException {
+    public final DataBaseConnectionProvider create(DbProperties properties) throws SQLException {
+        assert properties != null;
+        DatabaseSystem system = Optional
+                .ofNullable(this.systems.get(properties.getSystem()))
+                .orElseThrow(() -> new UnhandledSwitchCaseException(properties.getSystem()));
+        return new C3P0ConnectionProvider(system, properties);
+    }
+
+    public final DataBaseConnectionProvider createWithHighPrivilege(DbProperties properties) throws SQLException {
         assert properties != null;
         DatabaseSystem system = Optional
                 .ofNullable(this.systems.get(properties.getSystem()))
                 .orElseThrow(() -> new UnhandledSwitchCaseException(properties.getSystem()));
 
-        return new C3P0ConnectionProvider(system, properties);
+        return new C3P0ConnectionProvider(system, properties, true);
     }
 }
