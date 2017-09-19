@@ -94,6 +94,7 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
     @Override
     protected Connection getConnectionImpl() throws SQLException {
         if(!open && this.getSystem() == DBSystem.DERBY_IN_MEMORY) {
+            LOGGER.debug("Create derby connection: " + this.getUri() + "create=true;");
             this.cpds.setMinPoolSize(1);
             this.cpds.setMaxPoolSize(1);
             this.cpds.setInitialPoolSize(1);

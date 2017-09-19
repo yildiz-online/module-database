@@ -34,7 +34,7 @@ import java.sql.SQLException;
  */
 public final class Transaction {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Transaction.class);
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final DataBaseConnectionProvider connectionProvider;
 
@@ -44,17 +44,19 @@ public final class Transaction {
 
     public void execute(TransactionBehavior b) {
         try(Connection c = connectionProvider.getConnection()) {
+            logger.debug("Starting transaction");
             c.setAutoCommit(false);
             try {
                 b.execute(c);
             } catch (Exception e) {
                 c.rollback();
-                LOGGER.error("Error in transaction", e);
+                logger.error("Error in transaction", e);
             }
             c.commit();
             c.setAutoCommit(true);
+            logger.debug("Complete transaction");
         } catch (SQLException e) {
-            LOGGER.error("Error in transaction", e);
+            logger.error("Error in transaction", e);
         }
     }
 }
