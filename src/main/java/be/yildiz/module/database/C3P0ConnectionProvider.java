@@ -68,7 +68,7 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
      * @throws SQLException         If an exception occurs when building the object.
      * @throws NullPointerException if a parameter is null.
      */
-    public C3P0ConnectionProvider(final DatabaseSystem system, final DbProperties properties, boolean root) throws SQLException {
+    C3P0ConnectionProvider(final DatabaseSystem system, final DbProperties properties, boolean root) throws SQLException {
         super(system, properties, root);
         System.setProperty("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL", "WARNING");
         System.setProperty("com.mchange.v2.log.MLog", "com.mchange.v2.log.FallbackMLog");
@@ -87,7 +87,7 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
         this.cpds.setAutoCommitOnClose(true);
     }
 
-    public C3P0ConnectionProvider(final DatabaseSystem system, final DbProperties properties) throws SQLException {
+    C3P0ConnectionProvider(final DatabaseSystem system, final DbProperties properties) throws SQLException {
         this(system, properties, false);
     }
 
