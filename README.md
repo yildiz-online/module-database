@@ -51,8 +51,10 @@ In your maven project, add the dependency
 <dependency>
     <groupId>be.yildiz-games</groupId>
     <artifactId>module-database</artifactId>
-    <version>1.2.0</version>
+    <version>LATEST</version>
 </dependency>
 ```
+Replace LATEST with the version number to use.
+
 ## Contact
 Owner of this repository: Grégory Van den Borre
