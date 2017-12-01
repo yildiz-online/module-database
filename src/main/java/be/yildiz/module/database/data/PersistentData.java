@@ -32,7 +32,7 @@ import java.sql.Connection;
  * @param <T> Object to set as persistent.
  * @author Grégory Van den Borre
  */
-public interface PersistentData<T, U> {
+public interface PersistentData<T, U, P> {
 
     /**
      * Persist a new object.
@@ -41,7 +41,7 @@ public interface PersistentData<T, U> {
      * @param c Connection to the persistent unit.
      * @return The saved object.
      */
-    U save(T data, Connection c);
+    P save(T data, Connection c);
 
     /**
      * Update an existing object.
