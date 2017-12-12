@@ -42,10 +42,6 @@ public class DatabaseConnectionProviderFactory {
 
     private DatabaseConnectionProviderFactory() {
         super();
-        this.addSystem("derby-memory", DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY);
-        this.addSystem("derby-file", DataBaseConnectionProvider.DBSystem.DERBY);
-        this.addSystem("mysql", DataBaseConnectionProvider.DBSystem.MYSQL);
-        this.addSystem("postgres", DataBaseConnectionProvider.DBSystem.POSTGRES);
     }
 
     public static DatabaseConnectionProviderFactory getInstance() {

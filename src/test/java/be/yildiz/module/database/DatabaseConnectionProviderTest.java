@@ -40,14 +40,14 @@ class DatabaseConnectionProviderTest {
     @Nested
     class Constructor {
 
-        @Test
+       /* @Test
         void happyFlow() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
             assertFalse(dcp.isDebug());
             assertEquals(properties.getDbUser(), dcp.getLogin());
             assertEquals(properties.getDbPassword(), dcp.getPassword());
-        }
+        }*/
 
         @Test
         void withNoLogin() throws SQLException {

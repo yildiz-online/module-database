@@ -22,9 +22,6 @@
  */
 package be.yildiz.module.database;
 
-import be.yildiz.common.util.StringUtil;
-import com.mysql.cj.jdbc.Driver;
-import org.apache.derby.jdbc.EmbeddedDriver;
 import org.jdbcdslog.ConnectionLoggingProxy;
 import org.jooq.SQLDialect;
 import org.slf4j.Logger;
@@ -32,7 +29,6 @@ import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Calendar;
 import java.util.Properties;
 
 /**
@@ -89,10 +85,10 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
         p.put("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL", "info");
         p.put("org.jooq.no-logo", "true");
         System.setProperties(p);
-        this.system = system;
         this.login = root ? properties.getDbRootUser() : properties.getDbUser();
         this.password = root ? properties.getDbRootPassword() :properties.getDbPassword();
         this.uri = system.getUrl(properties);
+        this.system = system;
         assert this.invariant();
     }
 
@@ -180,96 +176,5 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
             return false;
         }
         return true;
-    }
-
-    /**
-     * Possible RDBMS.
-     *
-     * @author Van den Borre Grégory
-     */
-    public enum DBSystem implements DatabaseSystem {
-
-        /**
-         * MySQL system.
-         */
-        MYSQL(
-                SQLDialect.MYSQL,
-                "com.mysql.cj.jdbc.Driver",
-                Driver::new,
-                "jdbc:mysql://${1}:${2}/${0}?zeroDateTimeBehavior=convertToNull&createDatabaseIfNotExist=true&nullNamePatternMatchesAll=true&useSSL=false&serverTimezone=" + Calendar.getInstance().getTimeZone().getID()),
-        /**
-         * Derby 10 system.
-         */
-        DERBY(
-                SQLDialect.DERBY,
-                "org.apache.derby.jdbc.EmbeddedDriver",
-                EmbeddedDriver::new,
-                "jdbc:derby:target/database/${0};"),
-        /**
-         * Derby 10 system, only in memory.
-         */
-        DERBY_IN_MEMORY(
-                SQLDialect.DERBY,
-                "org.apache.derby.jdbc.EmbeddedDriver",
-                EmbeddedDriver::new,
-                "jdbc:derby:memory:${0};user=${3};"),
-        
-        /**
-         * PostgreSQL system
-         */
-        POSTGRES(
-                SQLDialect.POSTGRES,
-                "org.postgresql.Driver",
-                org.postgresql.Driver::new,
-                "jdbc:postgresql://${1}:${2}/${0}"
-        );
-
-        /**
-         * Associated dialect.
-         */
-        private final SQLDialect dialect;
-
-        /**
-         * Associated driver.
-         */
-        private final String driver;
-
-        private final DriverProvider driverProvider;
-
-        private final String url;
-
-        /**
-         * Build a new DBSystem.
-         *
-         * @param dialect JOOQ dialect to use.
-         * @param driver Driver to load.
-         */
-        DBSystem(final SQLDialect dialect, final String driver, final DriverProvider driverProvider, String url) {
-            this.dialect = dialect;
-            this.driver = driver;
-            this.driverProvider = driverProvider;
-            this.url = url;
-        }
-
-        @Override
-        public SQLDialect getDialect() {
-            return dialect;
-        }
-
-        @Override
-        public String getDriver() {
-            return driver;
-        }
-
-        @Override
-        public DriverProvider getDriverProvider() {
-            return driverProvider;
-        }
-
-        @Override
-        public String getUrl(DbProperties p) {
-            String[] params = {p.getDbName(), p.getDbHost(), String.valueOf(p.getDbPort()), p.getDbUser()};
-            return StringUtil.fillVariable(this.url, params);
-        }
     }
 }

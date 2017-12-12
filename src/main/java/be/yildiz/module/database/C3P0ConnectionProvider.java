@@ -24,15 +24,12 @@
 package be.yildiz.module.database;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import org.apache.derby.jdbc.Driver42;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLNonTransientConnectionException;
-import java.util.Properties;
 
 /**
  * C3P0 implementation for a connection provider.
@@ -58,6 +55,8 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
      */
     private final ComboPooledDataSource cpds;
 
+    private final DatabaseSystem system;
+
     private boolean open = false;
 
     /**
@@ -70,6 +69,7 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
      */
     C3P0ConnectionProvider(final DatabaseSystem system, final DbProperties properties, boolean root) throws SQLException {
         super(system, properties, root);
+        this.system = system;
         System.setProperty("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL", "WARNING");
         System.setProperty("com.mchange.v2.log.MLog", "com.mchange.v2.log.FallbackMLog");
         this.cpds = new ComboPooledDataSource();
@@ -93,31 +93,12 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
 
     @Override
     protected Connection getConnectionImpl() throws SQLException {
-        if(!open && this.getSystem() == DBSystem.DERBY_IN_MEMORY) {
-            LOGGER.debug("Create derby connection: " + this.getUri() + "create=true;");
-            this.cpds.setMinPoolSize(1);
-            this.cpds.setMaxPoolSize(1);
-            this.cpds.setInitialPoolSize(1);
-            this.cpds.setJdbcUrl(this.getUri() + "create=true;");
-            Connection c = this.cpds.getConnection();
-            this.cpds.setJdbcUrl(this.getUri());
-            this.open = true;
-            this.cpds.setMaxPoolSize(15);
-            return c;
-        }
         return this.cpds.getConnection();
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws SQLException {
         if(open) {
-            if (this.getSystem() == DBSystem.DERBY_IN_MEMORY) {
-                try {
-                Driver42.activeDriver().connect(this.getUri() + "drop=true;", new Properties());
-                } catch (SQLNonTransientConnectionException e) {
-                    //Expected exception when closing in memory derby.
-                }
-            }
             this.cpds.close();
             this.open = false;
             LOGGER.info("Closed database connection pool.");

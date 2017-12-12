@@ -38,5 +38,4 @@ public interface DatabaseSystem {
 
     String getUrl(DbProperties p);
 
-
 }
