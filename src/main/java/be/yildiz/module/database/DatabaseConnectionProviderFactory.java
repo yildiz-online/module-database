@@ -23,8 +23,8 @@
 
 package be.yildiz.module.database;
 
-import be.yildiz.common.collections.Maps;
 import be.yildiz.common.exeption.UnhandledSwitchCaseException;
+import be.yildizgames.common.collection.Maps;
 
 import java.sql.SQLException;
 import java.util.Map;
