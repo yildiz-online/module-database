@@ -22,15 +22,16 @@
  */
 package be.yildiz.module.database;
 
-import com.mysql.cj.jdbc.Driver;
+import org.h2.Driver;
 import org.jooq.SQLDialect;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.sql.SQLException;
-import java.util.Calendar;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Grégory Van den Borre
@@ -92,7 +93,7 @@ class DatabaseConnectionProviderTest {
                     return "ok";
                 }
             };
-            assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false));
+            assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(new DummySystem(), properties, false));
         }
 
         @Test
@@ -138,7 +139,7 @@ class DatabaseConnectionProviderTest {
                     return "ok";
                 }
             };
-            assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false));
+            assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(new DummySystem(), properties, false));
         }
 
         @Test
@@ -158,7 +159,7 @@ class DatabaseConnectionProviderTest {
 
                 @Override
                 public DriverProvider getDriverProvider() {
-                    return Driver::new;
+                    return () -> Mockito.mock(Driver.class);
                 }
 
                 @Override
@@ -170,7 +171,7 @@ class DatabaseConnectionProviderTest {
             assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(withoutUri, properties, false));
         }
 
-        @Test
+        /*@Test
         void withMysql() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
@@ -198,7 +199,7 @@ class DatabaseConnectionProviderTest {
             assertEquals(DataBaseConnectionProvider.DBSystem.POSTGRES, dcp.getSystem());
             assertEquals("jdbc:postgresql://" + properties.getDbHost() + ":" + properties.getDbPort()
                     + "/" + properties.getDbName(), dcp.getUri());
-        }
+        }*/
 
         @Test
         void withNull() throws SQLException {
@@ -208,7 +209,7 @@ class DatabaseConnectionProviderTest {
 
         @Test
         void withNullProperties() throws SQLException {
-            assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY, null, false));
+            assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(new DummySystem(), null, false));
         }
     }
 
@@ -217,14 +218,14 @@ class DatabaseConnectionProviderTest {
         @Test
         void happyFlow() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
+            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(new DummySystem(), properties, false);
             assertNotNull(dcp.getConnection());
         }
 
         @Test
         void withDebugMode() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
+            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(new DummySystem(), properties, false);
             dcp.setDebugMode();
             assertNotNull(dcp.getConnection());
         }
@@ -232,11 +233,11 @@ class DatabaseConnectionProviderTest {
         @Test
         void withError() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-            assertThrows(SQLException.class, () -> new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, true).getConnection());
+            assertThrows(SQLException.class, () -> new DummyDatabaseConnectionProvider(new DummySystem(), properties, true).getConnection());
         }
     }
 
-    @Nested
+   /* @Nested
     class GetDriver {
 
         @Test
@@ -253,7 +254,7 @@ class DatabaseConnectionProviderTest {
         void postgres() {
             assertEquals("org.postgresql.Driver", DataBaseConnectionProvider.DBSystem.POSTGRES.getDriver());
         }
-    }
+    }*/
 
     @Nested
     class Sanity {
@@ -261,16 +262,15 @@ class DatabaseConnectionProviderTest {
         @Test
         void happyFlow() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
+            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(new DummySystem(), properties, false);
             dcp.sanity();
         }
 
         @Test
         void withError() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, true);
+            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(new DummySystem(), properties, true);
             assertThrows(SQLException.class, dcp::sanity);
         }
     }
-
 }

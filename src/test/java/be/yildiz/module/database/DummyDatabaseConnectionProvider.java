@@ -42,7 +42,7 @@ public class DummyDatabaseConnectionProvider extends DataBaseConnectionProvider 
     }
 
     public static DataBaseConnectionProvider getDummyProvider() throws SQLException {
-        return new DummyDatabaseConnectionProvider(DBSystem.MYSQL, new DefaultProperties(), false);
+        return new DummyDatabaseConnectionProvider(new DummySystem(), new DefaultProperties(), false);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class DummyDatabaseConnectionProvider extends DataBaseConnectionProvider 
 
         @Override
         public String getSystem() {
-            return "derby-memory";
+            return "h2";
         }
     }
 }

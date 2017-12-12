@@ -39,7 +39,7 @@ class TransactionTest {
         @Test
         void happyFlow() throws SQLException {
             Transaction t = new Transaction(new DummyDatabaseConnectionProvider(
-                    DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY,
+                    new DummySystem(),
                     new DummyDatabaseConnectionProvider.DefaultProperties(),
                     false));
             t.execute(c -> {});
@@ -48,7 +48,7 @@ class TransactionTest {
         @Test
         void withError() throws Exception {
             Transaction t = new Transaction(new DummyDatabaseConnectionProvider(
-                    DataBaseConnectionProvider.DBSystem.DERBY_IN_MEMORY,
+                    new DummySystem(),
                     new DummyDatabaseConnectionProvider.DefaultProperties(),
                     false));
             t.execute(c -> {throw new Exception("Expected exception");});
