@@ -62,7 +62,6 @@ class C3P0ConnectionProviderTest {
     @Nested
     class GetConnection {
 
-        @Disabled
         @Test
         void happyFlow() throws Exception {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
@@ -75,7 +74,6 @@ class C3P0ConnectionProviderTest {
     @Nested
     class Close {
 
-        @Disabled
         @Test
         void happyFlow() throws Exception {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();

@@ -23,6 +23,6 @@ class DummySystem implements DatabaseSystem {
 
     @Override
     public String getUrl(DbProperties p) {
-        return "url";
+        return "jdbc:h2:~/test";
     }
 }
