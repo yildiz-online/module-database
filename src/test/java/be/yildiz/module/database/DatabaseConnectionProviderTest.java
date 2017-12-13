@@ -30,8 +30,7 @@ import org.mockito.Mockito;
 
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Grégory Van den Borre
@@ -51,7 +50,7 @@ class DatabaseConnectionProviderTest {
         }*/
 
         @Test
-        void withNoLogin() throws SQLException {
+        void withNoLogin() {
             DbProperties properties = new DbProperties() {
                 @Override
                 public String getDbUser() {
@@ -97,7 +96,7 @@ class DatabaseConnectionProviderTest {
         }
 
         @Test
-        void withNoPassword() throws SQLException {
+        void withNoPassword() {
             DbProperties properties = new DbProperties() {
                 @Override
                 public String getDbUser() {
@@ -143,7 +142,7 @@ class DatabaseConnectionProviderTest {
         }
 
         @Test
-        void withNoURI() throws SQLException {
+        void withNoURI() {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
 
             DatabaseSystem withoutUri = new DatabaseSystem() {
@@ -171,33 +170,14 @@ class DatabaseConnectionProviderTest {
             assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(withoutUri, properties, false));
         }
 
-        /*@Test
-        void withMysql() throws SQLException {
-            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.MYSQL, properties, false);
-            assertEquals(SQLDialect.MYSQL, dcp.getDialect());
-            assertEquals(DataBaseConnectionProvider.DBSystem.MYSQL, dcp.getSystem());
-            assertEquals("jdbc:mysql://" + properties.getDbHost() + ":" + properties.getDbPort() + "/" + properties.getDbName() + "?zeroDateTimeBehavior=convertToNull&createDatabaseIfNotExist=true&nullNamePatternMatchesAll=true&useSSL=false&serverTimezone=" + Calendar.getInstance().getTimeZone().getID(), dcp.getUri());
-        }
-
         @Test
-        void withDerby() throws SQLException {
-            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.DERBY, properties, false);
-
-            assertEquals(SQLDialect.DERBY, dcp.getDialect());
-            assertEquals(DataBaseConnectionProvider.DBSystem.DERBY, dcp.getSystem());
-            assertEquals("jdbc:derby:target/database/" + properties.getDbName() + ";", dcp.getUri());
-        }*/
-
-        @Test
-        void withNull() throws SQLException {
+        void withNull() {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(null, properties, false));
         }
 
         @Test
-        void withNullProperties() throws SQLException {
+        void withNullProperties() {
             assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(new DummySystem(), null, false));
         }
     }
@@ -220,30 +200,20 @@ class DatabaseConnectionProviderTest {
         }
 
         @Test
-        void withError() throws SQLException {
+        void withError() {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             assertThrows(SQLException.class, () -> new DummyDatabaseConnectionProvider(new DummySystem(), properties, true).getConnection());
         }
     }
 
-   /* @Nested
+    @Nested
     class GetDriver {
 
         @Test
-        void mysql() {
-            assertEquals("com.mysql.cj.jdbc.Driver", DataBaseConnectionProvider.DBSystem.MYSQL.getDriver());
+        void happyFlow() {
+            assertEquals("org.h2.Driver", new DummySystem().getDriver());
         }
-
-        @Test
-        void derby() {
-            assertEquals("org.apache.derby.jdbc.EmbeddedDriver", DataBaseConnectionProvider.DBSystem.DERBY.getDriver());
-        }
-
-        @Test
-        void postgres() {
-            assertEquals("org.postgresql.Driver", DataBaseConnectionProvider.DBSystem.POSTGRES.getDriver());
-        }
-    }*/
+    }
 
     @Nested
     class Sanity {
