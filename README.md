@@ -26,7 +26,7 @@ Wiki:
 https://yildiz.atlassian.net/wiki
 
 Quality report:
-https://sonarqube.com/overview?id=be.yildiz-games:module-database
+https://sonarcloud.io/dashboard?id=be.yildiz-games%3Amodule-database
 
 ## License
 
