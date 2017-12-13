@@ -188,17 +188,6 @@ class DatabaseConnectionProviderTest {
             assertEquals(SQLDialect.DERBY, dcp.getDialect());
             assertEquals(DataBaseConnectionProvider.DBSystem.DERBY, dcp.getSystem());
             assertEquals("jdbc:derby:target/database/" + properties.getDbName() + ";", dcp.getUri());
-        }
-
-        @Test
-        void withPostgres() throws SQLException {
-            DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-            DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(DataBaseConnectionProvider.DBSystem.POSTGRES, properties, false);
-
-            assertEquals(SQLDialect.POSTGRES, dcp.getDialect());
-            assertEquals(DataBaseConnectionProvider.DBSystem.POSTGRES, dcp.getSystem());
-            assertEquals("jdbc:postgresql://" + properties.getDbHost() + ":" + properties.getDbPort()
-                    + "/" + properties.getDbName(), dcp.getUri());
         }*/
 
         @Test

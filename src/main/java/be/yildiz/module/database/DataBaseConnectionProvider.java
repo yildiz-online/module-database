@@ -67,6 +67,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
      *
      * @param system Database system to use.
      * @param properties Properties holding connection data.
+     * @param root Flag to check if the connection is root or not.
      * @throws AssertionError if a parameter is null or invalid.
      */
     //@Ensures ("this.system == system")
@@ -86,7 +87,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
         p.put("org.jooq.no-logo", "true");
         System.setProperties(p);
         this.login = root ? properties.getDbRootUser() : properties.getDbUser();
-        this.password = root ? properties.getDbRootPassword() :properties.getDbPassword();
+        this.password = root ? properties.getDbRootPassword() : properties.getDbPassword();
         this.uri = system.getUrl(properties);
         this.system = system;
         assert this.invariant();
@@ -138,27 +139,27 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
     /**
      * @return The dialect for this system.
      */
-    public SQLDialect getDialect() {
+    public final SQLDialect getDialect() {
         return this.system.getDialect();
     }
 
-    protected DatabaseSystem getSystem() {
+    protected final DatabaseSystem getSystem() {
         return system;
     }
 
-    protected String getUri() {
+    public final String getUri() {
         return uri;
     }
 
-    protected String getLogin() {
+    protected final String getLogin() {
         return login;
     }
 
-    protected String getPassword() {
+    protected final String getPassword() {
         return password;
     }
 
-    protected boolean isDebug() {
+    protected final boolean isDebug() {
         return debug;
     }
 
@@ -176,5 +177,9 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
             return false;
         }
         return true;
+    }
+
+    public final String getDriver() {
+        return this.system.getDriver();
     }
 }

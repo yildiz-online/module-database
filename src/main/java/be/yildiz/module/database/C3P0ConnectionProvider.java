@@ -55,8 +55,6 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
      */
     private final ComboPooledDataSource cpds;
 
-    private final DatabaseSystem system;
-
     private boolean open = false;
 
     /**
@@ -69,7 +67,6 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
      */
     C3P0ConnectionProvider(final DatabaseSystem system, final DbProperties properties, boolean root) throws SQLException {
         super(system, properties, root);
-        this.system = system;
         System.setProperty("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL", "WARNING");
         System.setProperty("com.mchange.v2.log.MLog", "com.mchange.v2.log.FallbackMLog");
         this.cpds = new ComboPooledDataSource();
