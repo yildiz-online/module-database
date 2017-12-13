@@ -31,6 +31,7 @@ import java.sql.SQLException;
 public class TestingDatabaseInit {
 
     public DataBaseConnectionProvider init(final String changeLogFile) throws SQLException {
+        DatabaseConnectionProviderFactory.getInstance().addSystem("h2", new DummySystem());
         DataBaseConnectionProvider dbcp =
                 DatabaseConnectionProviderFactory.getInstance().create(new TestingDbProperties());
         LiquibaseDatabaseUpdater.fromConfigurationPath(changeLogFile).update(dbcp);
@@ -38,11 +39,13 @@ public class TestingDatabaseInit {
     }
 
     public DataBaseConnectionProvider init(final String changeLogFile, final String databaseName) throws SQLException {
+        DatabaseConnectionProviderFactory.getInstance().addSystem("h2", new DummySystem());
         DataBaseConnectionProvider dbcp =
                 DatabaseConnectionProviderFactory.getInstance().create(new TestingDbProperties(databaseName));
         LiquibaseDatabaseUpdater.fromConfigurationPath(changeLogFile).update(dbcp);
         return dbcp;
     }
+
 
     /**
      * @author Grégory Van den Borre
@@ -86,7 +89,7 @@ public class TestingDatabaseInit {
 
         @Override
         public String getSystem() {
-            return "derby-memory";
+            return "h2";
         }
 
         @Override
