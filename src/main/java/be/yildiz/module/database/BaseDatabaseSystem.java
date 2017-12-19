@@ -24,7 +24,7 @@
 
 package be.yildiz.module.database;
 
-import be.yildiz.common.util.StringUtil;
+import be.yildizgames.common.util.StringUtil;
 
 /**
  * @author Grégory Van den Borre

@@ -23,8 +23,8 @@
 
 package be.yildiz.module.database;
 
-import be.yildiz.common.exeption.UnhandledSwitchCaseException;
 import be.yildizgames.common.collection.Maps;
+import be.yildizgames.common.exception.technical.InitializationException;
 
 import java.sql.SQLException;
 import java.util.Map;
@@ -56,7 +56,7 @@ public class DatabaseConnectionProviderFactory {
         assert properties != null;
         DatabaseSystem system = Optional
                 .ofNullable(this.systems.get(properties.getSystem()))
-                .orElseThrow(() -> new UnhandledSwitchCaseException(properties.getSystem()));
+                .orElseThrow(() -> new InitializationException(properties.getSystem()));
         return new C3P0ConnectionProvider(system, properties);
     }
 
@@ -64,7 +64,7 @@ public class DatabaseConnectionProviderFactory {
         assert properties != null;
         DatabaseSystem system = Optional
                 .ofNullable(this.systems.get(properties.getSystem()))
-                .orElseThrow(() -> new UnhandledSwitchCaseException(properties.getSystem()));
+                .orElseThrow(() -> new InitializationException(properties.getSystem()));
 
         return new C3P0ConnectionProvider(system, properties, true);
     }

@@ -22,7 +22,7 @@
  */
 package be.yildiz.module.database;
 
-import be.yildiz.common.exeption.UnhandledSwitchCaseException;
+import be.yildizgames.common.exception.technical.InitializationException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -74,7 +74,7 @@ class DatabaseConnectionProviderFactoryTest {
         @Test
         void unknown() throws SQLException {
             DbProperties properties = givenADbProperties("unknown");
-            assertThrows(UnhandledSwitchCaseException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(properties));
+            assertThrows(InitializationException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(properties));
         }
     }
 

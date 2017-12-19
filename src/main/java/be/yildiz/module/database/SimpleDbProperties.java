@@ -23,17 +23,17 @@
 
 package be.yildiz.module.database;
 
-import be.yildiz.common.exeption.ResourceMissingException;
-import be.yildiz.common.resource.PropertiesHelper;
+import be.yildizgames.common.util.PropertiesException;
+import be.yildizgames.common.util.PropertiesHelper;
 
 import java.io.File;
 import java.util.Properties;
 
 /**
- * File implementation for the DbProperties.
+ * Basic implementation for the DbProperties.
  * @author Grégory Van den Borre
  */
-public class DbFileProperties implements DbProperties {
+public class SimpleDbProperties implements DbProperties {
 
     /**
      * Database login.
@@ -66,31 +66,35 @@ public class DbFileProperties implements DbProperties {
     private final String rootPassword;
 
     /**
-     * Build a DbProperties from a property file.
+     * Build a DbProperties from a property object.
      * Expected content is:
      * <ul>
      *     <li>database.user</li>
      *     <li>database.password</li>
+     *     <li>database.root.user</li>
+     *     <li>database.root.password</li>
      *     <li>database.name</li>
      *     <li>database.host</li>
      *     <li>database.port</li>
+     *     <li>database.system</li>
      * </ul>
-     * @param path Path of the property file.
-     * @throws ResourceMissingException If the file cannot be found.
+     * @param properties Properties object.
      * @throws NullPointerException If any parameter is null.
      * @throws IllegalArgumentException If the port is not between 0 and 65635
      */
-    public DbFileProperties(final String path) {
+    public SimpleDbProperties(final Properties properties) {
         super();
-        Properties properties = PropertiesHelper.getPropertiesFromFile(new File(path));
-        this.user = properties.getProperty("database.user");
-        this.password = properties.getProperty("database.password");
-        this.rootUser = properties.getProperty("database.root.user");
-        this.rootPassword = properties.getProperty("database.root.password");
-        this.database = properties.getProperty("database.name");
-        this.host = properties.getProperty("database.host");
-        this.port = PropertiesHelper.getIntValue(properties, "database.port");
-        this.system = properties.getProperty("database.system");
+        if(properties == null) {
+            throw new AssertionError("Properties object should not be null");
+        }
+        this.user = PropertiesHelper.getValue(properties, "database.user");
+        this.password = PropertiesHelper.getValue(properties,"database.password");
+        this.rootUser = PropertiesHelper.getValue(properties,"database.root.user");
+        this.rootPassword = PropertiesHelper.getValue(properties,"database.root.password");
+        this.database = PropertiesHelper.getValue(properties,"database.name");
+        this.host = PropertiesHelper.getValue(properties,"database.host");
+        this.port = PropertiesHelper.getPortValue(properties, "database.port");
+        this.system = PropertiesHelper.getValue(properties,"database.system");
         DbPropertiesInvariant.check(this.user, this.password, this.rootUser, this.rootPassword, this.database, this.host, this.port, this.system);
     }
 
