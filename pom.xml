@@ -44,14 +44,11 @@
     <version>2.0.3</version>
   </parent>
 
+  <properties>
+    <maven.plugin.jooq.version>3.10.0</maven.plugin.jooq.version>
+  </properties>
 
   <dependencies>
-
-    <!--<dependency>
-      <groupId>be.yildiz-games</groupId>
-      <artifactId>common-shared</artifactId>
-      <version>3.0.1-SNAPSHOT</version>
-    </dependency>-->
     <dependency>
       <groupId>be.yildiz-games</groupId>
       <artifactId>common-collection</artifactId>
@@ -70,10 +67,12 @@
     <dependency>
       <groupId>com.googlecode.usc</groupId>
       <artifactId>jdbcdslog</artifactId>
+      <version>1.0.6.2</version>
     </dependency>
     <dependency>
       <groupId>org.liquibase</groupId>
       <artifactId>liquibase-core</artifactId>
+      <version>3.5.3</version>
     </dependency>
     <dependency>
       <groupId>org.jooq</groupId>
@@ -90,6 +89,7 @@
     <dependency>
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
+      <version>0.9.5.2</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
