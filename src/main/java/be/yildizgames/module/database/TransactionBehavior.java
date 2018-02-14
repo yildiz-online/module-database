@@ -22,33 +22,15 @@
  *
  */
 
-package be.yildiz.module.database.data;
+package be.yildizgames.module.database;
 
 import java.sql.Connection;
 
 /**
- * Persistent objects, not meant to be used as type.
- *
- * @param <T> Object to set as persistent.
  * @author Grégory Van den Borre
  */
-public interface PersistentData<T, U, P> {
+@FunctionalInterface
+public interface TransactionBehavior {
 
-    /**
-     * Persist a new object.
-     *
-     * @param data Object to save.
-     * @param c Connection to the persistent unit.
-     * @return The saved object.
-     */
-    P save(T data, Connection c);
-
-    /**
-     * Update an existing object.
-     *
-     * @param data Object to update.
-     * @param c Connection to the persistent unit.
-     */
-    void update(U data, Connection c);
-
+    void execute(Connection c) throws Exception;
 }

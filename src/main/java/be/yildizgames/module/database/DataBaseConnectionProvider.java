@@ -21,12 +21,12 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  *
  */
-package be.yildiz.module.database;
+package be.yildizgames.module.database;
 
+import be.yildizgames.common.logging.LogFactory;
 import org.jdbcdslog.ConnectionLoggingProxy;
 import org.jooq.SQLDialect;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -39,7 +39,7 @@ import java.util.Properties;
  */
 public abstract class DataBaseConnectionProvider implements AutoCloseable {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataBaseConnectionProvider.class);
+    private static final Logger LOGGER = LogFactory.getInstance().getLogger(DataBaseConnectionProvider.class);
 
     /**
      * Selected Database system.
@@ -132,24 +132,22 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
     }
 
     /**
-     * @return A database connection from the underlying implementation.
-     * @throws SQLException When connection cannot be retrieved.
-     */
-    protected abstract Connection getConnectionImpl() throws SQLException;
-
-    /**
      * @return The dialect for this system.
      */
     public final SQLDialect getDialect() {
         return this.system.getDialect();
     }
 
-    protected final DatabaseSystem getSystem() {
-        return system;
+    public final String getDriver() {
+        return this.system.getDriver();
     }
 
     public final String getUri() {
         return uri;
+    }
+
+    protected final DatabaseSystem getSystem() {
+        return system;
     }
 
     protected final String getLogin() {
@@ -163,6 +161,12 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
     protected final boolean isDebug() {
         return debug;
     }
+
+    /**
+     * @return A database connection from the underlying implementation.
+     * @throws SQLException When connection cannot be retrieved.
+     */
+    protected abstract Connection getConnectionImpl() throws SQLException;
 
     private boolean invariant() {
         if (this.login == null) {
@@ -178,9 +182,5 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
             return false;
         }
         return true;
-    }
-
-    public final String getDriver() {
-        return this.system.getDriver();
     }
 }

@@ -22,7 +22,7 @@
  *
  */
 
-package be.yildiz.module.database;
+package be.yildizgames.module.database;
 
 import be.yildizgames.common.util.PropertiesHelper;
 
@@ -62,6 +62,7 @@ public class SimpleDbProperties implements DbProperties {
     private final String system;
 
     private final String rootUser;
+
     private final String rootPassword;
 
     /**

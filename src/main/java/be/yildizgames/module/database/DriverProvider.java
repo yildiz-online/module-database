@@ -22,26 +22,16 @@
  *
  */
 
-package be.yildiz.module.database;
+package be.yildizgames.module.database;
 
-import be.yildizgames.common.util.StringUtil;
+import java.sql.Driver;
+import java.sql.SQLException;
 
 /**
  * @author Grégory Van den Borre
  */
-public abstract class BaseDatabaseSystem implements DatabaseSystem {
+@FunctionalInterface
+public interface DriverProvider {
 
-    private final String url;
-
-    protected BaseDatabaseSystem(final String url) {
-        super();
-        assert url != null;
-        this.url = url;
-    }
-
-    @Override
-    public final String getUrl(final DbProperties p) {
-        String[] params = {p.getDbName(), p.getDbHost(), String.valueOf(p.getDbPort()), p.getDbUser()};
-        return StringUtil.fillVariable(this.url, params);
-    }
+    Driver getDriver() throws SQLException;
 }

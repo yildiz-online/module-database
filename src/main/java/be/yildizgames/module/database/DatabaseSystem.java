@@ -22,16 +22,21 @@
  *
  */
 
-package be.yildiz.module.database;
+package be.yildizgames.module.database;
 
-import java.sql.Driver;
-import java.sql.SQLException;
+import org.jooq.SQLDialect;
 
 /**
  * @author Grégory Van den Borre
  */
-@FunctionalInterface
-public interface DriverProvider {
+public interface DatabaseSystem {
 
-    Driver getDriver() throws SQLException;
+    SQLDialect getDialect();
+
+    String getDriver();
+
+    DriverProvider getDriverProvider();
+
+    String getUrl(DbProperties p);
+
 }

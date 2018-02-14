@@ -22,10 +22,14 @@
  *
  */
 
-package be.yildiz.module.database.data;
+package be.yildizgames.module.database;
+
+import java.sql.SQLException;
 
 /**
  * @author Grégory Van den Borre
  */
-public interface SimplePersistentData<T> extends PersistentData<T, T, T>{
+public interface DatabaseUpdater {
+
+    void update(DataBaseConnectionProvider provider) throws SQLException;
 }

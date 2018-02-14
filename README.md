@@ -12,7 +12,7 @@ The database module is a component meant to access and use the database.
 
 ## Requirements
 
-To build this module, you will need a java 8 JDK, and Maven 3.
+To build this module, you will need a java 9 JDK, and Maven 3.
 
 ## Coding Style and other information
 
@@ -26,7 +26,7 @@ Wiki:
 https://yildiz.atlassian.net/wiki
 
 Quality report:
-https://sonarcloud.io/dashboard?id=be.yildiz-games%3Amodule-database
+https://sonarcloud.io/dashboard/index/be.yildiz-games:module-database
 
 ## License
 

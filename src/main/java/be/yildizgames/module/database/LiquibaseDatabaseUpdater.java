@@ -22,8 +22,15 @@
  *
  */
 
-package be.yildiz.module.database;
+package be.yildizgames.module.database;
 
+import liquibase.Liquibase;
+import liquibase.database.Database;
+import liquibase.database.DatabaseFactory;
+import liquibase.database.jvm.JdbcConnection;
+import liquibase.exception.LiquibaseException;
+import liquibase.logging.LogLevel;
+import liquibase.resource.ClassLoaderResourceAccessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,31 +40,35 @@ import java.sql.SQLException;
 /**
  * @author Grégory Van den Borre
  */
-public final class Transaction {
+public class LiquibaseDatabaseUpdater implements DatabaseUpdater {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final DataBaseConnectionProvider connectionProvider;
+    private final String configurationFile;
 
-    public Transaction(DataBaseConnectionProvider p) {
-        this.connectionProvider = p;
+    private LiquibaseDatabaseUpdater(String configurationFile) {
+        super();
+        assert configurationFile != null;
+        this.configurationFile = configurationFile;
     }
 
-    public void execute(TransactionBehavior b) {
-        try(Connection c = connectionProvider.getConnection()) {
-            logger.debug("Starting transaction");
-            c.setAutoCommit(false);
-            try {
-                b.execute(c);
-            } catch (Exception e) {
-                c.rollback();
-                logger.error("Error in transaction", e);
-            }
-            c.commit();
-            c.setAutoCommit(true);
-            logger.debug("Complete transaction");
-        } catch (SQLException e) {
-            logger.error("Error in transaction", e);
+    public static LiquibaseDatabaseUpdater fromConfigurationPath(String path) {
+        return new LiquibaseDatabaseUpdater(path);
+    }
+
+    @Override
+    public final void update(DataBaseConnectionProvider provider) throws SQLException {
+        assert provider != null;
+        this.logger.info("Updating database schema...");
+        try (Connection c = provider.getConnection()){
+            Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
+            Liquibase liquibase = new Liquibase(this.configurationFile, new ClassLoaderResourceAccessor(), database);
+            liquibase.getLog().setLogLevel(LogLevel.OFF);
+            liquibase.update("database-update");
+            this.logger.info("Database schema up to date.");
+            database.close();
+        } catch (LiquibaseException | SQLException e) {
+            throw new SQLException(e);
         }
     }
 }

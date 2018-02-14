@@ -22,15 +22,10 @@
  *
  */
 
-package be.yildiz.module.database;
-
-import java.sql.Connection;
+package be.yildizgames.module.database.data;
 
 /**
  * @author Grégory Van den Borre
  */
-@FunctionalInterface
-public interface TransactionBehavior {
-
-    void execute(Connection c) throws Exception;
+public interface SimplePersistentData<T> extends PersistentData<T, T, T>{
 }

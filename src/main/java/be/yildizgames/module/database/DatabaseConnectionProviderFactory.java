@@ -22,9 +22,8 @@
  *
  */
 
-package be.yildiz.module.database;
+package be.yildizgames.module.database;
 
-import be.yildizgames.common.collection.Maps;
 import be.yildizgames.common.exception.technical.InitializationException;
 
 import java.sql.SQLException;
@@ -39,7 +38,7 @@ public class DatabaseConnectionProviderFactory {
 
     private static final DatabaseConnectionProviderFactory INSTANCE = new DatabaseConnectionProviderFactory();
 
-    private final Map<String, DatabaseSystem> systems = Maps.newMap();
+    private final Map<String, DatabaseSystem> systems = new Ha;
 
     private DatabaseConnectionProviderFactory() {
         super();

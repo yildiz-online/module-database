@@ -22,21 +22,33 @@
  *
  */
 
-package be.yildiz.module.database;
+package be.yildizgames.module.database.data;
 
-import org.jooq.SQLDialect;
+import java.sql.Connection;
 
 /**
+ * Persistent objects, not meant to be used as type.
+ *
+ * @param <T> Object to set as persistent.
  * @author Grégory Van den Borre
  */
-public interface DatabaseSystem {
+public interface PersistentData<T, U, P> {
 
-    SQLDialect getDialect();
+    /**
+     * Persist a new object.
+     *
+     * @param data Object to save.
+     * @param c Connection to the persistent unit.
+     * @return The saved object.
+     */
+    P save(T data, Connection c);
 
-    String getDriver();
-
-    DriverProvider getDriverProvider();
-
-    String getUrl(DbProperties p);
+    /**
+     * Update an existing object.
+     *
+     * @param data Object to update.
+     * @param c Connection to the persistent unit.
+     */
+    void update(U data, Connection c);
 
 }

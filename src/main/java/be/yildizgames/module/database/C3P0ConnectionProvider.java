@@ -22,13 +22,12 @@
  *
  */
 
-package be.yildiz.module.database;
+package be.yildizgames.module.database;
 
+import be.yildizgames.common.logging.LogFactory;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -37,9 +36,9 @@ import java.sql.SQLException;
  *
  * @author Grégory Van den Borre
  */
-public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
+final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(C3P0ConnectionProvider.class);
+    private static final Logger LOGGER = LogFactory.getInstance().getLogger(C3P0ConnectionProvider.class);
 
     /**
      * Time in seconds.
@@ -73,7 +72,7 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
         this.cpds = new ComboPooledDataSource();
         try {
             this.cpds.setDriverClass(system.getDriver());
-        } catch (PropertyVetoException e) {
+        } catch (Exception e) {
             LOGGER.error("Error in pool", e);
             throw new SQLException("Cannot load pool driver.", e);
         }
