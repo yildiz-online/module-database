@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  *
  */
-package be.yildiz.module.database;
+package be.yildizgames.module.database;
 
 import org.h2.Driver;
 import org.jooq.SQLDialect;

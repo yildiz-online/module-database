@@ -33,6 +33,7 @@ module be.yildizgames.module.database {
     requires c3p0;
     requires org.jooq;
     requires jdbcdslog;
+    requires liquibase.core;
 
     exports be.yildizgames.module.database;
 }

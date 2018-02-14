@@ -22,7 +22,7 @@
  *
  */
 
-package be.yildiz.module.database;
+package be.yildizgames.module.database;
 
 import org.mockito.Mockito;
 
