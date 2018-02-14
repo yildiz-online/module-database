@@ -94,7 +94,7 @@ final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
     }
 
     @Override
-    public void close() throws SQLException {
+    public void close() {
         if(open) {
             this.cpds.close();
             this.open = false;
