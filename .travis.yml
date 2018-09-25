@@ -1,21 +1,6 @@
-env:
-  global:
-    - secure: "UPz8rWJRZVAWrnTFzsBafpOXDaRwHB+k8LKK4QcaulqZBOBtB1Q8XcFugDYdMKNLy0fxA/mMObDiePOW3LDZRUTzVopFcg3MR3LIkvJPmzUZpMh+O0V7hMC8ZFE9jGQ6NSFRIEh7c5qB9Nl1s6bM2u325HXYP2SFJ9/Sj2pQvwOCZ9srYct6KVVlf7wXEvoK8zmpU8ziSM2PJ3x0WBb7SlAZNodeh/9fNbBJO3ON+63+pFqiX1zKHqygs+KG3sEy5KpchJDFhGnoMltAoU8EDHjS9g7BI/tdd5WC1bXCVEMtRLI7stglk6Bulh7FG3kbdC9DEATGylRFF7ZRWwfcGbhlLTSysZdlWuucVnU98H3m0omHEF2W1+Our0qTC6vf7b9DT/ZP1SBtz1qFK/1Q9shAqba4jgY3j3xr5nIcwfhvIFy4XYS6aFL3WmNx3w79K0M71eE7b0GPcJQMgAu12Yjdv6to1aMhXVCIM+So2xR88x7tYJlxWdUBkjdfH+fS9k9QkMrw+10sPErd1TBnN+xHei3MvEG9n4PfCjnWGL144QUik7u+jrtm0I3L2qWlQ7SKvDq6TcRR44bn5mcoTFOYgRE9mavA1jOrKTkf7ulbAfOTSZqZBnFBfSmv7tm7jApieqO2UmX6v2r5NBiQotsVcjpOzwC7fJRQ4SGTQHY="
-
-
 language: java
 jdk:
   - oraclejdk9
-
-addons:
-  coverity_scan:
-    project:
-      name: "yildiz-online/module-database"
-      description: "Build submitted via Travis CI"
-    notification_email: vandenborre.gregory@hotmail.fr
-    build_command_prepend: "mvn clean"
-    build_command:   "mvn -DskipTests=true compile -s settings.xml"
-    branch_pattern: master
 
 script:
   - mvn -V -B -s settings.xml test
