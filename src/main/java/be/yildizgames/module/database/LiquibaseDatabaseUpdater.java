@@ -63,7 +63,6 @@ public class LiquibaseDatabaseUpdater implements DatabaseUpdater {
         try (Connection c = provider.getConnection()){
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
             Liquibase liquibase = new Liquibase(this.configurationFile, new ClassLoaderResourceAccessor(), database);
-            liquibase.getLog().setLogLevel(LogLevel.OFF);
             liquibase.update("database-update");
             this.logger.info("Database schema up to date.");
             database.close();
