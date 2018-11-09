@@ -26,10 +26,9 @@
 package be.yildizgames.module.database;
 
 
+import be.yildizgames.common.exception.implementation.ImplementationException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -48,7 +47,7 @@ class LiquibaseDatabaseUpdaterTest {
 
         @Test
         void withNullFile() {
-            assertThrows(AssertionError.class, () -> LiquibaseDatabaseUpdater.fromConfigurationPath(null));
+            assertThrows(ImplementationException.class, () -> LiquibaseDatabaseUpdater.fromConfigurationPath(null));
         }
     }
 
@@ -56,8 +55,8 @@ class LiquibaseDatabaseUpdaterTest {
     class Update {
 
         @Test
-        void withNullProvider() throws SQLException {
-            assertThrows(AssertionError.class, () -> LiquibaseDatabaseUpdater.fromConfigurationPath("any").update(null));
+        void withNullProvider() {
+            assertThrows(ImplementationException.class, () -> LiquibaseDatabaseUpdater.fromConfigurationPath("any").update(null));
         }
     }
 }

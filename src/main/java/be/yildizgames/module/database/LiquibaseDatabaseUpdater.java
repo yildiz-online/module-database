@@ -24,6 +24,7 @@
 
 package be.yildizgames.module.database;
 
+import be.yildizgames.common.exception.implementation.ImplementationException;
 import be.yildizgames.common.logging.LogFactory;
 import liquibase.Liquibase;
 import liquibase.database.Database;
@@ -47,7 +48,7 @@ public class LiquibaseDatabaseUpdater implements DatabaseUpdater {
 
     private LiquibaseDatabaseUpdater(String configurationFile) {
         super();
-        assert configurationFile != null;
+        ImplementationException.throwForNull(configurationFile);
         this.configurationFile = configurationFile;
     }
 
@@ -57,7 +58,7 @@ public class LiquibaseDatabaseUpdater implements DatabaseUpdater {
 
     @Override
     public final void update(DataBaseConnectionProvider provider) throws SQLException {
-        assert provider != null;
+        ImplementationException.throwForNull(provider);
         this.logger.info("Updating database schema...");
         try (Connection c = provider.getConnection()){
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));

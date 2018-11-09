@@ -24,6 +24,7 @@
 
 package be.yildizgames.module.database;
 
+import be.yildizgames.common.exception.implementation.ImplementationException;
 import be.yildizgames.common.util.PropertiesHelper;
 
 import java.util.Properties;
@@ -84,9 +85,7 @@ public class SimpleDbProperties implements DbProperties {
      */
     public SimpleDbProperties(final Properties properties) {
         super();
-        if(properties == null) {
-            throw new AssertionError("Properties object should not be null");
-        }
+        ImplementationException.throwForNull(properties);
         this.user = PropertiesHelper.getValue(properties, "database.user");
         this.password = PropertiesHelper.getValue(properties,"database.password");
         this.rootUser = PropertiesHelper.getValue(properties,"database.root.user");

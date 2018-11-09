@@ -24,6 +24,7 @@
 
 package be.yildizgames.module.database;
 
+import be.yildizgames.common.exception.implementation.ImplementationException;
 import be.yildizgames.common.util.StringUtil;
 
 /**
@@ -35,7 +36,7 @@ public abstract class BaseDatabaseSystem implements DatabaseSystem {
 
     protected BaseDatabaseSystem(final String url) {
         super();
-        assert url != null;
+        ImplementationException.throwForNull(url);
         this.url = url;
     }
 

@@ -23,6 +23,7 @@
  */
 package be.yildizgames.module.database;
 
+import be.yildizgames.common.exception.implementation.ImplementationException;
 import be.yildizgames.common.logging.LogFactory;
 import org.jdbcdslog.ConnectionLoggingProxy;
 import org.jooq.SQLDialect;
@@ -76,12 +77,8 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
     //@Ensures ("this.login == properties.dbUser")
     //@Ensures ("this.password == properties.dbPassword")
     protected DataBaseConnectionProvider(final DatabaseSystem system, final DbProperties properties, boolean root) {
-        if (properties == null) {
-            throw new AssertionError("Properties cannot be null.");
-        }
-        if (system == null) {
-            throw new AssertionError("system cannot be null.");
-        }
+        ImplementationException.throwForNull(system);
+        ImplementationException.throwForNull(properties);
         Properties p = new Properties(System.getProperties());
         p.put("com.mchange.v2.log.MLog", "com.mchange.v2.log.FallbackMLog");
         p.put("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL", "info");

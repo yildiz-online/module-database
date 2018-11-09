@@ -23,6 +23,7 @@
  */
 package be.yildizgames.module.database;
 
+import be.yildizgames.common.exception.implementation.ImplementationException;
 import org.h2.Driver;
 import org.jooq.SQLDialect;
 import org.junit.jupiter.api.Nested;
@@ -176,12 +177,12 @@ class DatabaseConnectionProviderTest {
         @Test
         void withNull() {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-            assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(null, properties, false));
+            assertThrows(ImplementationException.class, () -> new DummyDatabaseConnectionProvider(null, properties, false));
         }
 
         @Test
         void withNullProperties() {
-            assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(new DummySystem(), null, false));
+            assertThrows(ImplementationException.class, () -> new DummyDatabaseConnectionProvider(new DummySystem(), null, false));
         }
     }
 

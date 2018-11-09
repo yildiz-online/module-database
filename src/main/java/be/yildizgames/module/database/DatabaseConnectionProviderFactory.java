@@ -24,6 +24,7 @@
 
 package be.yildizgames.module.database;
 
+import be.yildizgames.common.exception.implementation.ImplementationException;
 import be.yildizgames.common.exception.technical.InitializationException;
 
 import java.sql.SQLException;
@@ -54,7 +55,7 @@ public class DatabaseConnectionProviderFactory {
     }
 
     public final DataBaseConnectionProvider create(DbProperties properties) throws SQLException {
-        assert properties != null;
+        ImplementationException.throwForNull(properties);
         DatabaseSystem system = Optional
                 .ofNullable(this.systems.get(properties.getSystem()))
                 .orElseThrow(() -> new InitializationException(properties.getSystem()));
@@ -62,7 +63,7 @@ public class DatabaseConnectionProviderFactory {
     }
 
     public final DataBaseConnectionProvider createWithHighPrivilege(DbProperties properties) throws SQLException {
-        assert properties != null;
+        ImplementationException.throwForNull(properties);
         DatabaseSystem system = Optional
                 .ofNullable(this.systems.get(properties.getSystem()))
                 .orElseThrow(() -> new InitializationException(properties.getSystem()));

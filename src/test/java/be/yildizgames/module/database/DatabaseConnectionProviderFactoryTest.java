@@ -24,11 +24,10 @@
  */
 package be.yildizgames.module.database;
 
+import be.yildizgames.common.exception.implementation.ImplementationException;
 import be.yildizgames.common.exception.technical.InitializationException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -69,12 +68,12 @@ class DatabaseConnectionProviderFactoryTest {
         }*/
 
         @Test
-        void withNull() throws SQLException {
-            assertThrows(AssertionError.class, () -> DatabaseConnectionProviderFactory.getInstance().create(null));
+        void withNull() {
+            assertThrows(ImplementationException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(null));
         }
 
         @Test
-        void unknown() throws SQLException {
+        void unknown() {
             DbProperties properties = givenADbProperties("unknown");
             assertThrows(InitializationException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(properties));
         }

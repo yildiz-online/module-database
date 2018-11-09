@@ -24,6 +24,7 @@
 
 package be.yildizgames.module.database;
 
+import be.yildizgames.common.exception.implementation.ImplementationException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -50,12 +51,12 @@ class C3P0ConnectionProviderTest {
         @Test
         void withNullSystem() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-            assertThrows(AssertionError.class, () -> new C3P0ConnectionProvider(null, properties));
+            assertThrows(ImplementationException.class, () -> new C3P0ConnectionProvider(null, properties));
         }
 
         @Test
         void withNullProperties() throws SQLException {
-            assertThrows(AssertionError.class, () -> new C3P0ConnectionProvider(new DummySystem(), null));
+            assertThrows(ImplementationException.class, () -> new C3P0ConnectionProvider(new DummySystem(), null));
         }
     }
 

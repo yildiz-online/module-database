@@ -25,6 +25,7 @@
 
 package be.yildizgames.module.database;
 
+import be.yildizgames.common.exception.implementation.ImplementationException;
 import be.yildizgames.common.util.PropertiesException;
 import org.junit.jupiter.api.Test;
 
@@ -74,7 +75,7 @@ class SimpleDbPropertiesTest {
 
     @Test
     void userNull() {
-        assertThrows(AssertionError.class, () -> new SimpleDbProperties(null));
+        assertThrows(ImplementationException.class, () -> new SimpleDbProperties(null));
     }
 
     @Test
