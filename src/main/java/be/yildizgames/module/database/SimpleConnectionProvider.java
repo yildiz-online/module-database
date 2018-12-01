@@ -32,7 +32,11 @@ public class SimpleConnectionProvider extends DataBaseConnectionProvider {
     private final Properties properties;
 
     SimpleConnectionProvider(DatabaseSystem system, DbProperties properties) {
-        super(system, properties, false);
+        this(system, properties, false);
+    }
+
+    SimpleConnectionProvider(DatabaseSystem system, DbProperties properties, boolean root) {
+        super(system, properties, root);
         this.properties = new Properties();
         this.properties.put("user", this.getLogin());
         this.properties.put("password", this.getPassword());

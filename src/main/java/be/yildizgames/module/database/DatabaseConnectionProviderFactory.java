@@ -72,6 +72,10 @@ public class DatabaseConnectionProviderFactory {
                 .ofNullable(this.systems.get(properties.getSystem()))
                 .orElseThrow(() -> new InitializationException(properties.getSystem()));
 
-        return new C3P0ConnectionProvider(system, properties, true);
+        if(system.requirePool()) {
+            return new C3P0ConnectionProvider(system, properties, true);
+        } else {
+            return new SimpleConnectionProvider(system, properties, true);
+        }
     }
 }
