@@ -39,4 +39,6 @@ public interface DatabaseSystem {
 
     String getUrl(DbProperties p);
 
+    QueryBuilder createBuilder();
+
 }

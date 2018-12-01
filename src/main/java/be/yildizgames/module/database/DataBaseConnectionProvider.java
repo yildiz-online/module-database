@@ -159,6 +159,10 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
         return debug;
     }
 
+    public final QueryBuilder getBuilder() {
+        return this.system.createBuilder();
+    }
+
     /**
      * @return A database connection from the underlying implementation.
      * @throws SQLException When connection cannot be retrieved.

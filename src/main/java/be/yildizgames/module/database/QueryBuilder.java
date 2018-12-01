@@ -21,37 +21,22 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  *
  */
-
 package be.yildizgames.module.database;
 
-import org.h2.Driver;
-import org.jooq.SQLDialect;
+public abstract class QueryBuilder {
 
-class DummySystem implements DatabaseSystem {
+    private final StringBuilder builder = new StringBuilder();
 
-    @Override
-    public SQLDialect getDialect() {
-        return SQLDialect.H2;
+    public abstract QueryBuilder selectAllFrom(String table);
+
+    public abstract QueryBuilder limit(int number);
+
+    public final QueryBuilder append(String content) {
+        this.builder.append(content);
+        return this;
     }
 
-    @Override
-    public String getDriver() {
-        return "org.h2.Driver";
-    }
-
-    @Override
-    public DriverProvider getDriverProvider() {
-        return Driver::new;
-
-    }
-
-    @Override
-    public String getUrl(DbProperties p) {
-        return "jdbc:h2:~/test";
-    }
-
-    @Override
-    public QueryBuilder createBuilder() {
-        return null;
+    public final String build() {
+        return this.builder.toString().trim() + ";";
     }
 }

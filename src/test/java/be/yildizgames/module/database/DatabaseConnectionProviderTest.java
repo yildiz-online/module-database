@@ -169,6 +169,11 @@ class DatabaseConnectionProviderTest {
                 public String getUrl(DbProperties p) {
                     return null;
                 }
+
+                @Override
+                public QueryBuilder createBuilder() {
+                    return null;
+                }
             };
 
             assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(withoutUri, properties, false));
