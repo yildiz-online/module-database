@@ -32,11 +32,11 @@ public abstract class QueryBuilder {
     public abstract QueryBuilder limit(int number);
 
     public final QueryBuilder append(String content) {
-        this.builder.append(content);
+        this.builder.append(content + " ");
         return this;
     }
 
     public final String build() {
-        return this.builder.toString().trim() + ";";
+        return this.builder.toString().trim();
     }
 }

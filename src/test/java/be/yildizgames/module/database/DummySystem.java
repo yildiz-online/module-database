@@ -54,4 +54,9 @@ class DummySystem implements DatabaseSystem {
     public QueryBuilder createBuilder() {
         return null;
     }
+
+    @Override
+    public boolean requirePool() {
+        return false;
+    }
 }

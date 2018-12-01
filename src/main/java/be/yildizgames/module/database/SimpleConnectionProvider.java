@@ -21,25 +21,30 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
  *
  */
-
 package be.yildizgames.module.database;
 
-import org.jooq.SQLDialect;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Properties;
 
-/**
- * @author Grégory Van den Borre
- */
-public interface DatabaseSystem {
+public class SimpleConnectionProvider extends DataBaseConnectionProvider {
 
-    SQLDialect getDialect();
+    private final Properties properties;
 
-    String getDriver();
+    SimpleConnectionProvider(DatabaseSystem system, DbProperties properties) {
+        super(system, properties, false);
+        this.properties = new Properties();
+        this.properties.put("user", this.getLogin());
+        this.properties.put("password", this.getPassword());
+    }
 
-    DriverProvider getDriverProvider();
+    @Override
+    protected Connection getConnectionImpl() throws SQLException {
+        return this.getSystem().getDriverProvider().getDriver().connect(this.getUri(), this.properties);
+    }
 
-    String getUrl(DbProperties p);
+    @Override
+    public void close() throws Exception {
 
-    QueryBuilder createBuilder();
-
-    boolean requirePool();
+    }
 }

@@ -59,7 +59,11 @@ public class DatabaseConnectionProviderFactory {
         DatabaseSystem system = Optional
                 .ofNullable(this.systems.get(properties.getSystem()))
                 .orElseThrow(() -> new InitializationException(properties.getSystem()));
-        return new C3P0ConnectionProvider(system, properties);
+        if(system.requirePool()) {
+            return new C3P0ConnectionProvider(system, properties);
+        } else {
+            return new SimpleConnectionProvider(system, properties);
+        }
     }
 
     public final DataBaseConnectionProvider createWithHighPrivilege(DbProperties properties) throws SQLException {

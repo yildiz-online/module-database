@@ -174,6 +174,11 @@ class DatabaseConnectionProviderTest {
                 public QueryBuilder createBuilder() {
                     return null;
                 }
+
+                @Override
+                public boolean requirePool() {
+                    return false;
+                }
             };
 
             assertThrows(AssertionError.class, () -> new DummyDatabaseConnectionProvider(withoutUri, properties, false));
