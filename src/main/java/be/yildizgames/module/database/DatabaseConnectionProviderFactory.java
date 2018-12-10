@@ -25,7 +25,7 @@
 package be.yildizgames.module.database;
 
 import be.yildizgames.common.exception.implementation.ImplementationException;
-import be.yildizgames.common.exception.technical.InitializationException;
+import be.yildizgames.module.database.exception.InvalidSystem;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -58,7 +58,7 @@ public class DatabaseConnectionProviderFactory {
         ImplementationException.throwForNull(properties);
         DatabaseSystem system = Optional
                 .ofNullable(this.systems.get(properties.getSystem()))
-                .orElseThrow(() -> new InitializationException(properties.getSystem()));
+                .orElseThrow(() -> new InvalidSystem(properties.getSystem()));
         if(system.requirePool()) {
             return new C3P0ConnectionProvider(system, properties);
         } else {
@@ -70,7 +70,7 @@ public class DatabaseConnectionProviderFactory {
         ImplementationException.throwForNull(properties);
         DatabaseSystem system = Optional
                 .ofNullable(this.systems.get(properties.getSystem()))
-                .orElseThrow(() -> new InitializationException(properties.getSystem()));
+                .orElseThrow(() -> new InvalidSystem(properties.getSystem()));
 
         if(system.requirePool()) {
             return new C3P0ConnectionProvider(system, properties, true);

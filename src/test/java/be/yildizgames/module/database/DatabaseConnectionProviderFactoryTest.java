@@ -25,7 +25,7 @@
 package be.yildizgames.module.database;
 
 import be.yildizgames.common.exception.implementation.ImplementationException;
-import be.yildizgames.common.exception.technical.InitializationException;
+import be.yildizgames.common.exception.technical.TechnicalException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -75,7 +75,7 @@ class DatabaseConnectionProviderFactoryTest {
         @Test
         void unknown() {
             DbProperties properties = givenADbProperties("unknown");
-            assertThrows(InitializationException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(properties));
+            assertThrows(TechnicalException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(properties));
         }
     }
 
