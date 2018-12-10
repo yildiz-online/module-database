@@ -31,6 +31,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ServiceLoader;
 
 /**
  * Parse properties to extract the required connection provider.
@@ -44,6 +45,8 @@ public class DatabaseConnectionProviderFactory {
 
     private DatabaseConnectionProviderFactory() {
         super();
+        ServiceLoader<DatabaseSystemRegisterer> registerer = ServiceLoader.load(DatabaseSystemRegisterer.class);
+        registerer.forEach(DatabaseSystemRegisterer::register);
     }
 
     public static DatabaseConnectionProviderFactory getInstance() {
