@@ -41,12 +41,15 @@ public class DatabaseConnectionProviderFactory {
 
     private static final DatabaseConnectionProviderFactory INSTANCE = new DatabaseConnectionProviderFactory();
 
+    static {
+        ServiceLoader<DatabaseSystemRegisterer> registerer = ServiceLoader.load(DatabaseSystemRegisterer.class);
+        registerer.forEach(DatabaseSystemRegisterer::register);
+    }
+
     private final Map<String, DatabaseSystem> systems = new HashMap<>();
 
     private DatabaseConnectionProviderFactory() {
         super();
-        ServiceLoader<DatabaseSystemRegisterer> registerer = ServiceLoader.load(DatabaseSystemRegisterer.class);
-        registerer.forEach(DatabaseSystemRegisterer::register);
     }
 
     public static DatabaseConnectionProviderFactory getInstance() {
