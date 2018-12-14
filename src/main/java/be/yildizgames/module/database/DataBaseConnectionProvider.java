@@ -24,10 +24,10 @@
 package be.yildizgames.module.database;
 
 import be.yildizgames.common.exception.implementation.ImplementationException;
-import be.yildizgames.common.logging.LogFactory;
 import org.jdbcdslog.ConnectionLoggingProxy;
 import org.jooq.SQLDialect;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -40,7 +40,7 @@ import java.util.Properties;
  */
 public abstract class DataBaseConnectionProvider implements AutoCloseable {
 
-    private static final Logger LOGGER = LogFactory.getInstance().getLogger(DataBaseConnectionProvider.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataBaseConnectionProvider.class);
 
     /**
      * Selected Database system.

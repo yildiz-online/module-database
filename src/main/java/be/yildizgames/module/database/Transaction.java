@@ -24,8 +24,8 @@
 
 package be.yildizgames.module.database;
 
-import be.yildizgames.common.logging.LogFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -35,7 +35,7 @@ import java.sql.SQLException;
  */
 public final class Transaction {
 
-    private final Logger logger = LogFactory.getInstance().getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final DataBaseConnectionProvider connectionProvider;
 
