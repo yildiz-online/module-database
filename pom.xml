@@ -46,7 +46,7 @@
   </parent>
 
   <properties>
-    <maven.plugin.jooq.version>3.11.7</maven.plugin.jooq.version>
+    <maven.plugin.jooq.version>3.11.8</maven.plugin.jooq.version>
   </properties>
 
   <dependencies>
