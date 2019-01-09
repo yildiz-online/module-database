@@ -72,6 +72,7 @@ public final class C3P0ConnectionProvider extends DataBaseConnectionProvider {
      */
     C3P0ConnectionProvider(final DatabaseSystem system, final DbProperties properties, boolean root) throws SQLException {
         super(system, properties, root);
+        LOGGER.info("Using C3P0 connection pool.");
         System.setProperty("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL", "WARNING");
         System.setProperty("com.mchange.v2.log.MLog", "com.mchange.v2.log.FallbackMLog");
         this.cpds = new ComboPooledDataSource();
