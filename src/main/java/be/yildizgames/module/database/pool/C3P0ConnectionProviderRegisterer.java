@@ -24,24 +24,23 @@
  *
  */
 
-package be.yildizgames.module.database;
+package be.yildizgames.module.database.pool;
 
-import java.util.Properties;
+import be.yildizgames.module.database.ConnectionProviderRegisterer;
+import be.yildizgames.module.database.DataBaseConnectionProvider;
+import be.yildizgames.module.database.DatabaseSystem;
+import be.yildizgames.module.database.DbProperties;
 
-/**
- * Basic implementation for the DbProperties.
- * @deprecated Use StandardDbProperties.
- * @author Grégory Van den Borre
- */
-@Deprecated(since = "2.0.4", forRemoval = true)
-public class SimpleDbProperties extends StandardDbProperties {
+import java.sql.SQLException;
 
-    /**
-     * @deprecated Use StandardDbProperties.
-     * @param properties Properties
-     */
-    @Deprecated(since = "2.0.4", forRemoval = true)
-    public SimpleDbProperties(Properties properties) {
-        super(properties);
+public class C3P0ConnectionProviderRegisterer implements ConnectionProviderRegisterer {
+
+    @Override
+    public DataBaseConnectionProvider register(DatabaseSystem system, DbProperties properties, boolean root) {
+        try {
+            return new C3P0ConnectionProvider(system, properties, root);
+        } catch (SQLException e) {
+            throw new PersistenceException(e);
+        }
     }
 }

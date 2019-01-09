@@ -62,7 +62,7 @@ class SimpleDbPropertiesTest {
         base.setProperty("database.host","host-ok");
         base.setProperty("database.port","10");
         base.setProperty("database.system","system-ok");
-        DbProperties p = new SimpleDbProperties(base);
+        DbProperties p = new StandardDbProperties(base);
         assertEquals("user-ok", p.getDbUser());
         assertEquals("password-ok", p.getDbPassword());
         assertEquals("user-ok", p.getDbRootUser());
@@ -75,7 +75,7 @@ class SimpleDbPropertiesTest {
 
     @Test
     void userNull() {
-        assertThrows(ImplementationException.class, () -> new SimpleDbProperties(null));
+        assertThrows(ImplementationException.class, () -> new StandardDbProperties(null));
     }
 
     @Test
@@ -88,7 +88,7 @@ class SimpleDbPropertiesTest {
         base.setProperty("database.host","host-ok");
         base.setProperty("database.port","10");
         base.setProperty("database.system","system-ok");
-        assertThrows(PropertiesException.class, () -> new SimpleDbProperties(base));
+        assertThrows(PropertiesException.class, () -> new StandardDbProperties(base));
     }
 
     @Test
@@ -101,7 +101,7 @@ class SimpleDbPropertiesTest {
         base.setProperty("database.host","host-ok");
         base.setProperty("database.port","10");
         base.setProperty("database.system","system-ok");
-        assertThrows(PropertiesException.class, () -> new SimpleDbProperties(base));
+        assertThrows(PropertiesException.class, () -> new StandardDbProperties(base));
     }
 
     @Test
@@ -114,7 +114,7 @@ class SimpleDbPropertiesTest {
         base.setProperty("database.name","name-ok");
         base.setProperty("database.port","10");
         base.setProperty("database.system","system-ok");
-        assertThrows(PropertiesException.class, () -> new SimpleDbProperties(base));
+        assertThrows(PropertiesException.class, () -> new StandardDbProperties(base));
     }
 
     @Test
@@ -128,7 +128,7 @@ class SimpleDbPropertiesTest {
         base.setProperty("database.host","host-ok");
         base.setProperty("database.port","-1");
         base.setProperty("database.system","system-ok");
-        assertThrows(PropertiesException.class, () -> new SimpleDbProperties(base));
+        assertThrows(PropertiesException.class, () -> new StandardDbProperties(base));
     }
 
     @Test
@@ -142,7 +142,7 @@ class SimpleDbPropertiesTest {
         base.setProperty("database.host","host-ok");
         base.setProperty("database.port","100000000000000");
         base.setProperty("database.system","system-ok");
-        assertThrows(PropertiesException.class, () -> new SimpleDbProperties(base));
+        assertThrows(PropertiesException.class, () -> new StandardDbProperties(base));
     }
 
 }

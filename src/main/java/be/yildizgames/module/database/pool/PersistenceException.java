@@ -24,24 +24,20 @@
  *
  */
 
-package be.yildizgames.module.database;
+package be.yildizgames.module.database.pool;
 
-import java.util.Properties;
+import be.yildizgames.common.exception.technical.TechnicalException;
 
-/**
- * Basic implementation for the DbProperties.
- * @deprecated Use StandardDbProperties.
- * @author Grégory Van den Borre
- */
-@Deprecated(since = "2.0.4", forRemoval = true)
-public class SimpleDbProperties extends StandardDbProperties {
+public class PersistenceException extends TechnicalException {
+    protected PersistenceException(String message, Exception cause) {
+        super(message, cause);
+    }
 
-    /**
-     * @deprecated Use StandardDbProperties.
-     * @param properties Properties
-     */
-    @Deprecated(since = "2.0.4", forRemoval = true)
-    public SimpleDbProperties(Properties properties) {
-        super(properties);
+    protected PersistenceException(Exception cause) {
+        super(cause);
+    }
+
+    protected PersistenceException(String s) {
+        super(s);
     }
 }

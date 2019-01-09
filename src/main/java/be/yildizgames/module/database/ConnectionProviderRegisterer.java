@@ -26,22 +26,12 @@
 
 package be.yildizgames.module.database;
 
-import java.util.Properties;
+import java.sql.SQLException;
 
 /**
- * Basic implementation for the DbProperties.
- * @deprecated Use StandardDbProperties.
  * @author Grégory Van den Borre
  */
-@Deprecated(since = "2.0.4", forRemoval = true)
-public class SimpleDbProperties extends StandardDbProperties {
+public interface ConnectionProviderRegisterer {
 
-    /**
-     * @deprecated Use StandardDbProperties.
-     * @param properties Properties
-     */
-    @Deprecated(since = "2.0.4", forRemoval = true)
-    public SimpleDbProperties(Properties properties) {
-        super(properties);
-    }
+    DataBaseConnectionProvider register(final DatabaseSystem system, final DbProperties properties, boolean root);
 }

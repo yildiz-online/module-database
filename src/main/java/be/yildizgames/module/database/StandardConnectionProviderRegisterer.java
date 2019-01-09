@@ -26,22 +26,10 @@
 
 package be.yildizgames.module.database;
 
-import java.util.Properties;
+class StandardConnectionProviderRegisterer implements ConnectionProviderRegisterer {
 
-/**
- * Basic implementation for the DbProperties.
- * @deprecated Use StandardDbProperties.
- * @author Grégory Van den Borre
- */
-@Deprecated(since = "2.0.4", forRemoval = true)
-public class SimpleDbProperties extends StandardDbProperties {
-
-    /**
-     * @deprecated Use StandardDbProperties.
-     * @param properties Properties
-     */
-    @Deprecated(since = "2.0.4", forRemoval = true)
-    public SimpleDbProperties(Properties properties) {
-        super(properties);
+    @Override
+    public DataBaseConnectionProvider register(DatabaseSystem system, DbProperties properties, boolean root) {
+        return new StandardConnectionProvider(system, properties, root);
     }
 }

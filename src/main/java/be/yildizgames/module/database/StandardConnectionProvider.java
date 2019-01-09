@@ -23,25 +23,34 @@
  *
  *
  */
-
 package be.yildizgames.module.database;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Properties;
 
-/**
- * Basic implementation for the DbProperties.
- * @deprecated Use StandardDbProperties.
- * @author Grégory Van den Borre
- */
-@Deprecated(since = "2.0.4", forRemoval = true)
-public class SimpleDbProperties extends StandardDbProperties {
+class StandardConnectionProvider extends DataBaseConnectionProvider {
 
-    /**
-     * @deprecated Use StandardDbProperties.
-     * @param properties Properties
-     */
-    @Deprecated(since = "2.0.4", forRemoval = true)
-    public SimpleDbProperties(Properties properties) {
-        super(properties);
+    private final Properties properties;
+
+    StandardConnectionProvider(DatabaseSystem system, DbProperties properties) {
+        this(system, properties, false);
+    }
+
+    StandardConnectionProvider(DatabaseSystem system, DbProperties properties, boolean root) {
+        super(system, properties, root);
+        this.properties = new Properties();
+        this.properties.put("user", this.getLogin());
+        this.properties.put("password", this.getPassword());
+    }
+
+    @Override
+    protected Connection getConnectionImpl() throws SQLException {
+        return this.getSystem().getDriverProvider().getDriver().connect(this.getUri(), this.properties);
+    }
+
+    @Override
+    public void close() throws Exception {
+
     }
 }
