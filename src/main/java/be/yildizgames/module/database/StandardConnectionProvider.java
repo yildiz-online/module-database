@@ -34,7 +34,7 @@ import java.util.Properties;
 
 class StandardConnectionProvider extends DataBaseConnectionProvider {
 
-    private final Logger logger = LoggerFactory.getLogger(StandardConnectionProvider.class)
+    private final Logger logger = LoggerFactory.getLogger(StandardConnectionProvider.class);
 
     private final Properties properties;
 
