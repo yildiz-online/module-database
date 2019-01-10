@@ -27,7 +27,7 @@ package be.yildizgames.module.database;
 import org.h2.Driver;
 import org.jooq.SQLDialect;
 
-class DummySystem implements DatabaseSystem {
+public class DummySystem implements DatabaseSystem {
 
     @Override
     public SQLDialect getDialect() {
