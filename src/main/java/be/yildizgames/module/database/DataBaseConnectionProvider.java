@@ -72,7 +72,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
      * @param system Database system to use.
      * @param properties Properties holding connection data.
      * @param root Flag to check if the connection is root or not.
-     * @throws AssertionError if a parameter is null or invalid.
+     * @throws ImplementationException if a parameter is null or invalid.
      */
     //@Ensures ("this.system == system")
     //@Ensures ("this.system != null")

@@ -24,20 +24,14 @@
  *
  */
 
-package be.yildizgames.module.database.pool;
+package be.yildizgames.module.database.exception;
 
 import be.yildizgames.common.exception.technical.TechnicalException;
 
 public class PersistenceException extends TechnicalException {
-    protected PersistenceException(String message, Exception cause) {
-        super(message, cause);
-    }
 
-    protected PersistenceException(Exception cause) {
+    public PersistenceException(Exception cause) {
         super(cause);
     }
 
-    protected PersistenceException(String s) {
-        super(s);
-    }
 }

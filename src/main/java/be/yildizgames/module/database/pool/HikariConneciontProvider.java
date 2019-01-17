@@ -26,22 +26,46 @@
 
 package be.yildizgames.module.database.pool;
 
-import be.yildizgames.module.database.ConnectionProviderRegisterer;
 import be.yildizgames.module.database.DataBaseConnectionProvider;
 import be.yildizgames.module.database.DatabaseSystem;
 import be.yildizgames.module.database.DbProperties;
-import be.yildizgames.module.database.exception.PersistenceException;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
-public class C3P0ConnectionProviderRegisterer implements ConnectionProviderRegisterer {
+public class HikariConneciontProvider extends DataBaseConnectionProvider {
+
+    private final HikariDataSource ds;
+
+    /**
+     * Create a new Database connection provider.
+     *
+     * @param system     Database system to use.
+     * @param properties Properties holding connection data.
+     * @param root       Flag to check if the connection is root or not.
+     */
+    public HikariConneciontProvider(DatabaseSystem system, DbProperties properties, boolean root) {
+        super(system, properties, root);
+        HikariConfig config = new HikariConfig();
+        config.setJdbcUrl("jdbc:mysql://localhost:3306/simpsons");
+        config.setUsername("bart");
+        config.setPassword("51mp50n");
+        config.addDataSourceProperty("cachePrepStmts", "true");
+        config.addDataSourceProperty("prepStmtCacheSize", "250");
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+
+        this.ds = new HikariDataSource(config);
+    }
 
     @Override
-    public DataBaseConnectionProvider register(DatabaseSystem system, DbProperties properties, boolean root) {
-        try {
-            return new C3P0ConnectionProvider(system, properties, root);
-        } catch (SQLException e) {
-            throw new PersistenceException(e);
-        }
+    protected Connection getConnectionImpl() throws SQLException {
+        return ds.getConnection();
+    }
+
+    @Override
+    public void close() throws Exception {
+        ds.close();
     }
 }

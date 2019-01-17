@@ -33,6 +33,7 @@ module be.yildizgames.module.database {
 
     requires slf4j.api;
     requires c3p0;
+    requires com.zaxxer.hikari;
     requires org.jooq;
     requires jdbcdslog;
     requires liquibase.core;

@@ -30,18 +30,11 @@ import be.yildizgames.module.database.ConnectionProviderRegisterer;
 import be.yildizgames.module.database.DataBaseConnectionProvider;
 import be.yildizgames.module.database.DatabaseSystem;
 import be.yildizgames.module.database.DbProperties;
-import be.yildizgames.module.database.exception.PersistenceException;
 
-import java.sql.SQLException;
-
-public class C3P0ConnectionProviderRegisterer implements ConnectionProviderRegisterer {
+public class HikariConnectionProviderRegisterer implements ConnectionProviderRegisterer {
 
     @Override
     public DataBaseConnectionProvider register(DatabaseSystem system, DbProperties properties, boolean root) {
-        try {
-            return new C3P0ConnectionProvider(system, properties, root);
-        } catch (SQLException e) {
-            throw new PersistenceException(e);
-        }
+         return new HikariConneciontProvider(system, properties, root);
     }
 }
