@@ -46,12 +46,12 @@ public class HikariConneciontProvider extends DataBaseConnectionProvider {
      * @param properties Properties holding connection data.
      * @param root       Flag to check if the connection is root or not.
      */
-    public HikariConneciontProvider(DatabaseSystem system, DbProperties properties, boolean root) {
+    HikariConneciontProvider(DatabaseSystem system, DbProperties properties, boolean root) {
         super(system, properties, root);
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:mysql://localhost:3306/simpsons");
-        config.setUsername("bart");
-        config.setPassword("51mp50n");
+        config.setJdbcUrl(this.getUri());
+        config.setUsername(this.getLogin());
+        config.setPassword(this.getPassword());
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
