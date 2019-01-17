@@ -35,7 +35,7 @@ import com.zaxxer.hikari.HikariDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class HikariConneciontProvider extends DataBaseConnectionProvider {
+public class HikariConnectionProvider extends DataBaseConnectionProvider {
 
     private final HikariDataSource ds;
 
@@ -46,7 +46,7 @@ public class HikariConneciontProvider extends DataBaseConnectionProvider {
      * @param properties Properties holding connection data.
      * @param root       Flag to check if the connection is root or not.
      */
-    HikariConneciontProvider(DatabaseSystem system, DbProperties properties, boolean root) {
+    HikariConnectionProvider(DatabaseSystem system, DbProperties properties, boolean root) {
         super(system, properties, root);
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(this.getUri());

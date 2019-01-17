@@ -35,6 +35,6 @@ public class HikariConnectionProviderRegisterer implements ConnectionProviderReg
 
     @Override
     public DataBaseConnectionProvider register(DatabaseSystem system, DbProperties properties, boolean root) {
-         return new HikariConneciontProvider(system, properties, root);
+         return new HikariConnectionProvider(system, properties, root);
     }
 }
