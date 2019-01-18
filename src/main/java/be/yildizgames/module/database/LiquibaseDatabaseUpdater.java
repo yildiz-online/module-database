@@ -38,6 +38,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
+ * Liquibase implementation to update the database schema.
  * @author Grégory Van den Borre
  */
 public class LiquibaseDatabaseUpdater implements DatabaseUpdater {
@@ -46,25 +47,25 @@ public class LiquibaseDatabaseUpdater implements DatabaseUpdater {
 
     private final String configurationFile;
 
-    private LiquibaseDatabaseUpdater(String configurationFile) {
+    private LiquibaseDatabaseUpdater(final String configurationFile) {
         super();
         ImplementationException.throwForNull(configurationFile);
         this.configurationFile = configurationFile;
     }
 
-    public static LiquibaseDatabaseUpdater fromConfigurationPath(String path) {
+    public static LiquibaseDatabaseUpdater fromConfigurationPath(final String path) {
         return new LiquibaseDatabaseUpdater(path);
     }
 
     @Override
-    public final void update(DataBaseConnectionProvider provider) throws SQLException {
+    public final void update(final DataBaseConnectionProvider provider) throws SQLException {
         ImplementationException.throwForNull(provider);
         this.logger.info("Updating database schema...");
         try (Connection c = provider.getConnection()){
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
             Liquibase liquibase = new Liquibase(this.configurationFile, new ClassLoaderResourceAccessor(), database);
             liquibase.update("database-update");
-            this.logger.info("Database schema up to date.");
+            this.logger.info("Updating database schema completed.");
             database.close();
         } catch (LiquibaseException | SQLException e) {
             throw new SQLException(e);

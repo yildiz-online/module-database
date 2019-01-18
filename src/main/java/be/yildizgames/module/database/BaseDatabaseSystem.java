@@ -28,12 +28,20 @@ import be.yildizgames.common.exception.implementation.ImplementationException;
 import be.yildizgames.common.util.StringUtil;
 
 /**
+ * A system represent an implementation of a RDBMS.
  * @author Grégory Van den Borre
  */
 public abstract class BaseDatabaseSystem implements DatabaseSystem {
 
+    /**
+     * URL with empty values.
+     */
     private final String url;
 
+    /**
+     * Create an instance from an URL.
+     * @param url The url with empty values.
+     */
     protected BaseDatabaseSystem(final String url) {
         super();
         ImplementationException.throwForNull(url);
@@ -42,6 +50,7 @@ public abstract class BaseDatabaseSystem implements DatabaseSystem {
 
     @Override
     public final String getUrl(final DbProperties p) {
+        ImplementationException.throwForNull(p);
         String[] params = {p.getDbName(), p.getDbHost(), String.valueOf(p.getDbPort()), p.getDbUser()};
         return StringUtil.fillVariable(this.url, params);
     }

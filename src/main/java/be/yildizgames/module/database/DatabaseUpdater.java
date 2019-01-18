@@ -27,9 +27,15 @@ package be.yildizgames.module.database;
 import java.sql.SQLException;
 
 /**
+ * Update the database schema.
  * @author Grégory Van den Borre
  */
 public interface DatabaseUpdater {
 
+    /**
+     * Update the schema.
+     * @param provider Database connection provider.
+     * @throws SQLException If something fails during the update.
+     */
     void update(DataBaseConnectionProvider provider) throws SQLException;
 }

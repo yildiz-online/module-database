@@ -27,19 +27,45 @@ package be.yildizgames.module.database;
 import org.jooq.SQLDialect;
 
 /**
+ * A system represent an implementation of a RDBMS.
  * @author Grégory Van den Borre
  */
 public interface DatabaseSystem {
 
+    /**
+     * Provide the associated JOOQ dialect.
+     * @return The dialect.
+     */
     SQLDialect getDialect();
 
+    /**
+     * Provide the driver name.
+     * @return The name.
+     */
     String getDriver();
 
+    /**
+     * Provide the driver provider.
+     * @return the driver provider
+     */
     DriverProvider getDriverProvider();
 
-    String getUrl(DbProperties p);
+    /**
+     * Provide the completed URL from the properties.
+     * @param properties Properties containing the connection information.
+     * @return The built URL.
+     */
+    String getUrl(DbProperties properties);
 
+    /**
+     * Create a builder for SQL queries.
+     * @return The builder.
+     */
     QueryBuilder createBuilder();
 
+    /**
+     * Flag to know if this system can use a pool or not.
+     * @return True if a pool can be used, false otherwise.
+     */
     boolean requirePool();
 }

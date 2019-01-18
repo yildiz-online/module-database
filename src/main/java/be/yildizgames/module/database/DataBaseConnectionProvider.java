@@ -48,14 +48,17 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
      * Selected Database system.
      */
     private final DatabaseSystem system;
+
     /**
      * Connection URI.
      */
     private String uri;
+
     /**
      * Database connection login.
      */
     private final String login;
+
     /**
      * Data base connection password.
      */
@@ -149,10 +152,18 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
         return system;
     }
 
+    /**
+     * Provide the connection user login.
+     * @return The login.
+     */
     protected final String getLogin() {
         return login;
     }
 
+    /**
+     * Provider the connection user password.
+     * @return The password.
+     */
     protected final String getPassword() {
         return password;
     }

@@ -28,10 +28,16 @@ import java.sql.Driver;
 import java.sql.SQLException;
 
 /**
+ * Provide the SQL driver to connect to the database system.
  * @author Grégory Van den Borre
  */
 @FunctionalInterface
 public interface DriverProvider {
 
+    /**
+     * Provide the database system driver.
+     * @return The driver [ensure not null].
+     * @throws SQLException In case of failure.
+     */
     Driver getDriver() throws SQLException;
 }

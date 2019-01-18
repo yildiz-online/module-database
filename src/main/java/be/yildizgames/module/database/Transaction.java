@@ -31,24 +31,31 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
+ * A transactional database operation.
  * @author Grégory Van den Borre
  */
 public final class Transaction {
 
+    /**
+     * Logger.
+     */
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     * Connection provider.
+     */
     private final DataBaseConnectionProvider connectionProvider;
 
-    public Transaction(DataBaseConnectionProvider p) {
-        this.connectionProvider = p;
+    public Transaction(DataBaseConnectionProvider provider) {
+        this.connectionProvider = provider;
     }
 
-    public void execute(TransactionBehavior b) {
+    public void execute(TransactionBehavior behavior) {
         try(Connection c = connectionProvider.getConnection()) {
             logger.debug("Starting transaction");
             c.setAutoCommit(false);
             try {
-                b.execute(c);
+                behavior.execute(c);
             } catch (Exception e) {
                 c.rollback();
                 logger.error("Error in transaction", e);

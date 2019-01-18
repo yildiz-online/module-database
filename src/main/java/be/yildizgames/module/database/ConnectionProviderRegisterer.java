@@ -26,12 +26,18 @@
 
 package be.yildizgames.module.database;
 
-import java.sql.SQLException;
-
 /**
+ * Register a database connection provider.
  * @author Grégory Van den Borre
  */
 public interface ConnectionProviderRegisterer {
 
-    DataBaseConnectionProvider register(final DatabaseSystem system, final DbProperties properties, boolean root);
+    /**
+     * Register a database connection provider, it can be simple or a pool.
+     * @param system Database system to use.
+     * @param properties Properties containing the connection information.
+     * @param root True to use the root user, false to use the database dedicated user.
+     * @return The create connection provider instance.
+     */
+    DataBaseConnectionProvider register(DatabaseSystem system, DbProperties properties, boolean root);
 }
