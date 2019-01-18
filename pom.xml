@@ -51,6 +51,11 @@
   <dependencies>
     <dependency>
       <groupId>be.yildiz-games</groupId>
+      <artifactId>module-database-pool</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>be.yildiz-games</groupId>
       <artifactId>common-exception</artifactId>
       <version>1.0.2</version>
     </dependency>
@@ -103,11 +108,6 @@
       <groupId>com.mchange</groupId>
       <artifactId>c3p0</artifactId>
       <version>0.9.5.2</version>
-    </dependency>
-    <dependency>
-      <groupId>com.zaxxer</groupId>
-      <artifactId>HikariCP</artifactId>
-      <version>3.3.0</version>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
