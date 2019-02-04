@@ -34,10 +34,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * @author Grégory Van den Borre
  */
-class DatabaseConnectionProviderFactoryTest {
+public class DatabaseConnectionProviderFactoryTest {
 
     @Nested
-    class Create {
+    public class Create {
 
         /*@Test
         void mysql() throws SQLException {
@@ -68,12 +68,12 @@ class DatabaseConnectionProviderFactoryTest {
         }*/
 
         @Test
-        void withNull() {
+        public void withNull() {
             assertThrows(ImplementationException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(null));
         }
 
         @Test
-        void unknown() {
+        public void unknown() {
             DbProperties properties = givenADbProperties("unknown");
             assertThrows(TechnicalException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(properties));
         }

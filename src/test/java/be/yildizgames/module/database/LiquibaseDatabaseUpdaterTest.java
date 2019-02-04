@@ -35,27 +35,27 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * @author Grégory Van den Borre
  */
-class LiquibaseDatabaseUpdaterTest {
+public class LiquibaseDatabaseUpdaterTest {
 
     @Nested
-    class Constructor {
+    public class Constructor {
 
         @Test
-        void happyFlow() {
+        public void happyFlow() {
             LiquibaseDatabaseUpdater.fromConfigurationPath("any");
         }
 
         @Test
-        void withNullFile() {
+        public void withNullFile() {
             assertThrows(ImplementationException.class, () -> LiquibaseDatabaseUpdater.fromConfigurationPath(null));
         }
     }
 
     @Nested
-    class Update {
+    public class Update {
 
         @Test
-        void withNullProvider() {
+        public void withNullProvider() {
             assertThrows(ImplementationException.class, () -> LiquibaseDatabaseUpdater.fromConfigurationPath("any").update(null));
         }
     }

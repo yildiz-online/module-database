@@ -33,13 +33,13 @@ import java.sql.SQLException;
 /**
  * @author Grégory Van den Borre
  */
-class TransactionTest {
+public class TransactionTest {
 
     @Nested
-    class Execute {
+    public class Execute {
 
         @Test
-        void happyFlow() throws SQLException {
+        public void happyFlow() throws SQLException {
             Transaction t = new Transaction(new DummyDatabaseConnectionProvider(
                     new DummySystem(),
                     new DummyDatabaseConnectionProvider.DefaultProperties(),
@@ -48,7 +48,7 @@ class TransactionTest {
         }
 
         @Test
-        void withError() throws Exception {
+        public void withError() throws Exception {
             Transaction t = new Transaction(new DummyDatabaseConnectionProvider(
                     new DummySystem(),
                     new DummyDatabaseConnectionProvider.DefaultProperties(),
