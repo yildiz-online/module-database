@@ -85,8 +85,6 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
         ImplementationException.throwForNull(system);
         ImplementationException.throwForNull(properties);
         Properties p = new Properties(System.getProperties());
-        p.put("com.mchange.v2.log.MLog", "com.mchange.v2.log.FallbackMLog");
-        p.put("com.mchange.v2.log.FallbackMLog.DEFAULT_CUTOFF_LEVEL", "info");
         p.put("org.jooq.no-logo", "true");
         System.setProperties(p);
         this.login = root ? properties.getDbRootUser() : properties.getDbUser();
