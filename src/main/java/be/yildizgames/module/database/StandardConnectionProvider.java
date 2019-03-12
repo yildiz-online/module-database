@@ -38,6 +38,10 @@ class StandardConnectionProvider extends DataBaseConnectionProvider {
 
     private final Properties properties;
 
+    private boolean connected;
+
+    private Connection connection;
+
     StandardConnectionProvider(DatabaseSystem system, DbProperties properties) {
         this(system, properties, false);
     }
@@ -52,11 +56,15 @@ class StandardConnectionProvider extends DataBaseConnectionProvider {
 
     @Override
     protected Connection getConnectionImpl() throws SQLException {
-        return this.getSystem().getDriverProvider().getDriver().connect(this.getUri(), this.properties);
+        if(!connected) {
+            this.connection = this.getSystem().getDriverProvider().getDriver().connect(this.getUri(), this.properties);
+        }
+        return this.connection;
     }
 
     @Override
     public void close() throws Exception {
-
+        this.connection.close();
+        this.connected = false;
     }
 }
