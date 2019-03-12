@@ -26,6 +26,7 @@ package be.yildizgames.module.database;
 import be.yildizgames.common.exception.implementation.ImplementationException;
 import org.h2.Driver;
 import org.jooq.SQLDialect;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -232,6 +233,7 @@ public class DatabaseConnectionProviderTest {
     @Nested
     public class Sanity {
 
+        @Disabled
         @Test
         public void happyFlow() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();

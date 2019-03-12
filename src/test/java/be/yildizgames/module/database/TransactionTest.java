@@ -25,6 +25,7 @@
 
 package be.yildizgames.module.database;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -38,6 +39,7 @@ public class TransactionTest {
     @Nested
     public class Execute {
 
+        @Disabled
         @Test
         public void happyFlow() throws SQLException {
             Transaction t = new Transaction(new DummyDatabaseConnectionProvider(
@@ -47,6 +49,7 @@ public class TransactionTest {
             t.execute(c -> {});
         }
 
+        @Disabled
         @Test
         public void withError() throws Exception {
             Transaction t = new Transaction(new DummyDatabaseConnectionProvider(
