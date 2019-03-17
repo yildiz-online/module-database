@@ -24,8 +24,6 @@
 
 package be.yildizgames.module.database;
 
-import org.mockito.Mockito;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -51,7 +49,7 @@ public class DummyDatabaseConnectionProvider extends DataBaseConnectionProvider 
         if (this.throwError) {
             throw new SQLException("error");
         }
-        return Mockito.mock(Connection.class);
+        return new DummyConnection();
     }
 
     @Override

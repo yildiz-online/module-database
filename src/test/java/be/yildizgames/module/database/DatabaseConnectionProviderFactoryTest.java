@@ -24,13 +24,9 @@
  */
 package be.yildizgames.module.database;
 
-import be.yildizgames.common.exception.implementation.ImplementationException;
-import be.yildizgames.common.exception.technical.TechnicalException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Grégory Van den Borre
