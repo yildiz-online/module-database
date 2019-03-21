@@ -1,27 +1,29 @@
 /*
+ *
  * This file is part of the Yildiz-Engine project, licenced under the MIT License  (MIT)
  *
- *  Copyright (c) 2019 Grégory Van den Borre
+ * Copyright (c) 2019 Grégory Van den Borre
  *
- *  More infos available: https://engine.yildiz-games.be
+ * More infos available: https://engine.yildiz-games.be
  *
- *  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
- *  documentation files (the "Software"), to deal in the Software without restriction, including without
- *  limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
- *  of the Software, and to permit persons to whom the Software is furnished to do so,
- *  subject to the following conditions:
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software without restriction, including without
+ * limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ * of the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included in all copies or substantial
+ * The above copyright notice and this permission notice shall be included in all copies or substantial
  *  portions of the Software.
  *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
  *  WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
- *  OR COPYRIGHT  HOLDERS BE LIABLE FOR ANY CLAIM,
+ * OR COPYRIGHT  HOLDERS BE LIABLE FOR ANY CLAIM,
  *  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE  SOFTWARE.
+ *
  *
  */
-package be.yildizgames.module.database;
+package be.yildizgames.module.database.dummy;
 
 import java.sql.Array;
 import java.sql.Blob;
@@ -43,6 +45,12 @@ import java.util.Properties;
 import java.util.concurrent.Executor;
 
 public class DummyConnection implements Connection {
+
+    private String cat = "";
+
+    private int isolation;
+
+    private boolean closed;
 
     @Override
     public Statement createStatement() throws SQLException {
@@ -75,23 +83,23 @@ public class DummyConnection implements Connection {
     }
 
     @Override
-    public void commit() throws SQLException {
-
+    public void commit() {
+        //Does nothing.
     }
 
     @Override
-    public void rollback() throws SQLException {
-
+    public void rollback() {
+        //Does nothing.
     }
 
     @Override
-    public void close() throws SQLException {
-
+    public final void close() {
+        this.closed = true;
     }
 
     @Override
-    public boolean isClosed() throws SQLException {
-        return false;
+    public final boolean isClosed() {
+        return this.closed;
     }
 
     @Override
@@ -110,33 +118,33 @@ public class DummyConnection implements Connection {
     }
 
     @Override
-    public void setCatalog(String catalog) throws SQLException {
-
+    public final void setCatalog(String catalog) {
+        this.cat = catalog;
     }
 
     @Override
-    public String getCatalog() throws SQLException {
-        return null;
+    public final String getCatalog() {
+        return this.cat;
     }
 
     @Override
-    public void setTransactionIsolation(int level) throws SQLException {
-
+    public final void setTransactionIsolation(int level) {
+        this.isolation = level;
     }
 
     @Override
-    public int getTransactionIsolation() throws SQLException {
-        return 0;
+    public final int getTransactionIsolation() {
+        return this.isolation;
     }
 
     @Override
-    public SQLWarning getWarnings() throws SQLException {
-        return null;
+    public final SQLWarning getWarnings() {
+        return new SQLWarning();
     }
 
     @Override
-    public void clearWarnings() throws SQLException {
-
+    public final void clearWarnings() {
+        //Does nothing.
     }
 
     @Override

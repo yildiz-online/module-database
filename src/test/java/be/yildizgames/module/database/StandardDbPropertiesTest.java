@@ -41,7 +41,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * @author Grégory Van den Borre
  */
-public class SimpleDbPropertiesTest {
+public class StandardDbPropertiesTest {
 
     @Test
     public void testInvariantConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {

@@ -25,6 +25,9 @@
 
 package be.yildizgames.module.database;
 
+import be.yildizgames.module.database.dummy.DummyDatabaseConnectionProvider;
+import be.yildizgames.module.database.dummy.DummySystem;
+import org.h2.Driver;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -39,21 +42,19 @@ public class TransactionTest {
     @Nested
     public class Execute {
 
-        @Disabled
         @Test
         public void happyFlow() throws SQLException {
             Transaction t = new Transaction(new DummyDatabaseConnectionProvider(
-                    new DummySystem(),
+                    new DummySystem(Driver::new),
                     new DummyDatabaseConnectionProvider.DefaultProperties(),
                     false));
             t.execute(c -> {});
         }
 
-        @Disabled
         @Test
         public void withError() throws Exception {
             Transaction t = new Transaction(new DummyDatabaseConnectionProvider(
-                    new DummySystem(),
+                    new DummySystem(Driver::new),
                     new DummyDatabaseConnectionProvider.DefaultProperties(),
                     false));
             t.execute(c -> {throw new Exception("Expected exception");});

@@ -24,9 +24,13 @@
  */
 package be.yildizgames.module.database;
 
+import be.yildizgames.common.exception.implementation.ImplementationException;
+import be.yildizgames.common.exception.technical.TechnicalException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Grégory Van den Borre
@@ -64,17 +68,15 @@ public class DatabaseConnectionProviderFactoryTest {
             assertEquals(DataBaseConnectionProvider.DBSystem.POSTGRES, p.getSystem());
         }*/
 
-        @Disabled
         @Test
         public void withNull() {
-            //assertThrows(ImplementationException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(null));
+            assertThrows(ImplementationException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(null));
         }
 
-        @Disabled
         @Test
         public void unknown() {
-           // DbProperties properties = givenADbProperties("unknown");
-           // assertThrows(TechnicalException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(properties));
+            DbProperties properties = givenADbProperties("unknown");
+            assertThrows(TechnicalException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(properties));
         }
     }
 
