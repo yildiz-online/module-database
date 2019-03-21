@@ -68,11 +68,13 @@ public class DatabaseConnectionProviderFactoryTest {
             assertEquals(DataBaseConnectionProvider.DBSystem.POSTGRES, p.getSystem());
         }*/
 
+        @Disabled
         @Test
         public void withNull() {
             assertThrows(ImplementationException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(null));
         }
 
+        @Disabled
         @Test
         public void unknown() {
             DbProperties properties = givenADbProperties("unknown");
