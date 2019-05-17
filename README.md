@@ -12,7 +12,7 @@ The database module is a component meant to access and use the database.
 
 ## Requirements
 
-To build this module, you will need a java 9 JDK, and Maven 3.
+To build this module, you will need the latest Java JDK, and Maven 3.
 
 ## Coding Style and other information
 
