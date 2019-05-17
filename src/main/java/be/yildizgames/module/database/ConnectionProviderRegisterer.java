@@ -28,6 +28,7 @@ package be.yildizgames.module.database;
 
 /**
  * Register a database connection provider.
+ *
  * @author Grégory Van den Borre
  */
 public interface ConnectionProviderRegisterer {
