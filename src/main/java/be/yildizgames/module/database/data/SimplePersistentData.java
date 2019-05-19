@@ -28,4 +28,5 @@ package be.yildizgames.module.database.data;
  * @author Grégory Van den Borre
  */
 public interface SimplePersistentData<T> extends PersistentData<T, T, T>{
+
 }

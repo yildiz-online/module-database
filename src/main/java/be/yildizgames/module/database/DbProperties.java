@@ -31,6 +31,7 @@ package be.yildizgames.module.database;
  */
 public interface DbProperties {
 
+
     /**
      * @return The user login to connect to the database.
      */

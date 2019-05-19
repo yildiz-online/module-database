@@ -39,6 +39,7 @@ import java.sql.SQLException;
 
 /**
  * Liquibase implementation to update the database schema.
+ *
  * @author Grégory Van den Borre
  */
 public class LiquibaseDatabaseUpdater implements DatabaseUpdater {

@@ -32,6 +32,9 @@ import be.yildizgames.module.database.DriverProvider;
 import be.yildizgames.module.database.QueryBuilder;
 import org.jooq.SQLDialect;
 
+/**
+ * @author Grégory Van den Borre
+ */
 public class DummySystem implements DatabaseSystem {
 
     public final DriverProvider driverProvider;

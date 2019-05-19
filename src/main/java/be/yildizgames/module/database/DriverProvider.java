@@ -29,6 +29,7 @@ import java.sql.SQLException;
 
 /**
  * Provide the SQL driver to connect to the database system.
+ *
  * @author Grégory Van den Borre
  */
 @FunctionalInterface

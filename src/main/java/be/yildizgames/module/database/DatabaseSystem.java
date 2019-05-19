@@ -28,6 +28,7 @@ import org.jooq.SQLDialect;
 
 /**
  * A system represent an implementation of a RDBMS.
+ *
  * @author Grégory Van den Borre
  */
 public interface DatabaseSystem {

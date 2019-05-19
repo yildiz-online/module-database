@@ -30,6 +30,7 @@ import java.sql.Connection;
  * Persistent objects, not meant to be used as type.
  *
  * @param <T> Object to set as persistent.
+ *
  * @author Grégory Van den Borre
  */
 public interface PersistentData<T, U, P> {

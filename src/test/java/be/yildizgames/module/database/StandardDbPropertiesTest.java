@@ -43,6 +43,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class StandardDbPropertiesTest {
 
+
     @Test
     public void testInvariantConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor<DbProperties.DbPropertiesInvariant> constructor = DbProperties.DbPropertiesInvariant.class.getDeclaredConstructor();

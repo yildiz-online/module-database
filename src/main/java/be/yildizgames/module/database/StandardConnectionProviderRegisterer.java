@@ -26,6 +26,9 @@
 
 package be.yildizgames.module.database;
 
+/**
+ * @author Grégory Van den Borre
+ */
 class StandardConnectionProviderRegisterer implements ConnectionProviderRegisterer {
 
     @Override

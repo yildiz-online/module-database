@@ -30,4 +30,5 @@ package be.yildizgames.module.database;
 public interface DatabaseSystemRegisterer {
 
     void register();
+
 }

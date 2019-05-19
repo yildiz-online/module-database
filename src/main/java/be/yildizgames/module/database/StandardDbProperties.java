@@ -31,6 +31,7 @@ import java.util.Properties;
 
 /**
  * Basic implementation for the DbProperties.
+ *
  * @author Grégory Van den Borre
  */
 public class StandardDbProperties implements DbProperties {

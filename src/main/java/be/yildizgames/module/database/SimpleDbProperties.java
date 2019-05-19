@@ -44,4 +44,5 @@ public class SimpleDbProperties extends StandardDbProperties {
     public SimpleDbProperties(Properties properties) {
         super(properties);
     }
+
 }

@@ -42,6 +42,7 @@ import java.util.Properties;
  */
 public abstract class DataBaseConnectionProvider implements AutoCloseable {
 
+
     private static final Logger LOGGER = LoggerFactory.getLogger(DataBaseConnectionProvider.class);
 
     /**

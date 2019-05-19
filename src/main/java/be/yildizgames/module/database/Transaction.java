@@ -32,6 +32,7 @@ import java.sql.SQLException;
 
 /**
  * A transactional database operation.
+ *
  * @author Grégory Van den Borre
  */
 public final class Transaction {

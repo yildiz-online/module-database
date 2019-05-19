@@ -37,6 +37,7 @@ import java.util.ServiceLoader;
 
 /**
  * Parse properties to extract the required connection provider.
+ *
  * @author Grégory Van den Borre
  */
 public class DatabaseConnectionProviderFactory {

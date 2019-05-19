@@ -39,4 +39,5 @@ public abstract class QueryBuilder {
     public final String build() {
         return this.builder.toString().trim();
     }
+
 }

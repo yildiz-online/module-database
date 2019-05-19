@@ -29,6 +29,7 @@ import be.yildizgames.common.util.StringUtil;
 
 /**
  * A system represent an implementation of a RDBMS.
+ *
  * @author Grégory Van den Borre
  */
 public abstract class BaseDatabaseSystem implements DatabaseSystem {

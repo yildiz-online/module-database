@@ -33,6 +33,7 @@ import be.yildizgames.module.database.DbProperties;
  */
 public class DummyDbProperties implements DbProperties {
 
+
     private final String name;
 
     public DummyDbProperties(String databaseName) {

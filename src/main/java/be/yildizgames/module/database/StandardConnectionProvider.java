@@ -32,6 +32,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * @author Grégory Van den Borre
+ */
 class StandardConnectionProvider extends DataBaseConnectionProvider {
 
     private final Logger logger = LoggerFactory.getLogger(StandardConnectionProvider.class);

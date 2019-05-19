@@ -44,6 +44,9 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+/**
+ * @author Grégory Van den Borre
+ */
 public class DummyConnection implements Connection {
 
     private String cat = "";

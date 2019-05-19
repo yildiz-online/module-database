@@ -33,4 +33,5 @@ import java.sql.Connection;
 public interface TransactionBehavior {
 
     void execute(Connection c) throws Exception;
+
 }

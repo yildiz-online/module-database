@@ -39,7 +39,6 @@ import java.sql.SQLException;
  */
 public class DummyDatabaseConnectionProvider extends DataBaseConnectionProvider {
 
-
     private final boolean throwError;
 
     public DummyDatabaseConnectionProvider(DatabaseSystem system, DbProperties properties, boolean throwError) {

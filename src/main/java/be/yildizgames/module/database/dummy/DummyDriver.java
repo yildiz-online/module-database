@@ -31,6 +31,9 @@ import java.sql.DriverPropertyInfo;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+/**
+ * @author Grégory Van den Borre
+ */
 public class DummyDriver implements Driver {
 
     @Override

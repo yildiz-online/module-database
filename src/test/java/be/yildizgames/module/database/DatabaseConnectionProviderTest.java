@@ -44,6 +44,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 public class DatabaseConnectionProviderTest {
 
+
     @Nested
     public class Constructor {
 

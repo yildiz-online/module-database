@@ -28,6 +28,7 @@ import java.sql.SQLException;
 
 /**
  * Update the database schema.
+ *
  * @author Grégory Van den Borre
  */
 public interface DatabaseUpdater {
