@@ -24,27 +24,32 @@
   ~
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
-  <name>Yildiz Module Database</name>
+
+  <name>Yildiz-Engine Module Database</name>
   <description>Module handling the database access and manipulation.</description>
-  <url>https://bitbucket.org/yildiz-engine-team/module-database</url>
+  <inceptionYear>2011</inceptionYear>
+  <url>https://engine.yildiz-games.be</url>
 
   <artifactId>module-database</artifactId>
   <version>2.0.5-SNAPSHOT</version>
 
-  <packaging>jar</packaging>
-  <inceptionYear>2011</inceptionYear>
-  <scm>
-    <connection>scm:git:https://bitbucket.org/yildiz-engine-team/module-database</connection>
-    <developerConnection>scm:git:https://bitbucket.org/yildiz-engine-team/module-database</developerConnection>
-    <url>https://bitbucket.org/yildiz-engine-team/module-database</url>
-  </scm>
   <parent>
     <groupId>be.yildiz-games</groupId>
     <artifactId>parent</artifactId>
     <version>3.0.5</version>
   </parent>
+
+  <packaging>jar</packaging>
+
+  <scm>
+    <connection>scm:git:https://github.com/yildiz-online/module-database</connection>
+    <developerConnection>scm:git:https://github.com/yildiz-online/module-database</developerConnection>
+    <url>https://github.com/yildiz-online/module-database</url>
+  </scm>
 
   <properties>
     <maven.plugin.jooq.version>3.11.11</maven.plugin.jooq.version>
