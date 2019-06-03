@@ -31,7 +31,6 @@ module be.yildizgames.module.database {
     requires be.yildizgames.common.logging;
     requires be.yildizgames.common.exception;
 
-    requires slf4j.api;
     requires org.jooq;
     requires jdbcdslog;
     requires liquibase.core;

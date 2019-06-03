@@ -25,9 +25,6 @@
  */
 package be.yildizgames.module.database;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -37,7 +34,7 @@ import java.util.Properties;
  */
 class StandardConnectionProvider extends DataBaseConnectionProvider {
 
-    private final Logger logger = LoggerFactory.getLogger(StandardConnectionProvider.class);
+    private final System.Logger logger = System.getLogger(StandardConnectionProvider.class.getName());
 
     private final Properties properties;
 
@@ -51,7 +48,7 @@ class StandardConnectionProvider extends DataBaseConnectionProvider {
 
     StandardConnectionProvider(DatabaseSystem system, DbProperties properties, boolean root) {
         super(system, properties, root);
-        this.logger.info("Using no database connection pool.");
+        this.logger.log(System.Logger.Level.INFO, "Using no database connection pool.");
         this.properties = new Properties();
         this.properties.put("user", this.getLogin());
         this.properties.put("password", this.getPassword());

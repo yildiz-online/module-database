@@ -28,8 +28,6 @@ package be.yildizgames.module.database;
 import be.yildizgames.common.exception.implementation.ImplementationException;
 import org.jdbcdslog.ConnectionLoggingProxy;
 import org.jooq.SQLDialect;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -43,7 +41,7 @@ import java.util.Properties;
 public abstract class DataBaseConnectionProvider implements AutoCloseable {
 
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataBaseConnectionProvider.class);
+    private static final System.Logger LOGGER = System.getLogger(DataBaseConnectionProvider.class.getName());
 
     /**
      * Selected Database system.
@@ -108,11 +106,11 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
      * @throws SQLException thrown if connection failed.
      */
     public final void sanity() throws SQLException {
-        LOGGER.info("Checking database connection...");
+        LOGGER.log(System.Logger.Level.INFO, "Checking database connection...");
         try (Connection c = this.getConnection()) {
-            LOGGER.info("Checking database connection successful.");
+            LOGGER.log(System.Logger.Level.INFO,"Checking database connection successful.");
         } catch (SQLException e) {
-            LOGGER.error("Database connection failed.");
+            LOGGER.log(System.Logger.Level.ERROR, "Database connection failed.");
             throw e;
         }
     }
@@ -183,15 +181,15 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
 
     private boolean invariant() {
         if (this.login == null) {
-            LOGGER.error("login cannot be null.");
+            LOGGER.log(System.Logger.Level.ERROR, "login cannot be null.");
             return false;
         }
         if (this.password == null) {
-            LOGGER.error("password cannot be null.");
+            LOGGER.log(System.Logger.Level.ERROR, "password cannot be null.");
             return false;
         }
         if (this.uri == null) {
-            LOGGER.error("uri cannot be null.");
+            LOGGER.log(System.Logger.Level.ERROR, "uri cannot be null.");
             return false;
         }
         return true;

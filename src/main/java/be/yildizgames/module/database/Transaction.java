@@ -24,9 +24,6 @@
 
 package be.yildizgames.module.database;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -40,7 +37,7 @@ public final class Transaction {
     /**
      * Logger.
      */
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final System.Logger logger = System.getLogger(this.getClass().getName());
 
     /**
      * Connection provider.
@@ -53,19 +50,19 @@ public final class Transaction {
 
     public void execute(TransactionBehavior behavior) {
         try(Connection c = connectionProvider.getConnection()) {
-            logger.debug("Starting transaction");
+            logger.log(System.Logger.Level.DEBUG, "Starting transaction");
             c.setAutoCommit(false);
             try {
                 behavior.execute(c);
             } catch (Exception e) {
                 c.rollback();
-                logger.error("Error in transaction", e);
+                logger.log(System.Logger.Level.ERROR, "Error in transaction", e);
             }
             c.commit();
             c.setAutoCommit(true);
-            logger.debug("Complete transaction");
+            logger.log(System.Logger.Level.DEBUG, "Complete transaction");
         } catch (SQLException e) {
-            logger.error("Error in transaction", e);
+            logger.log(System.Logger.Level.ERROR, "Error in transaction", e);
         }
     }
 }

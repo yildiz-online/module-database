@@ -31,8 +31,6 @@ import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
 import liquibase.resource.ClassLoaderResourceAccessor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -44,7 +42,7 @@ import java.sql.SQLException;
  */
 public class LiquibaseDatabaseUpdater implements DatabaseUpdater {
 
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final System.Logger logger = System.getLogger(this.getClass().getName());
 
     private final String configurationFile;
 
@@ -61,12 +59,12 @@ public class LiquibaseDatabaseUpdater implements DatabaseUpdater {
     @Override
     public final void update(final DataBaseConnectionProvider provider) throws SQLException {
         ImplementationException.throwForNull(provider);
-        this.logger.info("Updating database schema...");
+        this.logger.log(System.Logger.Level.INFO, "Updating database schema...");
         try (Connection c = provider.getConnection()){
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
             Liquibase liquibase = new Liquibase(this.configurationFile, new ClassLoaderResourceAccessor(), database);
             liquibase.update("database-update");
-            this.logger.info("Updating database schema completed.");
+            this.logger.log(System.Logger.Level.INFO, "Updating database schema completed.");
             database.close();
         } catch (LiquibaseException | SQLException e) {
             throw new SQLException(e);
