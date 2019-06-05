@@ -25,8 +25,6 @@
 
 package be.yildizgames.module.database;
 
-import be.yildizgames.common.exception.implementation.ImplementationException;
-import be.yildizgames.common.util.PropertiesException;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Constructor;
@@ -76,7 +74,7 @@ public class StandardDbPropertiesTest {
 
     @Test
     public void userNull() {
-        assertThrows(ImplementationException.class, () -> new StandardDbProperties(null));
+        assertThrows(NullPointerException.class, () -> new StandardDbProperties(null));
     }
 
     @Test
@@ -89,7 +87,7 @@ public class StandardDbPropertiesTest {
         base.setProperty("database.host","host-ok");
         base.setProperty("database.port","10");
         base.setProperty("database.system","system-ok");
-        assertThrows(PropertiesException.class, () -> new StandardDbProperties(base));
+        assertThrows(NullPointerException.class, () -> new StandardDbProperties(base));
     }
 
     @Test
@@ -102,7 +100,7 @@ public class StandardDbPropertiesTest {
         base.setProperty("database.host","host-ok");
         base.setProperty("database.port","10");
         base.setProperty("database.system","system-ok");
-        assertThrows(PropertiesException.class, () -> new StandardDbProperties(base));
+        assertThrows(NullPointerException.class, () -> new StandardDbProperties(base));
     }
 
     @Test
@@ -115,7 +113,7 @@ public class StandardDbPropertiesTest {
         base.setProperty("database.name","name-ok");
         base.setProperty("database.port","10");
         base.setProperty("database.system","system-ok");
-        assertThrows(PropertiesException.class, () -> new StandardDbProperties(base));
+        assertThrows(NullPointerException.class, () -> new StandardDbProperties(base));
     }
 
     @Test
@@ -129,7 +127,7 @@ public class StandardDbPropertiesTest {
         base.setProperty("database.host","host-ok");
         base.setProperty("database.port","-1");
         base.setProperty("database.system","system-ok");
-        assertThrows(PropertiesException.class, () -> new StandardDbProperties(base));
+        assertThrows(IllegalArgumentException.class, () -> new StandardDbProperties(base));
     }
 
     @Test
@@ -143,7 +141,7 @@ public class StandardDbPropertiesTest {
         base.setProperty("database.host","host-ok");
         base.setProperty("database.port","100000000000000");
         base.setProperty("database.system","system-ok");
-        assertThrows(PropertiesException.class, () -> new StandardDbProperties(base));
+        assertThrows(IllegalArgumentException.class, () -> new StandardDbProperties(base));
     }
 
 }

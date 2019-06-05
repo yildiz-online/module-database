@@ -25,7 +25,6 @@
  */
 package be.yildizgames.module.database;
 
-import be.yildizgames.common.exception.implementation.ImplementationException;
 import org.jdbcdslog.ConnectionLoggingProxy;
 import org.jooq.SQLDialect;
 
@@ -74,15 +73,13 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
      * @param system Database system to use.
      * @param properties Properties holding connection data.
      * @param root Flag to check if the connection is root or not.
-     * @throws ImplementationException if a parameter is null or invalid.
+     * @throws NullPointerException if a parameter is null.
      */
     //@Ensures ("this.system == system")
     //@Ensures ("this.system != null")
     //@Ensures ("this.login == properties.dbUser")
     //@Ensures ("this.password == properties.dbPassword")
     protected DataBaseConnectionProvider(final DatabaseSystem system, final DbProperties properties, boolean root) {
-        ImplementationException.throwForNull(system);
-        ImplementationException.throwForNull(properties);
         Properties p = new Properties(System.getProperties());
         p.put("org.jooq.no-logo", "true");
         System.setProperties(p);

@@ -24,8 +24,6 @@
  */
 package be.yildizgames.module.database;
 
-import be.yildizgames.common.exception.implementation.ImplementationException;
-import be.yildizgames.common.exception.technical.TechnicalException;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -72,14 +70,14 @@ public class DatabaseConnectionProviderFactoryTest {
         @Disabled
         @Test
         public void withNull() {
-            assertThrows(ImplementationException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(null));
+            assertThrows(NullPointerException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(null));
         }
 
         @Disabled
         @Test
         public void unknown() {
             DbProperties properties = givenADbProperties("unknown");
-            assertThrows(TechnicalException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(properties));
+            assertThrows(IllegalStateException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(properties));
         }
     }
 

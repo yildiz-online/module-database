@@ -24,11 +24,9 @@
 
 module be.yildizgames.module.database {
     requires java.sql;
-    requires java.naming;
-    requires java.desktop;
+    requires java.xml;
 
     requires be.yildizgames.common.util;
-    requires be.yildizgames.common.exception;
 
     requires org.jooq;
     requires jdbcdslog;

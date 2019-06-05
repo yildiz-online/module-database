@@ -23,13 +23,11 @@
  */
 package be.yildizgames.module.database;
 
-import be.yildizgames.common.exception.implementation.ImplementationException;
 import be.yildizgames.module.database.dummy.DummyDatabaseConnectionProvider;
 import be.yildizgames.module.database.dummy.DummyDriver;
 import be.yildizgames.module.database.dummy.DummySystem;
 import org.h2.Driver;
 import org.jooq.SQLDialect;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -191,12 +189,12 @@ public class DatabaseConnectionProviderTest {
         @Test
         public void withNull() {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
-            assertThrows(ImplementationException.class, () -> new DummyDatabaseConnectionProvider(null, properties, false));
+            assertThrows(NullPointerException.class, () -> new DummyDatabaseConnectionProvider(null, properties, false));
         }
 
         @Test
         public void withNullProperties() {
-            assertThrows(ImplementationException.class, () -> new DummyDatabaseConnectionProvider(new DummySystem(Driver::new), null, false));
+            assertThrows(NullPointerException.class, () -> new DummyDatabaseConnectionProvider(new DummySystem(Driver::new), null, false));
         }
     }
 

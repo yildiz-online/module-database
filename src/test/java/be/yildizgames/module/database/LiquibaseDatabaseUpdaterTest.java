@@ -26,7 +26,6 @@
 package be.yildizgames.module.database;
 
 
-import be.yildizgames.common.exception.implementation.ImplementationException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -48,7 +47,7 @@ public class LiquibaseDatabaseUpdaterTest {
 
         @Test
         public void withNullFile() {
-            assertThrows(ImplementationException.class, () -> LiquibaseDatabaseUpdater.fromConfigurationPath(null));
+            assertThrows(NullPointerException.class, () -> LiquibaseDatabaseUpdater.fromConfigurationPath(null));
         }
     }
 
@@ -57,7 +56,7 @@ public class LiquibaseDatabaseUpdaterTest {
 
         @Test
         public void withNullProvider() {
-            assertThrows(ImplementationException.class, () -> LiquibaseDatabaseUpdater.fromConfigurationPath("any").update(null));
+            assertThrows(NullPointerException.class, () -> LiquibaseDatabaseUpdater.fromConfigurationPath("any").update(null));
         }
     }
 }

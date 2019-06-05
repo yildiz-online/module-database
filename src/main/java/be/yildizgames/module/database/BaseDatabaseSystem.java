@@ -24,8 +24,9 @@
 
 package be.yildizgames.module.database;
 
-import be.yildizgames.common.exception.implementation.ImplementationException;
 import be.yildizgames.common.util.StringUtil;
+
+import java.util.Objects;
 
 /**
  * A system represent an implementation of a RDBMS.
@@ -45,13 +46,12 @@ public abstract class BaseDatabaseSystem implements DatabaseSystem {
      */
     protected BaseDatabaseSystem(final String url) {
         super();
-        ImplementationException.throwForNull(url);
+        Objects.requireNonNull(url);
         this.url = url;
     }
 
     @Override
     public final String getUrl(final DbProperties p) {
-        ImplementationException.throwForNull(p);
         String[] params = {p.getDbName(), p.getDbHost(), String.valueOf(p.getDbPort()), p.getDbUser()};
         return StringUtil.fillVariable(this.url, params);
     }

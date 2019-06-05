@@ -24,9 +24,7 @@
 
 package be.yildizgames.module.database;
 
-import be.yildizgames.common.exception.implementation.ImplementationException;
-import be.yildizgames.common.util.PropertiesHelper;
-
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -86,15 +84,15 @@ public class StandardDbProperties implements DbProperties {
      */
     public StandardDbProperties(final Properties properties) {
         super();
-        ImplementationException.throwForNull(properties);
-        this.user = PropertiesHelper.getValue(properties, "database.user");
-        this.password = PropertiesHelper.getValue(properties,"database.password");
-        this.rootUser = PropertiesHelper.getValue(properties,"database.root.user");
-        this.rootPassword = PropertiesHelper.getValue(properties,"database.root.password");
-        this.database = PropertiesHelper.getValue(properties,"database.name");
-        this.host = PropertiesHelper.getValue(properties,"database.host");
-        this.port = PropertiesHelper.getPortValue(properties, "database.port");
-        this.system = PropertiesHelper.getValue(properties,"database.system");
+        Objects.requireNonNull(properties);
+        this.user = properties.getProperty("database.user");
+        this.password = properties.getProperty("database.password");
+        this.rootUser = properties.getProperty("database.root.user");
+        this.rootPassword = properties.getProperty("database.root.password");
+        this.database = properties.getProperty("database.name");
+        this.host = properties.getProperty("database.host");
+        this.port = Integer.parseInt(properties.getProperty("database.port"));
+        this.system = properties.getProperty("database.system");
         DbPropertiesInvariant.check(this.user, this.password, this.rootUser, this.rootPassword, this.database, this.host, this.port, this.system);
     }
 

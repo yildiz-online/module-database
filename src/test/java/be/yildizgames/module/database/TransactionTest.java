@@ -28,7 +28,6 @@ package be.yildizgames.module.database;
 import be.yildizgames.module.database.dummy.DummyDatabaseConnectionProvider;
 import be.yildizgames.module.database.dummy.DummySystem;
 import org.h2.Driver;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
