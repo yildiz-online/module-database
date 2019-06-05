@@ -28,7 +28,6 @@ module be.yildizgames.module.database {
     requires java.desktop;
 
     requires be.yildizgames.common.util;
-    requires be.yildizgames.common.logging;
     requires be.yildizgames.common.exception;
 
     requires org.jooq;
