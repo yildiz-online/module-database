@@ -32,7 +32,7 @@ import java.util.Properties;
  *
  * @author Grégory Van den Borre
  */
-public class StandardDbProperties implements DbProperties {
+public class DbPropertiesStandard implements DbProperties {
 
     /**
      * Database login.
@@ -82,7 +82,7 @@ public class StandardDbProperties implements DbProperties {
      * @throws NullPointerException If any parameter is null.
      * @throws IllegalArgumentException If the port is not between 0 and 65635
      */
-    public StandardDbProperties(final Properties properties) {
+    private DbPropertiesStandard(final Properties properties) {
         super();
         Objects.requireNonNull(properties);
         this.user = properties.getProperty("database.user");
@@ -94,6 +94,10 @@ public class StandardDbProperties implements DbProperties {
         this.port = Integer.parseInt(properties.getProperty("database.port"));
         this.system = properties.getProperty("database.system");
         DbPropertiesInvariant.check(this.user, this.password, this.rootUser, this.rootPassword, this.database, this.host, this.port, this.system);
+    }
+
+    public static DbProperties fromProperties(final Properties properties) {
+        return new DbPropertiesStandard(properties);
     }
 
     @Override
