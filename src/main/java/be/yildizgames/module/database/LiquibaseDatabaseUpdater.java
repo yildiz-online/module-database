@@ -29,6 +29,7 @@ import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.exception.LiquibaseException;
+import liquibase.exception.LockException;
 import liquibase.resource.ClassLoaderResourceAccessor;
 
 import java.sql.Connection;
@@ -59,12 +60,15 @@ public class LiquibaseDatabaseUpdater implements DatabaseUpdater {
     @Override
     public final void update(final DataBaseConnectionProvider provider) throws SQLException {
         this.logger.log(System.Logger.Level.INFO, "Updating database schema...");
-        try (Connection c = provider.getConnection()){
+        try (Connection c = provider.getConnection()) {
             Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(c));
             Liquibase liquibase = new Liquibase(this.configurationFile, new ClassLoaderResourceAccessor(), database);
+            liquibase.forceReleaseLocks();
             liquibase.update("database-update");
             this.logger.log(System.Logger.Level.INFO, "Updating database schema completed.");
             database.close();
+        } catch (LockException e) {
+            e.printStackTrace();
         } catch (LiquibaseException | SQLException e) {
             throw new SQLException(e);
         }
