@@ -32,7 +32,7 @@ public abstract class QueryBuilder {
     public abstract QueryBuilder limit(int number);
 
     public final QueryBuilder append(String content) {
-        this.builder.append(content + " ");
+        this.builder.append(content).append(" ");
         return this;
     }
 

@@ -50,7 +50,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
     /**
      * Connection URI.
      */
-    private String uri;
+    private final String uri;
 
     /**
      * Database connection login.

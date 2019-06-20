@@ -164,7 +164,7 @@ public class DatabaseConnectionProviderTest {
 
                 @Override
                 public DriverProvider getDriverProvider() {
-                    return () -> new DummyDriver();
+                    return DummyDriver::new;
                 }
 
                 @Override
