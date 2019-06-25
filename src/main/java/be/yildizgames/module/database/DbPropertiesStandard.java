@@ -82,7 +82,7 @@ public class DbPropertiesStandard implements DbProperties {
      * @throws NullPointerException If any parameter is null.
      * @throws IllegalArgumentException If the port is not between 0 and 65635
      */
-    private DbPropertiesStandard(final Properties properties) {
+    public DbPropertiesStandard(final Properties properties) {
         super();
         Objects.requireNonNull(properties);
         this.user = properties.getProperty("database.user");

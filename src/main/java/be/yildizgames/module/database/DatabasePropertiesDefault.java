@@ -23,23 +23,24 @@
  */
 package be.yildizgames.module.database;
 
-public abstract class QueryBuilder {
+import java.util.Properties;
 
-    private final StringBuilder builder = new StringBuilder();
+/**
+ * @author Grégory Van den Borre
+ */
+public class DatabasePropertiesDefault extends Properties {
 
-    public abstract QueryBuilder selectAllFrom(String table);
-
-    public abstract QueryBuilder selectAllFrom(String schema, String table);
-
-    public abstract QueryBuilder limit(int number);
-
-    public final QueryBuilder append(String content) {
-        this.builder.append(content).append(" ");
-        return this;
-    }
-
-    public final String build() {
-        return this.builder.toString().trim();
+    public DatabasePropertiesDefault() {
+        super();
+        this.setProperty("database.user", "sa");
+        this.setProperty("database.password", "sa");
+        this.setProperty("database.root.user", "sa");
+        this.setProperty("database.root.password", "sa");
+        this.setProperty("database.name", "database");
+        this.setProperty("database.create", "true");
+        this.setProperty("database.host", "localhost");
+        this.setProperty("database.port", "9000");
+        this.setProperty("database.system", "derby-file");
     }
 
 }
