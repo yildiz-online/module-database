@@ -68,7 +68,7 @@ public class LiquibaseDatabaseUpdater implements DatabaseUpdater {
             this.logger.log(System.Logger.Level.INFO, "Updating database schema completed.");
             database.close();
         } catch (LockException e) {
-            e.printStackTrace();
+            this.logger.log(System.Logger.Level.WARN, "Updating database schema error, file locked.");
         } catch (LiquibaseException | SQLException e) {
             throw new SQLException(e);
         }
