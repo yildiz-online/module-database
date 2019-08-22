@@ -52,7 +52,7 @@
   </scm>
 
   <properties>
-    <maven.plugin.jooq.version>3.11.11</maven.plugin.jooq.version>
+    <maven.plugin.jooq.version>3.11.12</maven.plugin.jooq.version>
   </properties>
 
   <dependencies>
@@ -80,7 +80,7 @@
     <dependency>
       <groupId>org.liquibase</groupId>
       <artifactId>liquibase-core</artifactId>
-      <version>3.7.0</version>
+      <version>3.8.0</version>
       <exclusions>
         <exclusion>
           <groupId>ch.qos.logback</groupId>
