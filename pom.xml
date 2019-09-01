@@ -52,6 +52,7 @@
   </scm>
 
   <properties>
+    <java.version>11</java.version>
     <maven.plugin.jooq.version>3.11.12</maven.plugin.jooq.version>
   </properties>
 
