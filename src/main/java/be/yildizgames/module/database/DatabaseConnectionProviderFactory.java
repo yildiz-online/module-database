@@ -28,7 +28,6 @@ package be.yildizgames.module.database;
 
 import be.yildizgames.module.database.exception.InvalidSystem;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -44,7 +43,7 @@ public class DatabaseConnectionProviderFactory {
     private static final DatabaseConnectionProviderFactory INSTANCE = new DatabaseConnectionProviderFactory();
 
     static {
-        ServiceLoader<DatabaseSystemRegisterer> registerer = ServiceLoader.load(DatabaseSystemRegisterer.class);
+        var registerer = ServiceLoader.load(DatabaseSystemRegisterer.class);
         registerer.forEach(DatabaseSystemRegisterer::register);
     }
 
@@ -62,21 +61,21 @@ public class DatabaseConnectionProviderFactory {
         this.systems.put(key, system);
     }
 
-    public final DataBaseConnectionProvider create(DbProperties properties) throws SQLException {
-        DatabaseSystem system = Optional
+    public final DataBaseConnectionProvider create(DbProperties properties) {
+        var system = Optional
                 .ofNullable(this.systems.get(properties.getSystem()))
                 .orElseThrow(() -> new InvalidSystem(properties.getSystem()));
         return getConnectionProvider(system, properties, false);
     }
 
-    public final DataBaseConnectionProvider createWithHighPrivilege(DbProperties properties) throws SQLException {
-        DatabaseSystem system = Optional
+    public final DataBaseConnectionProvider createWithHighPrivilege(DbProperties properties) {
+        var system = Optional
                 .ofNullable(this.systems.get(properties.getSystem()))
                 .orElseThrow(() -> new InvalidSystem(properties.getSystem()));
         return getConnectionProvider(system, properties, true);
     }
 
-    private DataBaseConnectionProvider getConnectionProvider(DatabaseSystem system, DbProperties properties, boolean highPrivilege) throws SQLException {
+    private DataBaseConnectionProvider getConnectionProvider(DatabaseSystem system, DbProperties properties, boolean highPrivilege) {
         if(system.requirePool()) {
             return this.getRegisterer().register(system, properties, highPrivilege);
         } else {
@@ -85,7 +84,7 @@ public class DatabaseConnectionProviderFactory {
     }
 
     private ConnectionProviderRegisterer getRegisterer() {
-        ServiceLoader<ConnectionProviderRegisterer> registerer = ServiceLoader.load(ConnectionProviderRegisterer.class);
+        var registerer = ServiceLoader.load(ConnectionProviderRegisterer.class);
         return registerer.findFirst().orElse(new StandardConnectionProviderRegisterer());
     }
 }

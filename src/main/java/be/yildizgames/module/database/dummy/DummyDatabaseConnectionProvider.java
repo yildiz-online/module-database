@@ -60,7 +60,7 @@ public class DummyDatabaseConnectionProvider extends DataBaseConnectionProvider 
 
     @Override
     public void close() {
-
+        //Does nothing.
     }
 
     public final static class DefaultProperties implements DbProperties {

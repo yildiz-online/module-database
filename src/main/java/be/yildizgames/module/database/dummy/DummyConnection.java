@@ -77,7 +77,7 @@ public class DummyConnection implements Connection {
 
     @Override
     public void setAutoCommit(boolean autoCommit) throws SQLException {
-
+        //Does nothing.
     }
 
     @Override
@@ -112,7 +112,7 @@ public class DummyConnection implements Connection {
 
     @Override
     public void setReadOnly(boolean readOnly) throws SQLException {
-
+        //Does nothing.
     }
 
     @Override
@@ -172,12 +172,12 @@ public class DummyConnection implements Connection {
 
     @Override
     public void setTypeMap(Map<String, Class<?>> map) throws SQLException {
-
+        //Does nothing.
     }
 
     @Override
     public void setHoldability(int holdability) throws SQLException {
-
+        //Does nothing.
     }
 
     @Override
@@ -197,12 +197,12 @@ public class DummyConnection implements Connection {
 
     @Override
     public void rollback(Savepoint savepoint) throws SQLException {
-
+        //Does nothing.
     }
 
     @Override
     public void releaseSavepoint(Savepoint savepoint) throws SQLException {
-
+        //Does nothing.
     }
 
     @Override
@@ -262,12 +262,12 @@ public class DummyConnection implements Connection {
 
     @Override
     public void setClientInfo(String name, String value) throws SQLClientInfoException {
-
+        //Does nothing.
     }
 
     @Override
     public void setClientInfo(Properties properties) throws SQLClientInfoException {
-
+        //Does nothing.
     }
 
     @Override
@@ -292,7 +292,7 @@ public class DummyConnection implements Connection {
 
     @Override
     public void setSchema(String schema) throws SQLException {
-
+        //Does nothing.
     }
 
     @Override
@@ -302,12 +302,12 @@ public class DummyConnection implements Connection {
 
     @Override
     public void abort(Executor executor) throws SQLException {
-
+        //Does nothing.
     }
 
     @Override
     public void setNetworkTimeout(Executor executor, int milliseconds) throws SQLException {
-
+        //Does nothing.
     }
 
     @Override
