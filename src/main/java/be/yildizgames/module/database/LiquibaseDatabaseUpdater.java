@@ -49,8 +49,7 @@ public class LiquibaseDatabaseUpdater implements DatabaseUpdater {
 
     private LiquibaseDatabaseUpdater(final String configurationFile) {
         super();
-        Objects.requireNonNull(configurationFile);
-        this.configurationFile = configurationFile;
+        this.configurationFile = Objects.requireNonNull(configurationFile);
     }
 
     public static LiquibaseDatabaseUpdater fromConfigurationPath(final String path) {

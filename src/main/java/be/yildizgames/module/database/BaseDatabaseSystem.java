@@ -46,8 +46,7 @@ public abstract class BaseDatabaseSystem implements DatabaseSystem {
      */
     protected BaseDatabaseSystem(final String url) {
         super();
-        Objects.requireNonNull(url);
-        this.url = url;
+        this.url = Objects.requireNonNull(url);
     }
 
     @Override
