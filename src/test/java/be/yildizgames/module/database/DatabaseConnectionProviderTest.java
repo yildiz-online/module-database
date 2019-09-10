@@ -40,11 +40,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * @author Grégory Van den Borre
  */
-public class DatabaseConnectionProviderTest {
+class DatabaseConnectionProviderTest {
 
 
     @Nested
-    public class Constructor {
+    class Constructor {
 
        /* @Test
         void happyFlow() throws SQLException {
@@ -56,7 +56,7 @@ public class DatabaseConnectionProviderTest {
         }*/
 
         @Test
-        public void withNoLogin() {
+        void withNoLogin() {
             DbProperties properties = new DbProperties() {
                 @Override
                 public String getDbUser() {
@@ -102,7 +102,7 @@ public class DatabaseConnectionProviderTest {
         }
 
         @Test
-        public void withNoPassword() {
+        void withNoPassword() {
             DbProperties properties = new DbProperties() {
                 @Override
                 public String getDbUser() {
@@ -148,7 +148,7 @@ public class DatabaseConnectionProviderTest {
         }
 
         @Test
-        public void withNoURI() {
+        void withNoURI() {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
 
             DatabaseSystem withoutUri = new DatabaseSystem() {
@@ -187,28 +187,29 @@ public class DatabaseConnectionProviderTest {
         }
 
         @Test
-        public void withNull() {
+        void withNull() {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             assertThrows(NullPointerException.class, () -> new DummyDatabaseConnectionProvider(null, properties, false));
         }
 
         @Test
-        public void withNullProperties() {
+        void withNullProperties() {
             assertThrows(NullPointerException.class, () -> new DummyDatabaseConnectionProvider(new DummySystem(Driver::new), null, false));
         }
     }
 
-    public class GetConnection {
+    @Nested
+    class GetConnection {
 
         @Test
-        public void happyFlow() throws SQLException {
+        void happyFlow() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(new DummySystem(Driver::new), properties, false);
             assertNotNull(dcp.getConnection());
         }
 
         @Test
-        public void withDebugMode() throws SQLException {
+        void withDebugMode() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(new DummySystem(Driver::new), properties, false);
             dcp.setDebugMode();
@@ -216,33 +217,33 @@ public class DatabaseConnectionProviderTest {
         }
 
         @Test
-        public void withError() {
+        void withError() {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             assertThrows(SQLException.class, () -> new DummyDatabaseConnectionProvider(new DummySystem(Driver::new), properties, true).getConnection());
         }
     }
 
     @Nested
-    public class GetDriver {
+    class GetDriver {
 
         @Test
-        public void happyFlow() {
+        void happyFlow() {
             assertEquals("org.h2.Driver", new DummySystem(Driver::new).getDriver());
         }
     }
 
     @Nested
-    public class Sanity {
+    class Sanity {
 
         @Test
-        public void happyFlow() throws SQLException {
+        void happyFlow() throws SQLException {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(new DummySystem(Driver::new), properties, false);
             dcp.sanity();
         }
 
         @Test
-        public void withError() throws SQLException {
+        void withError() {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
             DataBaseConnectionProvider dcp = new DummyDatabaseConnectionProvider(new DummySystem(Driver::new), properties, true);
             assertThrows(SQLException.class, dcp::sanity);

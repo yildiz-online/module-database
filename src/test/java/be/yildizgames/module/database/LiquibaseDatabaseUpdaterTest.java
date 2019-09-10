@@ -34,28 +34,28 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * @author Grégory Van den Borre
  */
-public class LiquibaseDatabaseUpdaterTest {
+class LiquibaseDatabaseUpdaterTest {
 
 
     @Nested
-    public class Constructor {
+    class Constructor {
 
         @Test
-        public void happyFlow() {
+        void happyFlow() {
             LiquibaseDatabaseUpdater.fromConfigurationPath("any");
         }
 
         @Test
-        public void withNullFile() {
+        void withNullFile() {
             assertThrows(NullPointerException.class, () -> LiquibaseDatabaseUpdater.fromConfigurationPath(null));
         }
     }
 
     @Nested
-    public class Update {
+    class Update {
 
         @Test
-        public void withNullProvider() {
+        void withNullProvider() {
             assertThrows(NullPointerException.class, () -> LiquibaseDatabaseUpdater.fromConfigurationPath("any").update(null));
         }
     }

@@ -39,11 +39,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * @author Grégory Van den Borre
  */
-public class StandardDbPropertiesTest {
+class StandardDbPropertiesTest {
 
 
     @Test
-    public void testInvariantConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    void testInvariantConstructor() throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Constructor<DbProperties.DbPropertiesInvariant> constructor = DbProperties.DbPropertiesInvariant.class.getDeclaredConstructor();
         assertTrue(Modifier.isPrivate(constructor.getModifiers()));
         constructor.setAccessible(true);
@@ -51,7 +51,7 @@ public class StandardDbPropertiesTest {
     }
 
     @Test
-    public void happyFlow() {
+    void happyFlow() {
         Properties base = new Properties();
         base.setProperty("database.user", "user-ok");
         base.setProperty("database.password","password-ok");
@@ -73,12 +73,12 @@ public class StandardDbPropertiesTest {
     }
 
     @Test
-    public void userNull() {
+    void userNull() {
         assertThrows(NullPointerException.class, () -> DbPropertiesStandard.fromProperties(null));
     }
 
     @Test
-    public void passwordNull() {
+    void passwordNull() {
         Properties base = new Properties();
         base.setProperty("database.user", "user-ok");
         base.setProperty("database.root.user","user-ok");
@@ -91,7 +91,7 @@ public class StandardDbPropertiesTest {
     }
 
     @Test
-    public void databaseNull() {
+    void databaseNull() {
         Properties base = new Properties();
         base.setProperty("database.user", "user-ok");
         base.setProperty("database.password","password-ok");
@@ -104,7 +104,7 @@ public class StandardDbPropertiesTest {
     }
 
     @Test
-    public void hostNull() {
+    void hostNull() {
         Properties base = new Properties();
         base.setProperty("database.user", "user-ok");
         base.setProperty("database.password","password-ok");
@@ -117,7 +117,7 @@ public class StandardDbPropertiesTest {
     }
 
     @Test
-    public void portTooLow() {
+    void portTooLow() {
         Properties base = new Properties();
         base.setProperty("database.user", "user-ok");
         base.setProperty("database.password","password-ok");
@@ -131,7 +131,7 @@ public class StandardDbPropertiesTest {
     }
 
     @Test
-    public void portTooHigh() {
+    void portTooHigh() {
         Properties base = new Properties();
         base.setProperty("database.user", "user-ok");
         base.setProperty("database.password","password-ok");

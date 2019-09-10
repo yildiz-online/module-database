@@ -33,11 +33,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * @author Grégory Van den Borre
  */
-public class DatabaseConnectionProviderFactoryTest {
+class DatabaseConnectionProviderFactoryTest {
 
 
     @Nested
-    public class Create {
+    class Create {
 
         /*@Test
         void mysql() throws SQLException {
@@ -69,13 +69,13 @@ public class DatabaseConnectionProviderFactoryTest {
 
         @Disabled
         @Test
-        public void withNull() {
+        void withNull() {
             assertThrows(NullPointerException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(null));
         }
 
         @Disabled
         @Test
-        public void unknown() {
+        void unknown() {
             DbProperties properties = givenADbProperties("unknown");
             assertThrows(IllegalStateException.class, () -> DatabaseConnectionProviderFactory.getInstance().create(properties));
         }

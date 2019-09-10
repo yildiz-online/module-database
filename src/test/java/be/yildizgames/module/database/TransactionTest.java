@@ -36,13 +36,13 @@ import java.sql.SQLException;
 /**
  * @author Grégory Van den Borre
  */
-public class TransactionTest {
+class TransactionTest {
 
     @Nested
-    public class Execute {
+    class Execute {
 
         @Test
-        public void happyFlow() throws SQLException {
+        void happyFlow() throws SQLException {
             Transaction t = new Transaction(new DummyDatabaseConnectionProvider(
                     new DummySystem(Driver::new),
                     new DummyDatabaseConnectionProvider.DefaultProperties(),
@@ -51,7 +51,7 @@ public class TransactionTest {
         }
 
         @Test
-        public void withError() throws Exception {
+        void withError() throws Exception {
             Transaction t = new Transaction(new DummyDatabaseConnectionProvider(
                     new DummySystem(Driver::new),
                     new DummyDatabaseConnectionProvider.DefaultProperties(),
