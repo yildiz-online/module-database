@@ -34,8 +34,6 @@ import java.util.Properties;
  */
 class StandardConnectionProvider extends DataBaseConnectionProvider {
 
-    private final System.Logger logger = System.getLogger(StandardConnectionProvider.class.getName());
-
     private final Properties properties;
 
     private boolean connected;
@@ -48,7 +46,8 @@ class StandardConnectionProvider extends DataBaseConnectionProvider {
 
     StandardConnectionProvider(DatabaseSystem system, DbProperties properties, boolean root) {
         super(system, properties, root);
-        this.logger.log(System.Logger.Level.INFO, "Using no database connection pool.");
+        System.Logger logger = System.getLogger(StandardConnectionProvider.class.getName());
+        logger.log(System.Logger.Level.INFO, "Using no database connection pool.");
         this.properties = new Properties();
         this.properties.put("user", this.getLogin());
         this.properties.put("password", this.getPassword());
