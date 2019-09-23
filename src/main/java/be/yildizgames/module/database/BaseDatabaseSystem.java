@@ -24,8 +24,7 @@
 
 package be.yildizgames.module.database;
 
-import be.yildizgames.common.util.StringUtil;
-
+import java.text.MessageFormat;
 import java.util.Objects;
 
 /**
@@ -52,6 +51,7 @@ public abstract class BaseDatabaseSystem implements DatabaseSystem {
     @Override
     public final String getUrl(final DbProperties p) {
         String[] params = {p.getDbName(), p.getDbHost(), String.valueOf(p.getDbPort()), p.getDbUser()};
-        return StringUtil.fillVariable(this.url, params);
+        MessageFormat messageFormat =  new MessageFormat(this.url);
+        return messageFormat.format(params);
     }
 }
