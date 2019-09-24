@@ -24,7 +24,6 @@
 
 open module be.yildizgames.module.database {
     requires java.sql;
-    requires java.xml;
 
     requires org.jooq;
     requires jdbcdslog;

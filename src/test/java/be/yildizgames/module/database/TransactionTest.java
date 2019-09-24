@@ -31,8 +31,6 @@ import org.h2.Driver;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.sql.SQLException;
-
 /**
  * @author Grégory Van den Borre
  */
@@ -42,7 +40,7 @@ class TransactionTest {
     class Execute {
 
         @Test
-        void happyFlow() throws SQLException {
+        void happyFlow() {
             Transaction t = new Transaction(new DummyDatabaseConnectionProvider(
                     new DummySystem(Driver::new),
                     new DummyDatabaseConnectionProvider.DefaultProperties(),
@@ -51,7 +49,7 @@ class TransactionTest {
         }
 
         @Test
-        void withError() throws Exception {
+        void withError() {
             Transaction t = new Transaction(new DummyDatabaseConnectionProvider(
                     new DummySystem(Driver::new),
                     new DummyDatabaseConnectionProvider.DefaultProperties(),

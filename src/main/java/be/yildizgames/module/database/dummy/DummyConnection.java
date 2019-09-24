@@ -314,12 +314,12 @@ public class DummyConnection implements Connection {
     }
 
     @Override
-    public <T> T unwrap(Class<T> iface) {
+    public <T> T unwrap(Class<T> i) {
         return null;
     }
 
     @Override
-    public boolean isWrapperFor(Class<?> iface) {
+    public boolean isWrapperFor(Class<?> i) {
         return false;
     }
 }
