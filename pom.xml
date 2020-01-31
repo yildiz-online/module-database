@@ -53,7 +53,7 @@
 
   <properties>
     <java.version>11</java.version>
-    <maven.plugin.jooq.version>3.12.3</maven.plugin.jooq.version>
+    <maven.plugin.jooq.version>3.12.4</maven.plugin.jooq.version>
   </properties>
 
   <dependencies>
