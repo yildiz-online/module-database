@@ -32,6 +32,6 @@ open module be.yildizgames.module.database {
     exports be.yildizgames.module.database.dummy;
     exports be.yildizgames.module.database.data;
 
-    uses be.yildizgames.common.logging.LogEngineProvider;
+    uses be.yildizgames.module.database.DatabaseSystemRegisterer;
 }
 
