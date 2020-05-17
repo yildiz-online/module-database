@@ -30,7 +30,6 @@ import be.yildizgames.module.database.DatabaseSystem;
 import be.yildizgames.module.database.DbProperties;
 import be.yildizgames.module.database.DriverProvider;
 import be.yildizgames.module.database.QueryBuilder;
-import org.jooq.SQLDialect;
 
 /**
  * @author Grégory Van den Borre
@@ -41,11 +40,6 @@ public class DummySystem implements DatabaseSystem {
 
     public DummySystem(DriverProvider driverProvider) {
         this.driverProvider = driverProvider;
-    }
-
-    @Override
-    public SQLDialect getDialect() {
-        return SQLDialect.H2;
     }
 
     @Override

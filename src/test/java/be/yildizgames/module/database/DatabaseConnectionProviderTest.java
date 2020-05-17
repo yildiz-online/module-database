@@ -27,15 +27,12 @@ import be.yildizgames.module.database.dummy.DummyDatabaseConnectionProvider;
 import be.yildizgames.module.database.dummy.DummyDriver;
 import be.yildizgames.module.database.dummy.DummySystem;
 import org.h2.Driver;
-import org.jooq.SQLDialect;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Grégory Van den Borre
@@ -152,10 +149,6 @@ class DatabaseConnectionProviderTest {
             DbProperties properties = new DummyDatabaseConnectionProvider.DefaultProperties();
 
             DatabaseSystem withoutUri = new DatabaseSystem() {
-                @Override
-                public SQLDialect getDialect() {
-                    return SQLDialect.MYSQL;
-                }
 
                 @Override
                 public String getDriver() {

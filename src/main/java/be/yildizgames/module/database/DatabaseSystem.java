@@ -24,20 +24,12 @@
 
 package be.yildizgames.module.database;
 
-import org.jooq.SQLDialect;
-
 /**
  * A system represent an implementation of a RDBMS.
  *
  * @author Grégory Van den Borre
  */
 public interface DatabaseSystem {
-
-    /**
-     * Provide the associated JOOQ dialect.
-     * @return The dialect.
-     */
-    SQLDialect getDialect();
 
     /**
      * Provide the driver name.

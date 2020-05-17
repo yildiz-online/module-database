@@ -26,7 +26,6 @@
 package be.yildizgames.module.database;
 
 import org.jdbcdslog.ConnectionLoggingProxy;
-import org.jooq.SQLDialect;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -103,9 +102,9 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
      * @throws SQLException thrown if connection failed.
      */
     public final void sanity() throws SQLException {
-        LOGGER.log(System.Logger.Level.INFO, "Checking database connection...");
+        LOGGER.log(System.Logger.Level.DEBUG, "Checking database connection...");
         try (Connection c = this.getConnection()) {
-            LOGGER.log(System.Logger.Level.INFO,"Checking database connection successful.");
+            LOGGER.log(System.Logger.Level.DEBUG,"Checking database connection successful.");
         } catch (SQLException e) {
             LOGGER.log(System.Logger.Level.ERROR, "Database connection failed.");
             throw e;
@@ -125,13 +124,6 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
             c = ConnectionLoggingProxy.wrap(c);
         }
         return c;
-    }
-
-    /**
-     * @return The dialect for this system.
-     */
-    public final SQLDialect getDialect() {
-        return this.system.getDialect();
     }
 
     public final String getDriver() {
