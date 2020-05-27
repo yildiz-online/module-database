@@ -47,7 +47,7 @@ class StandardConnectionProvider extends DataBaseConnectionProvider {
     StandardConnectionProvider(DatabaseSystem system, DbProperties properties, boolean root) {
         super(system, properties, root);
         System.Logger logger = System.getLogger(StandardConnectionProvider.class.getName());
-        logger.log(System.Logger.Level.INFO, "Using no database connection pool.");
+        logger.log(System.Logger.Level.DEBUG, "Using no database connection pool.");
         this.properties = new Properties();
         this.properties.put("user", this.getLogin());
         this.properties.put("password", this.getPassword());
