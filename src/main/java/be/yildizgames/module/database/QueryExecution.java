@@ -18,6 +18,12 @@ package be.yildizgames.module.database;
 @FunctionalInterface
 public interface QueryExecution <T> {
 
-    void execute(WrappedPreparedStatement pstmt, T objects);
-
+    /**
+     * Execute a given statement.
+     *
+     * @param preparedStatement Statement to use.
+     * @param objects Objects to feed the statement.
+     * @return true if the statement is executed, false otherwise.
+     */
+    boolean execute(WrappedPreparedStatement preparedStatement, T objects);
 }
