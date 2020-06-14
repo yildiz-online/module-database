@@ -166,7 +166,7 @@ class DatabaseConnectionProviderTest {
                 }
 
                 @Override
-                public QueryBuilder createBuilder() {
+                public QueryBuilder createBuilder(String table) {
                     return null;
                 }
 
