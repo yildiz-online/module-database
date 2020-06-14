@@ -158,8 +158,8 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
         return debug;
     }
 
-    public final QueryBuilder getBuilder() {
-        return this.system.createBuilder();
+    public final QueryBuilder getBuilder(String table) {
+        return this.system.createBuilder(table);
     }
 
     /**

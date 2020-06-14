@@ -23,13 +23,22 @@
  */
 package be.yildizgames.module.database;
 
+import java.util.Objects;
+
 public abstract class QueryBuilder {
+
+    protected final String table;
 
     private final StringBuilder builder = new StringBuilder();
 
-    public abstract QueryBuilder selectAllFrom(String table);
+    protected QueryBuilder(final String table) {
+        super();
+        this.table = Objects.requireNonNull(table);
+    }
 
-    public abstract QueryBuilder selectAllFrom(String schema, String table);
+    public abstract QueryBuilder selectAllFrom();
+
+    public abstract QueryBuilder selectAllFrom(String schema);
 
     public abstract QueryBuilder limit(int number);
 
@@ -37,6 +46,8 @@ public abstract class QueryBuilder {
         this.builder.append(content).append(" ");
         return this;
     }
+
+    public abstract QueryBuilder merge(String id, String... columns);
 
     public final String build() {
         return this.builder.toString().trim();

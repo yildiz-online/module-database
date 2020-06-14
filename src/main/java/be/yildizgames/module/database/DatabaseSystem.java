@@ -54,7 +54,7 @@ public interface DatabaseSystem {
      * Create a builder for SQL queries.
      * @return The builder.
      */
-    QueryBuilder createBuilder();
+    QueryBuilder createBuilder(String table);
 
     /**
      * Flag to know if this system can use a pool or not.
