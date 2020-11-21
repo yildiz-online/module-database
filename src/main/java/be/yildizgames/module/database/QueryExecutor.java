@@ -26,7 +26,9 @@ package be.yildizgames.module.database;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Grégory Van den Borre
@@ -38,6 +40,34 @@ public class QueryExecutor {
     public QueryExecutor(DataBaseConnectionProvider provider) {
         super();
         this.provider = provider;
+    }
+
+    public final void createTableIfNotExists(TableSchema...schemas) {
+        for(TableSchema  schema : schemas) {
+            try (var c = this.provider.getConnection(); var pstmt = c.prepareStatement(createTableQuery(schema))) {
+                pstmt.execute();
+                c.commit();
+            } catch (SQLException e) {
+                throw new IllegalStateException(e);
+            }
+        }
+    }
+
+    static String createTableQuery(TableSchema schema) {
+        String query = "CREATE CACHED TABLE IF NOT EXISTS " + schema.getTableName() + " (";
+        TableSchemaColumn id = schema.getId();
+        if(id != null) {
+            query = query + id.getTitle() + " " + id.getType() + "(" + id.getSize() + ")" + (id.isNullable() ? "" : " NOT NULL") + (schema.getColumns().length == 0 ? "" : ",");
+        }
+        query = query + Arrays
+                .stream(schema.getColumns())
+                .map(c -> c.getTitle() + " " + c.getType() + (c.getSize() == -1 ? "" : "(" + c.getSize() + ")") + (c.isNullable() ? "" : " NOT NULL"))
+                .collect(Collectors.joining(","));
+        if(id != null) {
+            query = query + ",PRIMARY KEY (" + id.getTitle() + ")";
+        }
+        query = query + ");";
+        return query;
     }
 
     public final void dropTables(String... tables) {

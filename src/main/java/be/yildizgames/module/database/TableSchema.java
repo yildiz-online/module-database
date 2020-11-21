@@ -21,24 +21,39 @@ public class TableSchema {
 
     private final TableSchemaColumn id;
 
-    public TableSchema(TableSchemaColumn id, TableSchemaColumn[] columns) {
+    private final String tableName;
+
+    private TableSchema(String tableName, TableSchemaColumn id, TableSchemaColumn[] columns) {
         super();
         this.id = id;
         this.columns = columns;
+        this.tableName = tableName;
     }
 
-    public TableSchema(TableSchemaColumn[] columns) {
+    private TableSchema(String tableName, TableSchemaColumn[] columns) {
         super();
         this.id = null;
         this.columns = columns;
+        this.tableName = tableName;
     }
 
-    public static TableSchema createWithId(TableSchemaColumn id, TableSchemaColumn... columns) {
-        return new TableSchema(id, columns);
+    public static TableSchema createWithId(String tableName, TableSchemaColumn id, TableSchemaColumn... columns) {
+        return new TableSchema(tableName, id, columns);
     }
 
-    public static TableSchema createWithoutId(TableSchemaColumn... columns) {
-        return new TableSchema(columns);
+    public static TableSchema createWithoutId(String tableName, TableSchemaColumn... columns) {
+        return new TableSchema(tableName, columns);
     }
 
+    String getTableName() {
+        return this.tableName;
+    }
+
+    TableSchemaColumn getId() {
+        return this.id;
+    }
+
+    TableSchemaColumn[] getColumns() {
+        return columns;
+    }
 }

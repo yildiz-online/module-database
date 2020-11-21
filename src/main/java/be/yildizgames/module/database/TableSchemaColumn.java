@@ -41,9 +41,33 @@ public class TableSchemaColumn {
         return new TableSchemaColumn(title, ColumnType.VARCHAR, size, false);
     }
 
+    public static TableSchemaColumn charNotNull(String title, int size) {
+        return new TableSchemaColumn(title, ColumnType.CHAR, size, false);
+    }
+
+    public static TableSchemaColumn tinyIntNotNull(String title) {
+        return new TableSchemaColumn(title, ColumnType.TINYINT, -1, false);
+    }
+
+    String getTitle() {
+        return title;
+    }
+
+    String getType() {
+        return type.name().toLowerCase();
+    }
+
+    int getSize() {
+        return size;
+    }
+
+    public boolean isNullable() {
+        return this.nullable;
+    }
+
     private enum ColumnType {
 
-        INT, VARCHAR;
+        INT, TINYINT, VARCHAR, CHAR;
 
     }
 }
