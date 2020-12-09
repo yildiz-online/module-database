@@ -67,7 +67,7 @@ public class TableSchemaColumn {
 
     private enum ColumnType {
 
-        INT, TINYINT, VARCHAR, CHAR;
+        INT, TINYINT, VARCHAR, CHAR, BOOLEAN;
 
     }
 }
