@@ -57,15 +57,12 @@ public class QueryExecutor {
         String query = "CREATE CACHED TABLE IF NOT EXISTS " + schema.getTableName() + " (";
         TableSchemaColumn id = schema.getId();
         if(id != null) {
-            query = query + id.getTitle() + " " + id.getType() + "(" + id.getSize() + ")" + (id.isNullable() ? "" : " NOT NULL") + (schema.getColumns().length == 0 ? "" : ",");
+            query = query + id.getTitle() + " " + id.getType()  + (id.getSize() == -1 ? "" : "(" + id.getSize() + ")") + (schema.isGeneratedId()? " IDENTITY" : "") + " PRIMARY KEY" + (schema.getColumns().length == 0 ? "" : ",");
         }
         query = query + Arrays
                 .stream(schema.getColumns())
                 .map(c -> c.getTitle() + " " + c.getType() + (c.getSize() == -1 ? "" : "(" + c.getSize() + ")") + (c.isNullable() ? "" : " NOT NULL"))
                 .collect(Collectors.joining(","));
-        if(id != null) {
-            query = query + ",PRIMARY KEY (" + id.getTitle() + ")";
-        }
         query = query + ");";
         return query;
     }

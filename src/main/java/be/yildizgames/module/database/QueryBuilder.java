@@ -23,22 +23,21 @@
  */
 package be.yildizgames.module.database;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public abstract class QueryBuilder {
 
-    protected final String table;
+    protected final TableSchema table;
 
     private final StringBuilder builder = new StringBuilder();
 
-    protected QueryBuilder(final String table) {
+    protected QueryBuilder(final TableSchema table) {
         super();
         this.table = Objects.requireNonNull(table);
     }
 
     public abstract QueryBuilder selectAllFrom();
-
-    public abstract QueryBuilder selectAllFrom(String schema);
 
     public abstract QueryBuilder limit(int number);
 
@@ -48,6 +47,13 @@ public abstract class QueryBuilder {
     }
 
     public abstract QueryBuilder merge(String id, String... columns);
+
+    public final QueryBuilder mergeAll() {
+        if(table.getId() == null) {
+            throw new IllegalStateException("Impossible to merge a table without id: " + table.getTableName());
+        }
+        return merge(table.getId().getTitle(), Arrays.stream(table.getColumns()).map(TableSchemaColumn::getTitle).toArray(String[]::new));
+    }
 
     public final String build() {
         return this.builder.toString().trim();

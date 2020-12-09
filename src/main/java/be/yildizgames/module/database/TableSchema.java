@@ -23,11 +23,14 @@ public class TableSchema {
 
     private final String tableName;
 
-    private TableSchema(String tableName, TableSchemaColumn id, TableSchemaColumn[] columns) {
+    private final boolean generatedId;
+
+    private TableSchema(String tableName, TableSchemaColumn id, boolean generatedId, TableSchemaColumn[] columns) {
         super();
         this.id = id;
         this.columns = columns;
         this.tableName = tableName;
+        this.generatedId = generatedId;
     }
 
     private TableSchema(String tableName, TableSchemaColumn[] columns) {
@@ -35,17 +38,22 @@ public class TableSchema {
         this.id = null;
         this.columns = columns;
         this.tableName = tableName;
+        this.generatedId = false;
     }
 
     public static TableSchema createWithId(String tableName, TableSchemaColumn id, TableSchemaColumn... columns) {
-        return new TableSchema(tableName, id, columns);
+        return new TableSchema(tableName, id, false, columns);
+    }
+
+    public static TableSchema createWithGeneratedId(String tableName, TableSchemaColumn id, TableSchemaColumn... columns) {
+        return new TableSchema(tableName, id, true, columns);
     }
 
     public static TableSchema createWithoutId(String tableName, TableSchemaColumn... columns) {
         return new TableSchema(tableName, columns);
     }
 
-    String getTableName() {
+    public final String getTableName() {
         return this.tableName;
     }
 
@@ -55,5 +63,14 @@ public class TableSchema {
 
     TableSchemaColumn[] getColumns() {
         return columns;
+    }
+
+    boolean isGeneratedId() {
+        return this.generatedId;
+    }
+
+    @Override
+    public final String toString() {
+        return this.tableName;
     }
 }

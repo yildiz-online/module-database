@@ -30,6 +30,7 @@ import be.yildizgames.module.database.DatabaseSystem;
 import be.yildizgames.module.database.DbProperties;
 import be.yildizgames.module.database.DriverProvider;
 import be.yildizgames.module.database.QueryBuilder;
+import be.yildizgames.module.database.TableSchema;
 
 /**
  * @author Grégory Van den Borre
@@ -59,8 +60,23 @@ public class DummySystem implements DatabaseSystem {
     }
 
     @Override
-    public QueryBuilder createBuilder(String table) {
-        return null;
+    public QueryBuilder createBuilder(TableSchema table) {
+        return new QueryBuilder(table) {
+            @Override
+            public QueryBuilder selectAllFrom() {
+                return this;
+            }
+
+            @Override
+            public QueryBuilder limit(int number) {
+                return this;
+            }
+
+            @Override
+            public QueryBuilder merge(String id, String... columns) {
+                return this;
+            }
+        };
     }
 
     @Override
