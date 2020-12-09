@@ -49,6 +49,10 @@ public class TableSchemaColumn {
         return new TableSchemaColumn(title, ColumnType.TINYINT, -1, false);
     }
 
+    public static TableSchemaColumn booleanNotNull(String title) {
+        return new TableSchemaColumn(title, ColumnType.BOOLEAN, -1, false);
+    }
+
     String getTitle() {
         return title;
     }
