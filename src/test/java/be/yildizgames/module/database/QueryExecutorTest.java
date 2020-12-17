@@ -32,12 +32,10 @@ class QueryExecutorTest {
                     TableSchemaColumn.varcharNotNull("colb", 10),
                     TableSchemaColumn.tinyIntNotNull("colc"));
 
-            String expected = "CREATE CACHED TABLE IF NOT EXISTS test ("
-                    + "idcol char(32) NOT NULL,"
-                    + "cola int NOT NULL,"
-                    + "colb varchar(10) NOT NULL,"
-                    + "colc tinyint NOT NULL,"
-                    + "PRIMARY KEY (idcol));";
+            String expected = "CREATE CACHED TABLE IF NOT EXISTS test (idcol char(32) PRIMARY KEY," +
+                    "cola int NOT NULL," +
+                    "colb varchar(10) NOT NULL," +
+                    "colc tinyint NOT NULL);";
             Assertions.assertEquals(expected, QueryExecutor.createTableQuery(schema));
         }
 
@@ -46,9 +44,7 @@ class QueryExecutorTest {
             TableSchema schema = TableSchema.createWithId("test",
                     TableSchemaColumn.charNotNull("idcol", 32));
 
-            String expected = "CREATE CACHED TABLE IF NOT EXISTS test ("
-                    + "idcol char(32) NOT NULL,"
-                    + "PRIMARY KEY (idcol));";
+            String expected = "CREATE CACHED TABLE IF NOT EXISTS test (idcol char(32) PRIMARY KEY);";
             Assertions.assertEquals(expected, QueryExecutor.createTableQuery(schema));
         }
 
