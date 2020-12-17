@@ -53,6 +53,10 @@ public class TableSchemaColumn {
         return new TableSchemaColumn(title, ColumnType.BOOLEAN, -1, false);
     }
 
+    public static TableSchemaColumn bigintNotNull(String title) {
+        return new TableSchemaColumn(title, ColumnType.BIGINT, -1, false);
+    }
+
     String getTitle() {
         return title;
     }
@@ -71,7 +75,7 @@ public class TableSchemaColumn {
 
     private enum ColumnType {
 
-        INT, TINYINT, VARCHAR, CHAR, BOOLEAN;
+        INT, TINYINT, BIGINT, VARCHAR, CHAR, BOOLEAN;
 
     }
 }
