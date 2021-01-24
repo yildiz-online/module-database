@@ -69,8 +69,8 @@ public class QueryExecutor {
 
     public final void dropTables(String... tables) {
         try (var c = this.provider.getConnection(); var dropStmt = c.createStatement()) {
-            for(String table : tables) {
-                dropStmt.execute("DROP TABLE " + table);
+            for(var table : tables) {
+                dropStmt.execute("DROP TABLE " + table + " IF EXISTS;");
             }
             c.commit();
         } catch (SQLException e) {
@@ -78,10 +78,10 @@ public class QueryExecutor {
         }
     }
 
-    public void dropTablesIfExists(String... tables) {
+    public void dropTables(TableSchema... tables) {
         try (var c = this.provider.getConnection(); var dropStmt = c.createStatement()) {
-            for(String table : tables) {
-                dropStmt.execute("DROP TABLE " + table + " IF EXISTS;");
+            for(var table : tables) {
+                dropStmt.execute("DROP TABLE " + table.getTableName() + " IF EXISTS;");
             }
             c.commit();
         } catch (SQLException e) {
