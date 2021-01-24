@@ -78,6 +78,17 @@ public class QueryExecutor {
         }
     }
 
+    void dropTablesIfNotExists(String... tables) {
+        try (var c = this.provider.getConnection(); var dropStmt = c.createStatement()) {
+            for(String table : tables) {
+                dropStmt.execute("DROP TABLE " + table + " IF EXISTS;");
+            }
+            c.commit();
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
     public <T> List<T> select(String query, RowMapper<T> mapper) {
         List<T> result = new ArrayList<>();
         try (var c = this.provider.getConnection(); var pstmt = WrappedPreparedStatement.create(c.prepareStatement(query)); var resultSet = WrappedResultSet.wrap(pstmt.executeQuery())) {
