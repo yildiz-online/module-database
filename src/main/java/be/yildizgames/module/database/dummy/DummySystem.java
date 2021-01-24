@@ -68,6 +68,11 @@ public class DummySystem implements DatabaseSystem {
             }
 
             @Override
+            public QueryBuilder select(String... columns) {
+                return this;
+            }
+
+            @Override
             public QueryBuilder limit(int number) {
                 return this;
             }

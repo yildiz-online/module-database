@@ -39,6 +39,8 @@ public abstract class QueryBuilder {
 
     public abstract QueryBuilder selectAllFrom();
 
+    public abstract QueryBuilder select(String... columns);
+
     public abstract QueryBuilder limit(int number);
 
     public final QueryBuilder append(String content) {
