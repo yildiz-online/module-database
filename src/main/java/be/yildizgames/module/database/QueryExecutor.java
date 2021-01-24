@@ -24,6 +24,7 @@
 
 package be.yildizgames.module.database;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,10 +44,15 @@ public class QueryExecutor {
     }
 
     public final void createTableIfNotExists(TableSchema...schemas) {
-        for(TableSchema  schema : schemas) {
+        for(var schema : schemas) {
             try (var c = this.provider.getConnection(); var pstmt = c.prepareStatement(createTableQuery(schema))) {
                 pstmt.execute();
                 c.commit();
+                for(var column: schema.getColumns()) {
+                    if(column.isIndexed()) {
+                        createIndex(schema, column.getTitle(), c);
+                    }
+                }
             } catch (SQLException e) {
                 throw new IllegalStateException(e);
             }
@@ -65,6 +71,20 @@ public class QueryExecutor {
                 .collect(Collectors.joining(","));
         query = query + ");";
         return query;
+    }
+
+    /**
+     * Create an index.
+     * @param table Table to use
+     * @param column Column to index.
+     */
+    private void createIndex(TableSchema table, String column, Connection c) {
+        var gameQuery = "CREATE INDEX IF NOT EXISTS index_" + table.getTableName() + "_" + column + " on " + table.getTableName() + " (" + column+ ");";
+        try (var pstmt = WrappedPreparedStatement.create(c.prepareStatement(gameQuery))) {
+            pstmt.execute();
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     public final void dropTables(String... tables) {

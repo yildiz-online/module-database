@@ -25,53 +25,85 @@ public class TableSchemaColumn {
 
     private final int size;
 
-    private TableSchemaColumn(String title, ColumnType type, int size, boolean nullable) {
+    private final boolean indexed;
+
+    private TableSchemaColumn(String title, ColumnType type, int size, boolean nullable, boolean indexed) {
         super();
         this.title = title;
         this.type = type;
         this.nullable = nullable;
         this.size = size;
+        this.indexed = indexed;
     }
 
     public static TableSchemaColumn intNotNull(String title) {
-        return new TableSchemaColumn(title, ColumnType.INT, -1, false);
+        return new TableSchemaColumn(title, ColumnType.INT, -1, false, false);
     }
 
     public static TableSchemaColumn varcharNotNull(String title, int size) {
-        return new TableSchemaColumn(title, ColumnType.VARCHAR, size, false);
+        return new TableSchemaColumn(title, ColumnType.VARCHAR, size, false, false);
     }
 
     public static TableSchemaColumn charNotNull(String title, int size) {
-        return new TableSchemaColumn(title, ColumnType.CHAR, size, false);
+        return new TableSchemaColumn(title, ColumnType.CHAR, size, false, false);
     }
 
     public static TableSchemaColumn tinyIntNotNull(String title) {
-        return new TableSchemaColumn(title, ColumnType.TINYINT, -1, false);
+        return new TableSchemaColumn(title, ColumnType.TINYINT, -1, false, false);
     }
 
     public static TableSchemaColumn booleanNotNull(String title) {
-        return new TableSchemaColumn(title, ColumnType.BOOLEAN, -1, false);
+        return new TableSchemaColumn(title, ColumnType.BOOLEAN, -1, false, false);
     }
 
     public static TableSchemaColumn bigintNotNull(String title) {
-        return new TableSchemaColumn(title, ColumnType.BIGINT, -1, false);
+        return new TableSchemaColumn(title, ColumnType.BIGINT, -1, false, false);
     }
 
-    String getTitle() {
-        return title;
+    public static TableSchemaColumn intNotNullIndexed(String title) {
+        return new TableSchemaColumn(title, ColumnType.INT, -1, false, true);
     }
 
-    String getType() {
-        return type.name().toLowerCase();
+    public static TableSchemaColumn varcharNotNullIndexed(String title, int size) {
+        return new TableSchemaColumn(title, ColumnType.VARCHAR, size, false, true);
     }
 
-    int getSize() {
-        return size;
+    public static TableSchemaColumn charNotNullIndexed(String title, int size) {
+        return new TableSchemaColumn(title, ColumnType.CHAR, size, false, true);
     }
 
-    public boolean isNullable() {
+    public static TableSchemaColumn tinyIntNotNullIndexed(String title) {
+        return new TableSchemaColumn(title, ColumnType.TINYINT, -1, false, true);
+    }
+
+    public static TableSchemaColumn booleanNotNullIndexed(String title) {
+        return new TableSchemaColumn(title, ColumnType.BOOLEAN, -1, false, true);
+    }
+
+    public static TableSchemaColumn bigintNotNullIndexed(String title) {
+        return new TableSchemaColumn(title, ColumnType.BIGINT, -1, false, true);
+    }
+
+    final String getTitle() {
+        return this.title;
+    }
+
+    final String getType() {
+        return this.type.name().toLowerCase();
+    }
+
+    final int getSize() {
+        return this.size;
+    }
+
+    final boolean isNullable() {
         return this.nullable;
     }
+
+    final boolean isIndexed() {
+        return this.indexed;
+    }
+
 
     private enum ColumnType {
 
