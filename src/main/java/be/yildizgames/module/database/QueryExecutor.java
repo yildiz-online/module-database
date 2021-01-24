@@ -78,7 +78,7 @@ public class QueryExecutor {
         }
     }
 
-    void dropTablesIfNotExists(String... tables) {
+    public void dropTablesIfNotExists(String... tables) {
         try (var c = this.provider.getConnection(); var dropStmt = c.createStatement()) {
             for(String table : tables) {
                 dropStmt.execute("DROP TABLE " + table + " IF EXISTS;");
