@@ -27,22 +27,22 @@ class QueryExecutorTest {
         @Test
         void happyFlow() {
             TableSchema schema = TableSchema.createWithId("test",
-                    TableSchemaColumn.charNotNull("idcol", 32),
-                    TableSchemaColumn.intNotNull("cola"),
-                    TableSchemaColumn.varcharNotNull("colb", 10),
-                    TableSchemaColumn.tinyIntNotNull("colc"));
+                    TableSchemaColumn.character("idcol", 32).notNull(),
+                    TableSchemaColumn.integer("cola").notNull(),
+                    TableSchemaColumn.varchar("colb", 10).notNull().unique(),
+                    TableSchemaColumn.tinyInt("colc").notNull().unique());
 
             String expected = "CREATE CACHED TABLE IF NOT EXISTS test (idcol char(32) PRIMARY KEY," +
                     "cola int NOT NULL," +
-                    "colb varchar(10) NOT NULL," +
-                    "colc tinyint NOT NULL);";
+                    "colb varchar(10) NOT NULL UNIQUE," +
+                    "colc tinyint NOT NULL UNIQUE);";
             Assertions.assertEquals(expected, QueryExecutor.createTableQuery(schema));
         }
 
         @Test
         void onlyId() {
             TableSchema schema = TableSchema.createWithId("test",
-                    TableSchemaColumn.charNotNull("idcol", 32));
+                    TableSchemaColumn.character("idcol", 32).notNull());
 
             String expected = "CREATE CACHED TABLE IF NOT EXISTS test (idcol char(32) PRIMARY KEY);";
             Assertions.assertEquals(expected, QueryExecutor.createTableQuery(schema));

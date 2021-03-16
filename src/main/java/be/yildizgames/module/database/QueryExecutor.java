@@ -67,7 +67,7 @@ public class QueryExecutor {
         }
         query = query + Arrays
                 .stream(schema.getColumns())
-                .map(c -> c.getTitle() + " " + c.getType() + (c.getSize() == -1 ? "" : "(" + c.getSize() + ")") + (c.isNullable() ? "" : " NOT NULL"))
+                .map(c -> c.getTitle() + " " + c.getType() + (c.getSize() == -1 ? "" : "(" + c.getSize() + ")") + (c.isNullable() ? "" : " NOT NULL" + (c.isUnique() ? " UNIQUE" : "")))
                 .collect(Collectors.joining(","));
         query = query + ");";
         return query;
