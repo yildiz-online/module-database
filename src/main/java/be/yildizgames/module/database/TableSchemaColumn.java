@@ -63,6 +63,10 @@ public class TableSchemaColumn {
         return new TableSchemaColumn(title, ColumnType.CHAR, size);
     }
 
+    public static TableSchemaColumn binary(String title, int size) {
+        return new TableSchemaColumn(title, ColumnType.BINARY, size);
+    }
+
     public static TableSchemaColumn tinyInt(String title) {
         return new TableSchemaColumn(title, ColumnType.TINYINT, -1);
     }
@@ -106,7 +110,7 @@ public class TableSchemaColumn {
 
     private enum ColumnType {
 
-        INT, TINYINT, BIGINT, VARCHAR, CHAR, BOOLEAN, UUID;
+        INT, TINYINT, BIGINT, VARCHAR, CHAR, BOOLEAN, UUID, BINARY;
 
     }
 }
