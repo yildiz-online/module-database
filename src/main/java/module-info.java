@@ -28,7 +28,6 @@ open module be.yildizgames.module.database {
     requires jdbcdslog;
 
     exports be.yildizgames.module.database;
-    exports be.yildizgames.module.database.dummy;
     exports be.yildizgames.module.database.data;
 
     uses be.yildizgames.module.database.DatabaseSystemRegisterer;
