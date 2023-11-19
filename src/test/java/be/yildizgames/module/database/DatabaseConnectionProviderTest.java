@@ -32,7 +32,9 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Grégory Van den Borre
@@ -156,17 +158,12 @@ class DatabaseConnectionProviderTest {
                 }
 
                 @Override
-                public DriverProvider getDriverProvider() {
+                public DriverProvider driverProvider() {
                     return DummyDriver::new;
                 }
 
                 @Override
                 public String getUrl(DbProperties p) {
-                    return null;
-                }
-
-                @Override
-                public QueryBuilder createBuilder(TableSchema table) {
                     return null;
                 }
 

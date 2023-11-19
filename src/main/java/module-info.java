@@ -23,12 +23,10 @@
  */
 
 open module be.yildizgames.module.database {
+
     requires java.sql;
 
-    requires jdbcdslog;
-
     exports be.yildizgames.module.database;
-    exports be.yildizgames.module.database.data;
 
     uses be.yildizgames.module.database.DatabaseSystemRegisterer;
 }

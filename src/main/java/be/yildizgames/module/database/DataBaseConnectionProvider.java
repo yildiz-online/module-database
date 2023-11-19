@@ -25,8 +25,6 @@
  */
 package be.yildizgames.module.database;
 
-import org.jdbcdslog.ConnectionLoggingProxy;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -57,7 +55,7 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
     private final String login;
 
     /**
-     * Data base connection password.
+     * Database connection password.
      */
     private final String password;
 
@@ -112,18 +110,14 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
     }
 
     /**
-     * Retrieve a connection to the data base. Do not forget to release it with
+     * Retrieve a connection to the database. Do not forget to release it with
      * Connection.close()
      *
      * @return The created database connection.
      * @throws SQLException In case the connection retrieving throws it.
      */
     public final Connection getConnection() throws SQLException {
-        Connection c = this.getConnectionImpl();
-        if (this.debug) {
-            c = ConnectionLoggingProxy.wrap(c);
-        }
-        return c;
+        return this.getConnectionImpl();
     }
 
     public final String getDriver() {
@@ -156,10 +150,6 @@ public abstract class DataBaseConnectionProvider implements AutoCloseable {
 
     protected final boolean isDebug() {
         return debug;
-    }
-
-    public final QueryBuilder getBuilder(TableSchema table) {
-        return this.system.createBuilder(table);
     }
 
     /**

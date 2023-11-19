@@ -15,23 +15,11 @@ package be.yildizgames.module.database.dummy;
 import be.yildizgames.module.database.DatabaseSystem;
 import be.yildizgames.module.database.DbProperties;
 import be.yildizgames.module.database.DriverProvider;
-import be.yildizgames.module.database.InsertQuery;
-import be.yildizgames.module.database.QueryBuilder;
-import be.yildizgames.module.database.SelectQuery;
-import be.yildizgames.module.database.TableSchema;
-import be.yildizgames.module.database.ColumnValue;
-import be.yildizgames.module.database.TableSchemaColumn;
 
 /**
  * @author Grégory Van den Borre
  */
-public class DummySystem implements DatabaseSystem {
-
-    public final DriverProvider driverProvider;
-
-    public DummySystem(DriverProvider driverProvider) {
-        this.driverProvider = driverProvider;
-    }
+public record DummySystem(DriverProvider driverProvider) implements DatabaseSystem {
 
     @Override
     public String getDriver() {
@@ -39,45 +27,10 @@ public class DummySystem implements DatabaseSystem {
     }
 
     @Override
-    public DriverProvider getDriverProvider() {
-        return this.driverProvider;
-
-    }
-
-    @Override
     public String getUrl(DbProperties p) {
         return "jdbc:h2:~/test";
     }
 
-    @Override
-    public QueryBuilder createBuilder(TableSchema table) {
-        return new QueryBuilder(table) {
-            @Override
-            public SelectQuery selectAllFrom() {
-                return null;
-            }
-
-            @Override
-            public SelectQuery select(TableSchemaColumn<?>... columns) {
-                return null;
-            }
-
-            @Override
-            public InsertQuery insert(ColumnValue<?>... columns) {
-                return null;
-            }
-
-            @Override
-            public QueryBuilder limit(int number) {
-                return this;
-            }
-
-            @Override
-            public QueryBuilder merge(String id, String... columns) {
-                return this;
-            }
-        };
-    }
 
     @Override
     public boolean requirePool() {

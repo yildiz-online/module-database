@@ -56,7 +56,7 @@ class StandardConnectionProvider extends DataBaseConnectionProvider {
     @Override
     protected Connection getConnectionImpl() throws SQLException {
         if(!connected) {
-            this.connection = this.getSystem().getDriverProvider().getDriver().connect(this.getUri(), this.properties);
+            this.connection = this.getSystem().driverProvider().getDriver().connect(this.getUri(), this.properties);
         }
         return this.connection;
     }

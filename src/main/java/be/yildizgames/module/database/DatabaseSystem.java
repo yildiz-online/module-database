@@ -41,7 +41,7 @@ public interface DatabaseSystem {
      * Provide the driver provider.
      * @return the driver provider
      */
-    DriverProvider getDriverProvider();
+    DriverProvider driverProvider();
 
     /**
      * Provide the completed URL from the properties.
@@ -49,12 +49,6 @@ public interface DatabaseSystem {
      * @return The built URL.
      */
     String getUrl(DbProperties properties);
-
-    /**
-     * Create a builder for SQL queries.
-     * @return The builder.
-     */
-    QueryBuilder createBuilder(TableSchema table);
 
     /**
      * Flag to know if this system can use a pool or not.
