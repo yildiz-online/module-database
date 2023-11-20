@@ -24,7 +24,6 @@
 
 package be.yildizgames.module.database;
 
-
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
