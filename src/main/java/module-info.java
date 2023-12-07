@@ -29,5 +29,6 @@ open module be.yildizgames.module.database {
     exports be.yildizgames.module.database;
 
     uses be.yildizgames.module.database.DatabaseSystemRegisterer;
+    uses be.yildizgames.module.database.ConnectionProviderRegisterer;
 }
 
