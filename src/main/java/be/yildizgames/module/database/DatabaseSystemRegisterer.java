@@ -25,6 +25,7 @@
 package be.yildizgames.module.database;
 
 /**
+ * Allow a system to activate its support.
  * @author Grégory Van den Borre
  */
 public interface DatabaseSystemRegisterer {

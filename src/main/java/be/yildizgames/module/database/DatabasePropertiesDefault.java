@@ -26,6 +26,7 @@ package be.yildizgames.module.database;
 import java.util.Properties;
 
 /**
+ * Default values for the properties used by the database.
  * @author Grégory Van den Borre
  */
 public class DatabasePropertiesDefault extends Properties {
