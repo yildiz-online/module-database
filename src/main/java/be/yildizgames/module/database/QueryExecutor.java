@@ -109,6 +109,15 @@ public class QueryExecutor {
         }
     }
 
+    public void addColumnToTable(TableSchema table, TableSchemaColumn column) {
+        try (var c = this.provider.getConnection(); var updateStmt = c.createStatement()) {
+            updateStmt.execute("ALTER TABLE " + table.getTableName() + " ADD " + column.getTitle() + " " + column.getType()  + (column.getSize() == -1 ? "" : "(" + column.getSize() + ")") + ";");
+            c.commit();
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
     public <T> List<T> select(String query, RowMapper<T> mapper) {
         List<T> result = new ArrayList<>();
         try (var c = this.provider.getConnection(); var pstmt = WrappedPreparedStatement.create(c.prepareStatement(query)); var resultSet = WrappedResultSet.wrap(pstmt.executeQuery())) {
