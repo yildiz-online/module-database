@@ -111,11 +111,15 @@ public class QueryExecutor {
 
     public void addColumnToTable(TableSchema table, TableSchemaColumn column) {
         try (var c = this.provider.getConnection(); var updateStmt = c.createStatement()) {
-            updateStmt.execute("ALTER TABLE " + table.getTableName() + " ADD " + column.getTitle() + " " + column.getType()  + (column.getSize() == -1 ? "" : "(" + column.getSize() + ")") + ";");
+            updateStmt.execute(addColumnToTableQuery(table, column));
             c.commit();
         } catch (SQLException e) {
             throw new IllegalStateException(e);
         }
+    }
+
+    String addColumnToTableQuery(TableSchema table, TableSchemaColumn column) {
+        return "ALTER TABLE " + table.getTableName() + " ADD " + column.getTitle() + " " + column.getType()  + (column.getSize() == -1 ? " NOT NULL DEFAULT 0" : "(" + column.getSize() + ")") + ";";
     }
 
     public <T> List<T> select(String query, RowMapper<T> mapper) {
