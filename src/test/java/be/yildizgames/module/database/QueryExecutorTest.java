@@ -53,6 +53,16 @@ class QueryExecutorTest {
         Assertions.assertEquals("ALTER TABLE testTable ADD newColumn int NOT NULL DEFAULT 0;", executor.addColumnToTableQuery(table, column));
     }
 
+    @Test
+    void testAddColumnToTableQueryWithBigIntColumn() {
+
+        QueryExecutor executor = new QueryExecutor(null);
+        TableSchema table = TableSchema.createWithoutId("testTable");
+        TableSchemaColumn column = TableSchemaColumn.bigint("newColumn");
+
+        Assertions.assertEquals("ALTER TABLE testTable ADD newColumn bigint NOT NULL DEFAULT 0;", executor.addColumnToTableQuery(table, column));
+    }
+
 
     @Test
     void testAddColumnToTableQueryWithSizedColumn() {
